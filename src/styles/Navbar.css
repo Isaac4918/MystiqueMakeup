@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1.5px solid black;
+  padding: 2px 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+}
+
+.leftSide {
+  font-size: 1.3rem;
+}
+
+.rightSide {
+  display: flex;
+  list-style: none;
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: black;
+  padding-right: 20px;
+}
+
+.rightSide li {
+  padding-left: 20px;
+}
+
+.rightSide img {
+  height: 29.5px;
+  width: 30px;
+}
+
+.rightSide img:hover{
+  filter: invert(39%) sepia(19%) saturate(2897%) hue-rotate(47deg) brightness(94%) contrast(94%);
+}
+
+
+
+
