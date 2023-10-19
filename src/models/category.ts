@@ -1,20 +1,15 @@
-class category{
+import { subCategory } from "./subCategory";
+
+export class Category{
   private name: string;
-  private idSubcategory: subCategory;
+  private subcategory: subCategory[];
   
-  //Constructors
-  constructor(name: string);
-  constructor(idSubcategory: subCategory, name: string);
-  
-  // Implementation
-  constructor(idSubcategoryOrName: subCategory | string, name?: string) {
-    if (idSubcategoryOrName instanceof subCategory) {
-      this.idSubcategory = idSubcategoryOrName;
-      this.name = name || '';
-    } else {
-      this.name = idSubcategoryOrName;
-    }
+  //Constructor
+  constructor(idSubcategory: subCategory[], name: string){
+    this.subcategory = idSubcategory;
+    this.name = name;
   }
+  
 
   //Getters and setters
   public getName(): string{
@@ -25,12 +20,12 @@ class category{
     this.name = name;
   }
 
-  public getIdSubcategory(): subCategory{
-    return this.idSubcategory;
+  public getSubcategory(): subCategory[]{
+    return this.subcategory;
   }
 
-  public setIdSubcategory(idSubcategory: subCategory): void{
-    this.idSubcategory = idSubcategory;
+  public setSubcategory(subcategory: subCategory[]): void{
+    this.subcategory = subcategory;
   }
 
 }

@@ -3,12 +3,10 @@ import {  accountDAOImpl  } from "../models/DAO/accountDAOImpl";
 
 export class accountController{
     private accountDAO: accountDAOImpl;
-    //private accountList: Account[];
 
     //Constructor
     constructor(){
-        this.accountDAO = accountDAOImpl.getInstanceAccount();
-        //this.accountList = [];  
+        this.accountDAO = accountDAOImpl.getInstanceAccount(); 
     }
 
     //Methods
