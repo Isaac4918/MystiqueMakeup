@@ -2,6 +2,7 @@ import { collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, 
 import { db } from './databaseConfig';
 import { crudDAO } from "./crudDAO";
 import { Category } from "../category";
+import { subCategory } from '../subCategory';
 
 export class categoryDAOImpl implements crudDAO{
     private static instance: categoryDAOImpl;
@@ -23,10 +24,13 @@ export class categoryDAOImpl implements crudDAO{
     //--------------------------- CREATE ---------------------------------------------------------
     async create(pObj: Category): Promise<void> {
         let name = pObj.getName();
+        let subCategories = pObj.getSubcategory();
         try {
+            // Convierte cada objeto subCategory a un objeto JavaScript puro
+            let subCategoriesPlain = subCategories.map(subCategory => Object.assign({}, subCategory));
             await setDoc(doc(db, "Categories", name), {
                 name: pObj.getName(),
-                subCategory: pObj.getSubcategory()
+                subCategory: subCategoriesPlain
             });
             console.log("Agregó con éxito");
         } catch (error) {
@@ -39,7 +43,7 @@ export class categoryDAOImpl implements crudDAO{
         try {
             const querySnapshot = await getDocs(collection(db, 'Categories'));
             let data: Category[] = [];
-  
+             
             querySnapshot.forEach((doc) => {
               // Add objects
               let categoryData = doc.data();
@@ -79,11 +83,13 @@ export class categoryDAOImpl implements crudDAO{
     //--------------------------- UPDATE ---------------------------------------------------------
     async update(pObj: Category): Promise<void> {
         let name = pObj.getName();
+        let subCategories = pObj.getSubcategory();
         try {
+            let subCategoriesPlain = subCategories.map(subCategory => Object.assign({}, subCategory));
             const docRef = doc(db, 'Categories', name);
             await updateDoc(docRef, {
                 name : pObj.getName(),
-                subCategory: pObj.getSubcategory()
+                subCategory: subCategoriesPlain
             });
             console.log("Categoría actualizada con éxito");
         } catch (error) {
@@ -97,7 +103,7 @@ export class categoryDAOImpl implements crudDAO{
         try {
             const docRef = doc(db, 'Categories', name);
             await deleteDoc(docRef);
-            console.log("Categorís eliminada con éxito");
+            console.log("Categoría eliminada con éxito");
             
         } catch (error) {
             console.error("Error al eliminar la categoría: ", error);

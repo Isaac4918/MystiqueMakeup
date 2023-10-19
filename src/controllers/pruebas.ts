@@ -1,23 +1,32 @@
-import { accountController } from "./accountController"; 
+import { subCategory } from "../models/subCategory";
+import { categoryController } from "./categoryController";
 
 function prueba(): void{
     // Crear una instancia de accountController
-    let controller = new accountController();
+    let controller = new categoryController();
     
-    // Datos para la nueva cuenta
-    let username = "OtraPrueba2";
-    let password = "unacontrasenna123";
-    let email = "wuiiiihh@test.com";
-    let admin = true;
+    /*
+    let category = "Categoria1";
+    let listSubcategory: string[];
+    listSubcategory = [];
+    listSubcategory.push("Subcategoria1", "Subcategoria2");
     
     // Crear la nueva cuenta
-    //controller.createAccount(username, password, email, admin);
+    controller.createCategory(category, listSubcategory);*/
+
+    
+    let category2 = "Categoria2";
+    let listSubcategory2: string[];
+    listSubcategory2 = [];
+    listSubcategory2.push("Subcategoria3", "Subcategoria4");
+
+    controller.createCategory(category2, listSubcategory2);
 
     //Update
     //controller.updateAccount(username, password, email, admin);
 
     //Delete
-    controller.deleteAccount(username);
+    //controller
 }
 
 prueba();
