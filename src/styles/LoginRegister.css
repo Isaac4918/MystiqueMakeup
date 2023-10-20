@@ -12,13 +12,13 @@
 
   @font-face {
     font-family: 'Pattaya';
-    src: url(C:\Users\mari_\OneDrive\Documentos\GitHub\MystiqueMakeup\public\fonts\Pattaya-Regular.ttf) format('truetype');
+    src: url(./fonts/Pattaya-Regular.ttf) format('truetype');
   }
 
 
   @font-face {
     font-family: 'Poppins';
-    src: url(C:\Users\mari_\OneDrive\Documentos\GitHub\MystiqueMakeup\public\fonts\Poppins-Regular.ttf) format('truetype');
+    src: url(./fonts/Poppins-Regular.ttf) format('truetype');
   }
   
 
