@@ -1,15 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "../styles/Navbar.css";
+import searchIcon from "../components/assets/search.png";
+import shoppingIcon from "../components/assets/shoppingbag.png";
+import accountIcon from "../components/assets/user.png";
 
-function Navbar() {
-  return (
-    <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/login">Registrarse</Link></li>
-      </ul>
-    </nav>
+const Navbar = () => {
+  return ( 
+  	<div className="navbar">
+        <div className="leftSide">
+            <a href="/"><h2>Mystique Makeup</h2></a>
+        </div>
+        <div className="rightSide">
+          <li><a href="/"><img src={shoppingIcon} alt=""/></a></li>
+          <li><a href="/LoginRegister"><img src={accountIcon} alt=""/></a></li>
+          <li><a href="/"><img src={searchIcon} alt=""/></a></li>
+        </div>
+    </div>
   );
-}
-
+};
+ 
 export default Navbar;
