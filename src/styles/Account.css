@@ -12,8 +12,6 @@
     font-family: 'Poppins';
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
-
-
   
 .AccountUser img{
     margin-top: 30px;
@@ -107,3 +105,53 @@
     color: white;
     margin-left: 20px;
 }
+
+
+
+.ModifyAccount form  {
+    display: grid;
+    margin-right: 100px;
+}
+
+
+.ModifyAccount{
+    display: flex;
+    margin-left: 600px;
+    margin-top: 100px;
+  }
+
+.ModifyAccount form h1{
+    font-family: 'Pattaya';
+    margin-left: 30px;
+}
+
+.ModifyAccount form input{
+    background-color: #EAEAEA;
+    width: 300px;
+    height: 25px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    border: none;
+}
+  
+.ModifyAccount form label{
+    font-family: 'Poppins';
+    margin-top: auto;
+    margin-bottom: auto;
+}
+  
+.ModifyAccount form button{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 140px;
+    height: 25px;
+    margin-left: 80px;
+}
+  

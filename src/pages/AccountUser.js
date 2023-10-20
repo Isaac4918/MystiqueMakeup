@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import DeleteAccount from './DeleteAccount';
 import '../styles/Account.css'
 import paletteColors from '../components/assets/paletteColors.png'
-import DeleteAccount from './DeleteAccount';
+
 
 function AccountUser(){
     const [mostrarDeleteAccount, setMostrarDeleteAccount] = useState(false);
@@ -38,3 +39,4 @@ function AccountUser(){
 }
 
 export default AccountUser;
+
