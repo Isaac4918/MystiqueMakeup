@@ -7,7 +7,13 @@
   padding: 2px 20px;
 }
 
+@font-face {
+  font-family: 'Parisienne';
+  src: url(./fonts/Parisienne-Regular.ttf) format('truetype');
+}
+
 .navbar a {
+  font-family: 'Parisienne';
   text-decoration: none;
   color: black;
 }
