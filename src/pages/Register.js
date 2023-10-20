@@ -2,27 +2,35 @@ import React, { useState } from 'react';
 import '../styles/LoginRegister.css';
 
 function Register() {
-    const [datos, setDatos] = useState({
-        usuario: '',
-        correo: '',
-        contraseña: ''
+    const [data, setDatos] = useState({
+        username: '',
+        email: '',
+        password: ''
     });
 
     const handleInputChange = (event) => {
         setDatos({
-            ...datos,
+            ...data,
             [event.target.name] : event.target.value
         })
     }
 
-    const enviarDatos = (event) => {
+    const sendData = (event) => {
         event.preventDefault();
-        console.log(datos.usuario +' '+ datos.correo +' '+datos.contraseña)
+        
+        // Validación de los datos
+        if (!data.username || !data.email || !data.password) {
+            console.log('Todos los campos son obligatorios');
+            return;
+        }
+
+        //const controller = accountController.getInstanceAccountController();
+        //controller.createAccount(data.username, data.password, data.email, true);
     }
 
     return (
         <div className="Register">
-            <form onSubmit={enviarDatos}>
+            <form onSubmit={sendData}>
                 <h1>Registrar cuenta</h1>
                 <label>Usuario</label>
                 <br />

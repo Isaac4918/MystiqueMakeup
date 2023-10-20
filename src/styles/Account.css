@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'Pattaya';
+    src: url(./fonts/Pattaya-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Monserrat';
+    src: url(./fonts/Montserrat-SemiBold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url(./fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+
+  
+.AccountUser img{
+    margin-top: 30px;
+    margin-left: 140px;
+}
+
+.AccountUser h2{
+    font-family: 'Pattaya';
+    margin-left: 240px;
+}
+
+.AccountUser label{
+    font-family: 'Poppins';
+    margin-left: 240px;
+}
+
+.AccountUser button[name="Update"]{
+    font-family: 'Monserrat';
+    margin-left: 240px;
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #5E8410;
+    width: 140px;
+    height: 25px;
+}
+
+.AccountUser button[name="Delete"]{
+    font-family: 'Monserrat';
+    margin-left: 240px;
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #5E8410;
+    width: 140px;
+    height: 25px;
+}
+
+.AccountUser button[name="Purchases"]{
+    font-family: 'Monserrat';
+    margin-left: 600px;
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #43A9BF;
+    width: 200px;
+    height: 30px;
+}
+
+
+.AccountUser button[name="LogOut"]{
+    font-family: 'Monserrat';
+    margin-left: 600px;
+    font-size: 14px;
+    color: black;
+    border-radius: 8px;
+    border: none;
+    background-color: #EAEAEA;
+    width: 200px;
+    height: 30px;
+}
+
+
+.DeleteAccount{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.507);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.DeleteAccount h1{
+    font-family: 'Pattaya';
+    color: white;
+}
+
+.DeleteAccount button{
+    background-color: #43A9BF;
+    border-radius: 8px;
+    border: none;
+    width: 180px;
+    height: 30px;
+    font-size: 18px;
+    color: white;
+    margin-left: 20px;
+}

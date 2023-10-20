@@ -2,11 +2,20 @@ import { Account } from "../models/account";
 import {  accountDAOImpl  } from "../models/DAO/accountDAOImpl";
 
 export class accountController{
+    private static instance: accountController;
     private accountDAO: accountDAOImpl;
 
     //Constructor
     constructor(){
         this.accountDAO = accountDAOImpl.getInstanceAccount(); 
+    }
+    
+    //Getter
+    public static getInstanceAccountController(): accountController {
+        if (!accountController.instance) {
+            accountController.instance = new accountController();
+        }
+        return accountController.instance;
     }
 
     //Methods
