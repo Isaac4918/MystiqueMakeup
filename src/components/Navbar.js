@@ -1,5 +1,5 @@
 import React from "react";
-import "../components/styles/Navbar.css";
+import "../styles/Navbar.css";
 import searchIcon from "../components/assets/search.png";
 import shoppingIcon from "../components/assets/shoppingbag.png";
 import accountIcon from "../components/assets/user.png";
