@@ -47,3 +47,27 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log(`Server listening at http://localhost:${PORT}`);
 });
+
+
+/*
+const fetchData = async(user, contra) => {
+        const newData = await fetch('http://localhost:5000/inicio',{
+            method: 'POST',
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                {"subcategory": ["Subprueba1", "Subprueba2"], "name": "PruebaAPI" }
+            })
+        }).then(res => res.json())
+        if(newData.outResult == 0){
+            console.log(true)
+            navigate("/home")
+        }else{
+            console.log(false)
+            setPasswordError(true);
+        }
+        
+    }
+*/
