@@ -1,4 +1,4 @@
-import { subCategory } from "../models/subCategory";
+//import { subCategory } from "../models/subCategory";
 import { categoryController } from "./categoryController";
 
 function prueba(): void{
@@ -15,12 +15,14 @@ function prueba(): void{
     controller.createCategory(category, listSubcategory);*/
 
     
-    let category2 = "Categoria2";
+    let category2 = "Cat1";
     let listSubcategory2: string[];
     listSubcategory2 = [];
-    listSubcategory2.push("Subcategoria3", "Subcategoria4");
+    listSubcategory2.push("Subcat3", "Subcat4");
 
     controller.createCategory(category2, listSubcategory2);
+    console.log("===========================================")
+    console.log(controller.getAllCategories())
 
     //Update
     //controller.updateAccount(username, password, email, admin);

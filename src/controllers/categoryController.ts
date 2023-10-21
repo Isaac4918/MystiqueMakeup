@@ -40,6 +40,11 @@ export class categoryController{
         }      
     }
 
+    //--------------------------- READ ---------------------------------------------------------
+    async getAllCategories(): Promise<Category[]>{
+        return await this.categoryDAO.getAll();
+    }
+
     //--------------------------- UPDATE ---------------------------------------------------------
     async updateCategory(pCategory: string, pSubCategory: string[]): Promise<void>{
         for(let name of pSubCategory){
