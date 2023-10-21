@@ -1,3 +1,4 @@
+/*-------------------- FONTS --------------------------------------------------*/
 @font-face {
     font-family: 'Pattaya';
     src: url(./fonts/Pattaya-Regular.ttf) format('truetype');
@@ -12,6 +13,85 @@
     font-family: 'Poppins';
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
+
+/*-------------------- DELETE ACCOUNT --------------------------------------------------*/
+.DeleteAccount{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.507);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.DeleteAccount h1{
+    font-family: 'Pattaya';
+    color: white;
+}
+
+.DeleteAccount button{
+    background-color: #43A9BF;
+    border-radius: 8px;
+    border: none;
+    width: 180px;
+    height: 30px;
+    font-size: 18px;
+    color: white;
+    margin-left: 20px;
+}
+
+/*-------------------- MODIFY ACCOUNT --------------------------------------------------*/
+.ModifyAccount form  {
+    display: grid;
+    margin-right: 100px;
+}
+
+.ModifyAccount{
+    display: flex;
+    margin-left: 600px;
+    margin-top: 100px;
+}
+
+.ModifyAccount form h1{
+    font-family: 'Pattaya';
+    margin-left: 30px;
+}
+
+.ModifyAccount form input{
+    background-color: #EAEAEA;
+    width: 300px;
+    height: 25px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    border: none;
+}
+  
+.ModifyAccount form label{
+    font-family: 'Poppins';
+    margin-top: auto;
+    margin-bottom: auto;
+}
+  
+.ModifyAccount form button{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 140px;
+    height: 25px;
+    margin-left: 80px;
+}
+
+
+/*-------------------- ACCOUNT USER --------------------------------------------------*/
   
 .AccountUser img{
     margin-top: 30px;
@@ -77,81 +157,64 @@
     height: 30px;
 }
 
-
-.DeleteAccount{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.507);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/*-------------------- ACCOUNT ADMIN --------------------------------------------------*/
+.AccountAdmin{
+    display: 'flex';
+    flex-direction: 'column';
+    align-items: 'center';
 }
 
-.DeleteAccount h1{
+.AccountAdmin img{
+    margin-top: 30px;
+    margin-left: 140px;
+}
+
+/*-------------------- ACCOUNT ADMIN -> INFO ACCOUNT --------------------------------------------------*/
+.AccountAdmin .infoAccount h2{
     font-family: 'Pattaya';
-    color: white;
+    margin-left: 240px;
 }
 
-.DeleteAccount button{
-    background-color: #43A9BF;
-    border-radius: 8px;
-    border: none;
-    width: 180px;
-    height: 30px;
-    font-size: 18px;
-    color: white;
-    margin-left: 20px;
-}
-
-
-
-.ModifyAccount form  {
-    display: grid;
-    margin-right: 100px;
-}
-
-
-.ModifyAccount{
-    display: flex;
-    margin-left: 600px;
-    margin-top: 100px;
-  }
-
-.ModifyAccount form h1{
-    font-family: 'Pattaya';
-    margin-left: 30px;
-}
-
-.ModifyAccount form input{
-    background-color: #EAEAEA;
-    width: 300px;
-    height: 25px;
-    margin-top: auto;
-    margin-bottom: auto;
-    border-radius: 8px;
-    border: none;
-}
-  
-.ModifyAccount form label{
+.AccountAdmin .infoAccount label{
     font-family: 'Poppins';
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-left: 240px;
 }
-  
-.ModifyAccount form button{
-    font-family: 'Poppins';
+
+.AccountAdmin .infoAccount button{
+    font-family: 'Monserrat';
     font-size: 14px;
     color: white;
-    margin-top: auto;
-    margin-bottom: auto;
-    background-color: #5E8410;
     border-radius: 8px;
     border: none;
-    width: 140px;
-    height: 25px;
-    margin-left: 80px;
+    background-color: #5E8410;
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 240px;
 }
-  
+
+/*-------------------- ACCOUNT ADMIN -> MENU ADMIN --------------------------------------------------*/
+.AccountAdmin .menuAdmin button{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #43A9BF;
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 300px;
+}
+
+.AccountAdmin .menuAdmin button[name="LogOut"]{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: black;
+    border-radius: 8px;
+    border: none;
+    background-color: #EAEAEA;
+    width: 300px;
+    height: 30px;
+}
+

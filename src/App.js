@@ -2,8 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar"; 
 import Home from "./pages/Home"; 
-import AccountUser from "./pages/AccountUser"
-import ModifyAccount from "./pages/ModifyAccount";
+import AccountAdmin from "./pages/AccountAdmin";
 
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/LoginRegister" element={<ModifyAccount />} />
+        <Route path="/LoginRegister" element={<AccountAdmin />} />
       </Routes>
     </Router>
   );
