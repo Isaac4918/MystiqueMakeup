@@ -2,7 +2,6 @@ import { collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, 
 import { db } from './databaseConfig';
 import { crudDAO } from "./crudDAO";
 import { Category } from "../category";
-import { subCategory } from '../subCategory';
 
 export class categoryDAOImpl implements crudDAO{
     private static instance: categoryDAOImpl;
