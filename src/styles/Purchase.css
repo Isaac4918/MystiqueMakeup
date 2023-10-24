@@ -8,6 +8,83 @@
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
+.pagePurchase{
+    position: relative;
+    margin: 20px 100px;
+    padding: 30px 80px 0px 80px;
+}
+
+.containerPurchase{
+    padding: 100px 100px 100px 100px;
+    position: inherit;
+}
+
+.cardPurchase{
+    position: relative;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    top: 60%;
+    left: 50%;
+    background-color: rgb(242, 242, 242);
+    width: 270px;
+    height: 350px;
+    transition: all 0.4s ease;
+}
+
+.cardPurchase:hover{
+    box-shadow: 0 5px 50px rgb(0 0 0 / 0.2);
+}
+
+.contentPurchase{
+    margin: 0 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardContentPurchase{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.numPurchase{
+    font-family: 'Poppins';
+    font-size: 22px;
+    font-weight: bold;
+    color: black;
+    justify-content: center;
+    margin: 30px 30px 10px; /*30 es el largo del text*/
+    height: 50px;
+}
+
+.descriptionPurchase{
+    font-family: 'Poppins';
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.52);
+    text-align: justify;
+    margin: 15px 0px 20px;
+}
+
+.buttonConsult{
+    font-family: 'Poppins';
+    font-size: 14px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 150px;
+    height: 33px;
+    position: fixed;
+    bottom: 50px;
+    transition: all 0.4s ease;
+}
+
+.buttonConsult:hover{
+    background-color: #6d961a;
+}
+
 .centered {
     position: fixed;
     justify-content: center;
@@ -37,4 +114,17 @@
     border: none;
     width: 300px;
     height: 38px;
+}
+
+.buttonBack{
+    border: none;
+    position:absolute;
+    cursor: pointer;
+    top: -10px; 
+    left: -85px; 
+}
+
+.buttonBack img{
+    width: 45px;
+    height: 45px;
 }
