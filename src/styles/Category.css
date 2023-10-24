@@ -38,3 +38,67 @@
     background-color: #EAEAEA;
     color: black;
 }
+
+/*-------------------- CREATE CATEGORY --------------------------------------------------*/
+.createCategory .backCategories{
+    margin-top: 40px;
+    margin-left: 100px;
+}
+
+.createCategory h1{
+    font-family: 'Pattaya';
+    margin-left: 240px;
+}
+
+.createCategory label{
+    font-family: 'Poppins';
+    margin-top: 20px;
+    margin-left: 240px;
+}
+
+.createCategory input[name='nameCategory']{
+    margin-left: 240px;
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 25px;
+    margin-top: 20px;
+}
+
+.createCategory input[name='addSubcategory']{
+    margin-left: 60px;
+}
+
+.createCategory input[name='generateInputs']{
+    margin-left: 240px;
+    margin-top: 10px;
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 25px;
+}
+
+.createCategory input[name='numberInput']{
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    width: 40px;
+    height: 30px;
+    border: none;
+}
+
+.createCategory button{
+    font-family: 'Monserrat';
+    margin-left: 240px;
+    margin-top: 40px;
+    background-color: #43A9BF;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    width: 240px;
+    height: 25px;
+}
+

@@ -9,6 +9,8 @@ import ModifyAccount from "./pages/ModifyAccount";
 import DeleteSubCategory from "./pages/DeleteSubCategory";
 import ProductManagement from "./pages/ProductManagement";
 import ProcessedPurchase from "./pages/ProcessedPurchase";
+import CreateCategory from "./pages/CreateCategory";
+import ModifyCategory from "./pages/ModifyCategory"
 import MyPurchases from "./pages/MyPurchases";
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
         <Route path="/account/manageCategories/deleteSubCategory" element={<DeleteSubCategory/>} />
         <Route path="/ProductManagement" element={<ProductManagement />} />
         <Route path="/ProcessedPurchase" element={<ProcessedPurchase />} />
+        <Route path="/account/manageCategories/createCategory" element={<CreateCategory />} />
+        <Route path="/account/manageCategories/modifyCategory" element={<ModifyCategory />} />
         <Route path="/MyPurchases" element={<MyPurchases />} />
       </Routes>
     </Router>

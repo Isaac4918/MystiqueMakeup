@@ -1,40 +1,17 @@
 import React, { useState } from 'react';
+import '../styles/Category.css'
 import backButton from '../components/assets/back.png'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import Navbar from "../components/Navbar" 
 
 export function BackAccount(){
     return(
-        <div className="backAccount"> 
+        <div className="backCategories"> 
             <a href="/account/manageCategories"><img src={backButton} alt=""/></a>
         </div>
     )
 }
 
-export function searchCategory(){
-    const [dropdown, setDropdown] = useState(false);
-
-    const OpenCloseDropdown = () =>{
-        setDropdown(!dropdown);
-    }
-
-    return(
-        <div>
-            <h1>Modificar Categoría</h1>
-            <label>Seleccione una categoría: </label>
-            <Dropdown isOpen={dropdown} toggle={OpenCloseDropdown}>
-                <DropdownToggle caret />
-
-                <DropdownMenu>
-                    <DropdownItem>Terror</DropdownItem>
-                    <DropdownItem>Fantasía</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
-        </div>
-    )
-}
-
-export function updateInfo(){
+export function InfoCategory(){
     const [isChecked, setIsChecked] = useState(false);
 
     const Check = () => {
@@ -43,24 +20,24 @@ export function updateInfo(){
 
     return(
         <div>
+            <h1>Crear Categoría</h1>
             <label>Nombre</label>
             <br />
             <input type='text' name='nameCategory'/>
             <br />
             <label>
-                <input type="checkbox" name='updateSubcategory' checked={isChecked} onChange={Check} />
-                &nbsp;Modificar subcategoría
+                <input type="checkbox" name='addSubcategory' checked={isChecked} onChange={Check} />
+                &nbsp;Agregar subcategoría
             </label>
-        <br />
-        {isChecked && <UpdateSubcategories />}
-        <br />
-        <button>Modificar Categoría</button>
-    </div>
+            <br />
+            {isChecked && <AddSubcategories />}
+            <br />
+            <button>Crear Categoría</button>
+        </div>
     )
 }
 
-
-export function UpdateSubcategories(){
+export function AddSubcategories(){
     const [inputCount, setInputCount] = useState(0);
     const [inputs, setInputs] = useState([]);
 
@@ -86,9 +63,16 @@ export function UpdateSubcategories(){
 }
 
 
-
-function ModifyCategory(){
-
+function CreateCategory(){
+    return(
+        <div>
+            <Navbar showIcons={false} />
+            <div className='createCategory'>
+                <BackAccount />
+                <InfoCategory/>
+            </div>
+        </div>
+    )
 }
 
-export default ModifyCategory;
+export default CreateCategory;

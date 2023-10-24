@@ -23,7 +23,7 @@ export function EraseSubCategory(){
     return(
         <div>
             <h1>Eliminar SubCategoría</h1>
-            <label>Seleccione una cateogría</label><br />
+            <label>Seleccione una cateogría: </label><br />
             <Dropdown isOpen={dropdown} toggle={OpenCloseDropdown}>
                 <DropdownToggle caret>
                    Categorías 
