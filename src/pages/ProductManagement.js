@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/ProductManagement.css";
+import Navbar from "../components/Navbar";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -7,6 +8,7 @@ import polvos from "../components/assets/polvos.jpg";
 import trash from "../components/assets/trash.png";
 import labiales from "../components/assets/labiales.jpg";
 import delineador from "../components/assets/delineador.jpg";
+import back from "../components/assets/back.png";
 
 function ProductManagement(){
     const responsive = {
@@ -28,56 +30,62 @@ function ProductManagement(){
         }
     };
     return (
-        <div className="page">
-            <div className="slideContainer">
-                <button className="buttonCreate">Crear nuevo producto</button>
-                <Carousel responsive={responsive}>
-                    <div className="card">
+        <div>
+            <Navbar showIcons={true} />
+            <div className="page">
+                <div className="buttonBack"> 
+                    <a href="/"><img src={back} alt=""/></a>
+                </div>
+                <div className="slideContainer">
+                    <button className="buttonCreate">Crear nuevo producto</button>
+                    <Carousel responsive={responsive}>
+                        <div className="card">
+                            <button className="buttonDelete"><img src={trash} alt=""/></button>
+                            <div className="slideContent">
+                                <div className="imageContent">
+                                    <div className="cardImage">
+                                        <img src={polvos} alt=""/>
+                                    </div>
+                                </div>
+                                <div className="cardContent">
+                                    <div className="name">Polvito mágico</div>
+                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
+                                    <button className="buttonModify">Modificar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card">
                         <button className="buttonDelete"><img src={trash} alt=""/></button>
-                        <div className="slideContent">
-                            <div className="imageContent">
-                                <div className="cardImage">
-                                    <img src={polvos} alt=""/>
+                            <div className="slideContent">
+                                <div className="imageContent">
+                                    <div className="cardImage">
+                                        <img src={labiales} alt=""/>
+                                    </div>
+                                </div>
+                                <div className="cardContent">
+                                    <h1 className="name">Labial colorcito</h1>
+                                    <p className="description">Decora tus labios con estos nuevos labiales</p>
+                                    <button className="buttonModify">Modificar</button>
                                 </div>
                             </div>
-                            <div className="cardContent">
-                                <div className="name">Polvito magico</div>
-                                <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
-                                <button className="buttonModify">Modificar</button>
-                            </div>
                         </div>
-                    </div>
-                    <div className="card">
-                    <button className="buttonDelete"><img src={trash} alt=""/></button>
-                        <div className="slideContent">
-                            <div className="imageContent">
-                                <div className="cardImage">
-                                    <img src={labiales} alt=""/>
+                        <div className="card">
+                            <button className="buttonDelete"><img src={trash} alt=""/></button>
+                            <div className="slideContent">
+                                <div className="imageContent">
+                                    <div className="cardImage">
+                                        <img src={delineador} alt=""/>
+                                    </div>
+                                </div>
+                                <div className="cardContent">
+                                    <h1 className="name">Delineador maravilla</h1>
+                                    <p className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</p>
+                                    <button className="buttonModify">Modificar</button>
                                 </div>
                             </div>
-                            <div className="cardContent">
-                                <h1 className="name">Manzana</h1>
-                                <p className="description">Decora tus labios con estos nuevos labiales</p>
-                                <button className="buttonModify">Modificar</button>
-                            </div>
                         </div>
-                    </div>
-                    <div className="card">
-                        <button className="buttonDelete"><img src={trash} alt=""/></button>
-                        <div className="slideContent">
-                            <div className="imageContent">
-                                <div className="cardImage">
-                                    <img src={delineador} alt=""/>
-                                </div>
-                            </div>
-                            <div className="cardContent">
-                                <h1 className="name">Delineador maravilla</h1>
-                                <p className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</p>
-                                <button className="buttonModify">Modificar</button>
-                            </div>
-                        </div>
-                    </div>
-                </Carousel>
+                    </Carousel>
+                </div>
             </div>
         </div>
     );

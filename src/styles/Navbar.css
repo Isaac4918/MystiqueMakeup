@@ -20,6 +20,7 @@
 
 .leftSide {
   font-size: 1.3rem;
+  transition: all 0.3s ease;
 }
 
 .rightSide {
@@ -38,6 +39,7 @@
 .rightSide img {
   height: 29.5px;
   width: 30px;
+  transition: all 0.3s ease;
 }
 
 .rightSide img:hover{

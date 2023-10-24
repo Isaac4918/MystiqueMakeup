@@ -10,7 +10,7 @@
 }
 
 .slideContainer{
-    padding: 40px 0px 40px;
+    padding: 30px 0px 40px;
 }
 
 .slideContent{
@@ -116,6 +116,14 @@
     left: 50%;
     transform: translateX(-50%);
     transition: all 0.4s ease;
+}
+
+.buttonBack{
+    border: none;
+    position:absolute;
+    cursor: pointer;
+    top: -10px; 
+    left: -90px; 
 }
 
 .buttonModify:hover{
