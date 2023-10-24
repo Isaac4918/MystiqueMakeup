@@ -60,11 +60,11 @@ export function UpdateInfo(){
                 <input type="checkbox" name='updateSubcategory' checked={isChecked} onChange={Check} />
                 &nbsp;Modificar subcategoría
             </label>
-        <br />
-        {isChecked && <UpdateSubcategories />}
-        <br />
-        <button name='modifyData'>Modificar Categoría</button>
-    </div>
+            <br /><br />
+            {isChecked && <UpdateSubcategories />}
+            <br />
+            <button name='modifyData'>Modificar Categoría</button>
+        </div>
     )
 }
 

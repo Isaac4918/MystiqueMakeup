@@ -124,7 +124,7 @@
 
 
 .modifyCategory input[name='nameCategory']{
-    margin-left: 800px;
+    margin-left: 240px;
     background-color: #EAEAEA;
     border-radius: 8px;
     border: none;
@@ -135,11 +135,12 @@
 
 .modifyCategory label[name='nameLabel']{
     font-family: 'Poppins';
-    margin-left: 800px;
+    margin-left: 240px;
+    margin-top: 40px;
 }
 
 .modifyCategory input[name='updateSubcategory']{
-    margin-left: 840px;
+    margin-left: 280px;
     margin-top: 20px;
 }
 

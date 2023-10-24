@@ -35,8 +35,8 @@ export function EraseSubCategory(){
                 </DropdownToggle>
 
                 <DropdownMenu>
-                    <DropdownItem>Terror</DropdownItem>
-                    <DropdownItem>Fantasía</DropdownItem>
+                    <DropdownItem onClick={handleSelect}>Terror</DropdownItem>
+                    <DropdownItem onClick={handleSelect}>Fantasía</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>
