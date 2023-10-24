@@ -12,7 +12,6 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/ProductManagement" element={<ProductManagement />} />
         <Route path="/LoginRegister" element={<ModifyAccount />} />
       </Routes>
     </Router>
