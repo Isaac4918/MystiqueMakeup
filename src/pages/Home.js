@@ -1,9 +1,10 @@
 import React from "react";
+import Navbar from "../components/Navbar" 
 
 function Home() {
   return (
     <div className="App">
-      <h1>This is a Prueba</h1>
+      <Navbar showIcons={true} />
     </div>
   );
 }

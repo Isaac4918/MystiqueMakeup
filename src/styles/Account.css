@@ -1,3 +1,4 @@
+/*-------------------- FONTS --------------------------------------------------*/
 @font-face {
     font-family: 'Pattaya';
     src: url(./fonts/Pattaya-Regular.ttf) format('truetype');
@@ -12,72 +13,111 @@
     font-family: 'Poppins';
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
+
+/*-------------------- LOGIN AND REGISTER --------------------------------------------------*/
+.LoginRegister{
+    display: flex;
+    margin-left: 400px;
+    margin-top: 100px;
+  }
   
-.AccountUser img{
-    margin-top: 30px;
-    margin-left: 140px;
+.Register form  {
+    display: grid;
+    margin-right: 100px;
 }
-
-.AccountUser h2{
+  
+  
+.Register form h1{
     font-family: 'Pattaya';
-    margin-left: 240px;
+    margin-left: 30px;
 }
-
-.AccountUser label{
-    font-family: 'Poppins';
-    margin-left: 240px;
-}
-
-.AccountUser button[name="Update"]{
-    font-family: 'Monserrat';
-    margin-left: 240px;
-    font-size: 14px;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    background-color: #5E8410;
-    width: 140px;
-    height: 25px;
-}
-
-.AccountUser button[name="Delete"]{
-    font-family: 'Monserrat';
-    margin-left: 240px;
-    font-size: 14px;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    background-color: #5E8410;
-    width: 140px;
-    height: 25px;
-}
-
-.AccountUser button[name="Purchases"]{
-    font-family: 'Monserrat';
-    margin-left: 600px;
-    font-size: 14px;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    background-color: #43A9BF;
-    width: 200px;
-    height: 30px;
-}
-
-
-.AccountUser button[name="LogOut"]{
-    font-family: 'Monserrat';
-    margin-left: 600px;
-    font-size: 14px;
-    color: black;
-    border-radius: 8px;
-    border: none;
+    
+.Register form input{
     background-color: #EAEAEA;
-    width: 200px;
-    height: 30px;
+    width: 300px;
+    height: 25px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    border: none;
+}
+    
+.Register form label{
+    font-family: 'Poppins';
+    margin-top: auto;
+    margin-bottom: auto;
+}
+    
+.Register form button{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 140px;
+    height: 25px;
+    margin-left: 80px;
+    cursor: pointer;
+}
+    
+.Login form  {
+    display: grid;
+    margin-right: 100px;
+}
+  
+.Login form h1{
+    font-family: 'Pattaya';
+    margin-left: 60px;
+}
+    
+.Login form input{
+    background-color: #EAEAEA;
+    width: 300px;
+    height: 25px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    border: none;
+}
+    
+.Login form label{
+    font-family: 'Poppins';
+    margin-top: auto;
+    margin-bottom: auto;
+}
+    
+.Login form button{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 140px;
+    height: 25px;
+    margin-left: 80px;
+    cursor: pointer;
+}
+  
+.Login a {
+    font-family: 'Poppins';
+    font-size: 12px;
+    color: black;
+}
+  
+.Login li{
+    list-style-type: none;
+    margin-left: 70px;
+    margin-top: 10px;
 }
 
 
+/*-------------------- DELETE ACCOUNT --------------------------------------------------*/
 .DeleteAccount{
     position: fixed;
     top: 0;
@@ -104,21 +144,20 @@
     font-size: 18px;
     color: white;
     margin-left: 20px;
+    cursor: pointer;
 }
 
-
-
+/*-------------------- MODIFY ACCOUNT --------------------------------------------------*/
 .ModifyAccount form  {
     display: grid;
-    margin-right: 100px;
+    margin-right: 500px;
+    margin-top: 60px;
 }
-
 
 .ModifyAccount{
     display: flex;
-    margin-left: 600px;
-    margin-top: 100px;
-  }
+    justify-content: space-around;
+}
 
 .ModifyAccount form h1{
     font-family: 'Pattaya';
@@ -153,5 +192,144 @@
     width: 140px;
     height: 25px;
     margin-left: 80px;
+    cursor: pointer;
 }
-  
+
+
+/*-------------------- ACCOUNT USER --------------------------------------------------*/
+
+.AccountUser{
+    display: 'flex';
+    flex-direction: 'column';
+    align-items: 'center';
+}
+
+.AccountUser img{
+    margin-top: 30px;
+    margin-left: 140px;
+}
+
+.AccountUser h2{
+    font-family: 'Pattaya';
+    margin-left: 240px;
+}
+
+.AccountUser .menuUser h2{
+    margin-left: 280px;
+}
+
+.AccountUser label{
+    font-family: 'Poppins';
+    margin-left: 240px;
+}
+
+.AccountUser .infoAccount button{
+    font-family: 'Monserrat';
+    margin-left: 240px;
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #5E8410;
+    width: 140px;
+    height: 25px;
+    cursor: pointer;
+}
+
+
+.AccountUser button[name="Purchases"]{
+    font-family: 'Monserrat';
+    margin-left: 240px;
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #43A9BF;
+    width: 200px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+.AccountUser button[name="LogOut"]{
+    font-family: 'Monserrat';
+    margin-left: 240px;
+    font-size: 14px;
+    color: black;
+    border-radius: 8px;
+    border: none;
+    background-color: #EAEAEA;
+    width: 200px;
+    height: 30px;
+    cursor: pointer;
+}
+
+/*-------------------- ACCOUNT ADMIN --------------------------------------------------*/
+.AccountAdmin{
+    display: 'flex';
+    flex-direction: 'column';
+    align-items: 'center';
+}
+
+.AccountAdmin img{
+    margin-top: 30px;
+    margin-left: 140px;
+}
+
+/*-------------------- ACCOUNT ADMIN -> INFO ACCOUNT --------------------------------------------------*/
+.AccountAdmin .infoAccount h2{
+    font-family: 'Pattaya';
+    margin-left: 240px;
+}
+
+.AccountAdmin .infoAccount label{
+    font-family: 'Poppins';
+    margin-left: 240px;
+}
+
+.AccountAdmin .infoAccount button{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #5E8410;
+    width: 140px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 240px;
+    cursor: pointer;
+}
+
+/*-------------------- ACCOUNT ADMIN -> MENU ADMIN --------------------------------------------------*/
+.AccountAdmin .menuAdmin h2{
+    font-family: 'Pattaya';
+    margin-left: 320px;
+}
+
+.AccountAdmin .menuAdmin button{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #43A9BF;
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 240px;
+    cursor: pointer;
+}
+
+.AccountAdmin .menuAdmin button[name="LogOut"]{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: black;
+    border-radius: 8px;
+    border: none;
+    background-color: #EAEAEA;
+    width: 300px;
+    height: 30px;
+    margin-bottom: 60px;
+}
+

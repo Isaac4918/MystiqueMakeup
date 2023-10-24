@@ -1,0 +1,12 @@
+npm install npm-run-all --save-dev
+
+npm install express
+
+npm install ts-node
+
+npm install @types/express -D
+
+npm install react-multi-carousel --save -D
+
+Si no sirve corranlo asi:
+npm install @types/express

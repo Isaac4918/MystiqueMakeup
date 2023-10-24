@@ -1,18 +1,26 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar"; 
 import Home from "./pages/Home"; 
-import AccountUser from "./pages/AccountUser"
+import LoginRegister from "./pages/LoginRegister"
+import ManageCategories from "./pages/ManageCategories"
+import AccountUser from "./pages/AccountUser";
+import AccountAdmin from "./pages/AccountAdmin";
 import ModifyAccount from "./pages/ModifyAccount";
+import DeleteSubCategory from "./pages/DeleteSubCategory";
 import ProductManagement from "./pages/ProductManagement";
 
 function App() {
   return (
     <Router>
-      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/LoginRegister" element={<ModifyAccount />} />
+        <Route path="/LoginRegister" element={<LoginRegister />} />
+        <Route path="/ProductManagement" element={<ProductManagement />} />
+        <Route path="/accountUser" element={<AccountUser/>} />
+        <Route path="/accountAdmin" element={<AccountAdmin/>} />
+        <Route path="/account/modifyAccount" element={<ModifyAccount/>} />
+        <Route path="/account/manageCategories" element={<ManageCategories/>} />
+        <Route path="/account/manageCategories/deleteSubCategory" element={<DeleteSubCategory/>} />
       </Routes>
     </Router>
   );
