@@ -5,6 +5,7 @@
   background: white;
   border-bottom: 1.5px solid black;
   padding: 2px 20px;
+  margin-top: 20px;
 }
 
 @font-face {
@@ -19,8 +20,9 @@
 }
 
 .leftSide {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   transition: all 0.3s ease;
+  margin-left: 20px;
 }
 
 .rightSide {
