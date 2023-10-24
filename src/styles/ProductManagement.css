@@ -3,27 +3,34 @@
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
-.page{
+.pageProductManagement{
     position: relative;
     margin: 20px 100px;
-    padding: 0px 100px 0px 100px;
+    padding: 0px 80px 0px 100px;
 }
 
-.slideContainer{
-    padding: 30px 0px 40px;
+
+.containerProductManagement{
+    padding: 40px 0px 40px;
+    margin: 0 30px 0 30px;
 }
 
-.slideContent{
+.content{
     margin: 0 40px;
     align-items: center;
     justify-content: center;
 }
 
-.card{
+.cardProductManagement{
     background-color: rgb(242, 242, 242);
-    margin-left: 30px;
     width: 350px;
     height: 450px;
+    position: inherit;
+    transition: all 0.4s ease;
+}
+
+.cardProductManagement:hover{
+    box-shadow: 0 5px 50px rgb(0 0 0 / 0.2);
 }
 
 .imageContent{
@@ -52,7 +59,7 @@
     object-fit: cover;
 }
 
-.name{
+.names{
     font-family: 'Poppins';
     font-size: 20px;
     font-weight: bold;
