@@ -8,6 +8,7 @@ import AccountAdmin from "./pages/AccountAdmin";
 import ModifyAccount from "./pages/ModifyAccount";
 import DeleteSubCategory from "./pages/DeleteSubCategory";
 import ProductManagement from "./pages/ProductManagement";
+import ProcessedPurchase from "./pages/ProcessedPurchase";
 
 function App() {
   return (
@@ -15,12 +16,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/LoginRegister" element={<LoginRegister />} />
-        <Route path="/ProductManagement" element={<ProductManagement />} />
         <Route path="/accountUser" element={<AccountUser/>} />
         <Route path="/accountAdmin" element={<AccountAdmin/>} />
         <Route path="/account/modifyAccount" element={<ModifyAccount/>} />
         <Route path="/account/manageCategories" element={<ManageCategories/>} />
         <Route path="/account/manageCategories/deleteSubCategory" element={<DeleteSubCategory/>} />
+        <Route path="/ProductManagement" element={<ProductManagement />} />
+        <Route path="/ProcessedPurchase" element={<ProcessedPurchase />} />
       </Routes>
     </Router>
   );
