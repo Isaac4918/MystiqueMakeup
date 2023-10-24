@@ -2,39 +2,48 @@ import React, { useState } from 'react';
 import backButton from '../components/assets/back.png'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import Navbar from "../components/Navbar" 
 
 export function BackAccount(){
     return(
-        <div className="backAccount"> 
+        <div className="backCategories"> 
             <a href="/account/manageCategories"><img src={backButton} alt=""/></a>
         </div>
     )
 }
 
-export function searchCategory(){
+export function SearchCategory(){
     const [dropdown, setDropdown] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     const OpenCloseDropdown = () =>{
         setDropdown(!dropdown);
     }
 
+    const handleSelect = (event) => {
+        setSelectedItem(event.currentTarget.textContent);
+    }
+
+
     return(
         <div>
             <h1>Modificar Categoría</h1>
-            <label>Seleccione una categoría: </label>
+            <label name='CategoryLabel'>Seleccione una categoría: </label>
             <Dropdown isOpen={dropdown} toggle={OpenCloseDropdown}>
-                <DropdownToggle caret />
+                <DropdownToggle caret className='rectangule'>
+                    {selectedItem}
+                </DropdownToggle>
 
                 <DropdownMenu>
-                    <DropdownItem>Terror</DropdownItem>
-                    <DropdownItem>Fantasía</DropdownItem>
+                    <DropdownItem onClick={handleSelect}>Terror</DropdownItem>
+                    <DropdownItem onClick={handleSelect}>Fantasía</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>
     )
 }
 
-export function updateInfo(){
+export function UpdateInfo(){
     const [isChecked, setIsChecked] = useState(false);
 
     const Check = () => {
@@ -43,7 +52,7 @@ export function updateInfo(){
 
     return(
         <div>
-            <label>Nombre</label>
+            <label name='nameLabel'>Nombre</label>
             <br />
             <input type='text' name='nameCategory'/>
             <br />
@@ -54,7 +63,7 @@ export function updateInfo(){
         <br />
         {isChecked && <UpdateSubcategories />}
         <br />
-        <button>Modificar Categoría</button>
+        <button name='modifyData'>Modificar Categoría</button>
     </div>
     )
 }
@@ -75,7 +84,7 @@ export function UpdateSubcategories(){
 
     return(
         <div>
-            <label>
+            <label name='CategoryLabel'>
                 Cantidad de subcategorías: 
                 &nbsp;<input type="number" name='numberInput' value={inputCount} onChange={handleInputChange} />
             </label>
@@ -88,6 +97,16 @@ export function UpdateSubcategories(){
 
 
 function ModifyCategory(){
+    return(
+        <div>
+            <Navbar showIcons={false}/>
+            <div className='modifyCategory'>
+                <BackAccount />
+                <SearchCategory />
+                <UpdateInfo />
+            </div>
+        </div>
+    )
 
 }
 
