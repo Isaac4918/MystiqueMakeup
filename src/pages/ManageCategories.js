@@ -1,7 +1,14 @@
 import '../styles/Category.css'
 import Navbar from "../components/Navbar" 
+import { useNavigate } from 'react-router-dom';
 
 export function MenuCategories(){
+  const navigate = useNavigate();
+
+  const DeleteSubCategoryPage = () => {
+    navigate('/accountn/manageCategories/deleteSubCategory');
+  };
+
   return(
     <div className='manageCategories'>
     <h1>Gestionar Categorías</h1>
@@ -9,7 +16,7 @@ export function MenuCategories(){
     <br />
     <button>Modificar Categoría</button><br />
     <br />
-    <button>Eliminar Subcategoría</button><br />
+    <button onClick={DeleteSubCategoryPage}>Eliminar Subcategoría</button><br />
     <br />
     <button>Eliminar Categoría</button><br />
     <br />

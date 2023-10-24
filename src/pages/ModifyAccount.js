@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Account.css';
 import backButton from '../components/assets/back.png'
+import Navbar from "../components/Navbar" 
 
 export function BackAccount(){
     return(
@@ -33,6 +34,8 @@ export function UpdateAccount(){
             return;
         }
 
+        //FALTA VALIDACIONES Y CONEXION AL API
+
     }
 
     return(
@@ -62,9 +65,12 @@ export function UpdateAccount(){
 
 function ModifyAccount() {
     return (
-        <div className="ModifyAccount">
-            <BackAccount />
-            <UpdateAccount />
+        <div>
+            <Navbar showIcons={false} />
+            <div className="ModifyAccount">
+                <BackAccount />
+                <UpdateAccount />
+            </div>
         </div>
     );
 }

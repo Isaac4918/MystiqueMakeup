@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home"; 
 import LoginRegister from "./pages/LoginRegister"
 import ManageCategories from "./pages/ManageCategories"
+import AccountUser from "./pages/AccountUser";
+import AccountAdmin from "./pages/AccountAdmin";
+import ModifyAccount from "./pages/ModifyAccount";
+import DeleteSubCategory from "./pages/DeleteSubCategory";
 
 function App() {
   return (
@@ -10,7 +14,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/LoginRegister" element={<LoginRegister />} />
-        <Route path="/accountAdmin/ManageCategories" element={<ManageCategories/>} />
+        <Route path="/accountUser" element={<AccountUser/>} />
+        <Route path="/accountAdmin" element={<AccountAdmin/>} />
+        <Route path="/account/modifyAccount" element={<ModifyAccount/>} />
+        <Route path="/account/manageCategories" element={<ManageCategories/>} />
+        <Route path="/account/manageCategories/deleteSubCategory" element={<DeleteSubCategory/>} />
       </Routes>
     </Router>
   );

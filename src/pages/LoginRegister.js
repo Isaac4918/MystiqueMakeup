@@ -26,6 +26,7 @@ export function Register() {
             return;
         }
 
+        //Faltan validaciones y conexión con el API
         //addData(data.username, data.password, data.email, true);
     }
 
@@ -80,6 +81,7 @@ export function Login() {
     const sendData = (event) => {
         event.preventDefault();
         console.log(data.usuario +' '+data.contraseña)
+        //Faltan validaciones y conexión con el API
     }
 
     return (
