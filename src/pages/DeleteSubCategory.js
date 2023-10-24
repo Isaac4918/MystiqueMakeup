@@ -15,9 +15,14 @@ export function BackAccount(){
 
 export function EraseSubCategory(){
     const [dropdown, setDropdown] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
 
     const OpenCloseDropdown = () =>{
         setDropdown(!dropdown);
+    }
+
+    const handleSelect = (event) => {
+        setSelectedItem(event.currentTarget.textContent);
     }
 
     return(
@@ -26,7 +31,7 @@ export function EraseSubCategory(){
             <label>Seleccione una cateogría: </label><br />
             <Dropdown isOpen={dropdown} toggle={OpenCloseDropdown}>
                 <DropdownToggle caret>
-                   Categorías 
+                    {selectedItem} 
                 </DropdownToggle>
 
                 <DropdownMenu>
