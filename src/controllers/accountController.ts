@@ -19,6 +19,8 @@ export class accountController{
     }
 
     //Methods
+    //---------------------------------------------------- REGISTER ---------------------------------------------------------
+    
     //--------------------------- CREATE ---------------------------------------------------------
     async createAccount(username: string, password: string, email: string, admin: boolean): Promise<void>{
         if(this.validateEmpty(username, password, email, admin)){
@@ -41,6 +43,10 @@ export class accountController{
             }
         }
     }
+
+    //-------------------------------------------------------------------------------------------------------------------------------------
+
+    //---------------------------------------------------- MANAGER ACCOUNT ---------------------------------------------------------
 
     //--------------------------- UPDATE ---------------------------------------------------------
     async updateAccount(username: string, password: string, email: string, admin: boolean): Promise<void>{
@@ -85,6 +91,26 @@ export class accountController{
         }else{
             console.log("Debe ingresar un nombre de usuario");
         }
+    }
+
+    //--------------------------- GET ---------------------------------------------------------
+    async getAccount(username: string): Promise<Account>{
+        let account = await this.accountDAO.get(username);
+        return account;
+    }
+
+
+    //-------------------------------------------------------------------------------------------------------------------------------------
+
+    //---------------------------  LOGIN  ---------------------------------------------------------
+    async verifyCredentials(username: string, password: string): Promise<boolean>{
+        console.log("Usuario:", username)
+        let account = await this.accountDAO.get(username);
+        if(account.getUsername() == username && account.getPassword() == password){
+            console.log("ENCONTRADO")
+            return true;
+        }
+        return false;
     }
 
     //----------------------------- VALIDATIONS ---------------------------------------------------------

@@ -1,7 +1,6 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-
+import * as admin from 'firebase-admin';
 
 //Firebase configuration
 const firebaseConfig = {
@@ -14,10 +13,16 @@ const firebaseConfig = {
     measurementId: "G-8TM80TWSKF"
 };
 
-// Initialize Firebase
+// Initialize Firebase App
 const app = initializeApp(firebaseConfig);
 
 // Get database from Firebase
 const db = getFirestore(app);
 
-export { db };
+// Initialize Firebase Admin SDK
+const serviceAccount = require('./mystiquemakeup-77e2c-firebase-adminsdk-gnf30-3b204e8fc9.json');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+export { db, admin };
