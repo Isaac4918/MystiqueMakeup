@@ -1,23 +1,32 @@
-.input-container{
-    margin-top: 10px;
-    text-align: center;
-    justify-content: center;
-    border-radius: 5px;
-    border-width: 1px;
-    margin-bottom: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
+@font-face {
+    font-family: 'Poppins';
+    src: url(../../styles/fonts/Poppins-Regular.ttf) format('truetype');
 }
 
-.input{
+.input-container{
+    font-family: 'Poppins'; 
     margin-top: 10px;
     text-align: center;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 15px;
     border-width: 1px;
     margin-bottom: 10px;
     margin-left: 5px;
     margin-right: 5px;
-    width: 200px;
-    height: 150px;
+    width: 300px;
+    height: 50px;
+}
+
+.input-area{
+    font-family: 'Poppins';
+    margin-top: 10px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 15px;
+    border-width: 1px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 300px;
+    height: 200px;
 }
