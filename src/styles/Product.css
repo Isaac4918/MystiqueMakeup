@@ -14,6 +14,7 @@
     font-family: 'Pattaya';
     font-size: 40px;
     text-align: center;
+    margin-left: 10px;
 }
 
 .containerProductManagement{
@@ -103,6 +104,7 @@
     position: absolute;
     position: fixed;
     bottom: 25px;
+    left: 28%;
 }
 
 .buttonDelete{
@@ -152,14 +154,14 @@
 /* PRODUCT SCREEN -------------------------------------------------*/
 .pageProductScreen{
     position: relative;
-    margin: 20px 88px;
+    margin: 0px 150px;
 }
 
 .pageProductScreen h1{
     font-family: 'Pattaya';
     font-size: 35px;
-    text-align: center;
-    padding-top: 50px;
+    margin-left: 10px;
+    margin-bottom: 50px;
 }
 
 .pageProductScreen h2{
@@ -167,7 +169,7 @@
     font-size: 20px;
     font-weight: bold;
     text-align: start;
-    padding-top: 60px;
+    padding-top: 10px;
 }
 
 .pageProductScreen .layout{
@@ -179,26 +181,130 @@
     gap: 8px;
 }
 
-.layout img{
+.pageProductScreen .layout img{
     width: 450px;
     height: 350px;
     display: block;
     margin: auto;
+    border: 2px solid black;
 }
 
-.layout p{
+.pageProductScreen .layout p{
     font-family: 'Poppins';
     font-size: 16px;
+    margin-bottom: 10px;
+    width: 500px;
+    height: 60px;
 }
 
-.layout .infoContainer{
-    margin-top: 50px;
+.pageProductScreen .layout .infoContainer{
+    padding-top: 110px;
     justify-content: center;
     align-items: center;
 }
 
-/* DELETE PRODUCT --------------------------------------------------*/
+.pageProductScreen button{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
 
+    position: absolute;
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* MODIFY PRODUCT -----------------------------------------------*/
+.layoutModifyProduct{
+    width: 1366px;
+    height: 500px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    margin-top: 70px;
+}
+
+.ModifyProduct h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    margin-left: 100px;
+    margin-top: -20px;
+}
+
+.layoutModifyProduct img{
+    width: 450px;
+    height: 350px;
+    margin-bottom: 22px;
+}
+
+.layoutModifyProduct label{
+    font-family: 'Poppins';
+    font-size: 16px;
+    color: black;
+    margin-left: 200px;
+}
+
+.layoutModifyProduct input{
+    background-color: rgb(242, 242, 242);
+    width: 300px;
+    height: 28px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 20px;
+    margin-left: 200px;
+}
+
+.layoutModifyProduct input[name='descriptionProduct']{
+    width: 300px;
+    height: 100px;
+}
+
+.buttonModifyProduct{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-left: 200px;
+    margin-top: 30px;
+}
+
+.buttonLoadImage{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-left: 75px;
+    margin-top: 20px;
+}
+
+/* DELETE PRODUCT --------------------------------------------------*/
 .buttonDeleteProduct{
     font-family: 'Poppins';
     font-size: 16px;
@@ -212,15 +318,14 @@
 }
 
 /* ALL ------------------------------------------------------------*/
-.buttonBack{
+.backManagement{
     border: none;
-    position: absolute;
     cursor: pointer;
-    top: 100px; 
-    left: 90px; 
+    margin-top: 13px;
+    background-color: white;
 }
 
-.buttonBack img{
+.backManagement img{
     width: 45px;
     height: 45px;
 }
