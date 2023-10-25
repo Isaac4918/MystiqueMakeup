@@ -34,6 +34,7 @@ function MyPurchases(){
                 <div className="buttonBack"> 
                     <a href="/"><img src={back} alt=""/></a>
                 </div>
+                <h1>Mis compras</h1>
                 <div className="containerPurchase">
                     <Carousel responsive={responsive}>
                         <div className="cardPurchase">

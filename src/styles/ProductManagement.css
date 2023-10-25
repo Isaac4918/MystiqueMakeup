@@ -9,9 +9,14 @@
     padding: 0px 100px 0px 100px;
 }
 
+h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    text-align: center;
+}
 
 .containerProductManagement{
-    padding: 40px 20px 40px 0px;
+    padding: 20px 20px 20px 0px;
     margin: 0 20px 0 20px;
 }
 
@@ -121,7 +126,7 @@
     background-color: rgb(242, 242, 242);
     border-radius: 8px;
     border: none;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     width: 230px;
     height: 33px;
     position: absolute;

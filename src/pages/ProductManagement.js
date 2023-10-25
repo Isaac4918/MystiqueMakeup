@@ -36,6 +36,7 @@ function ProductManagement(){
                 <div className="buttonBack"> 
                     <a href="/"><img src={back} alt=""/></a>
                 </div>
+                <h1>Gestión de productos</h1>
                 <button className="buttonCreate">Crear nuevo producto</button>
                 <div className="containerProductManagement">
                     <Carousel responsive={responsive}>
