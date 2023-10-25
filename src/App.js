@@ -12,6 +12,7 @@ import ProcessedPurchase from "./pages/ProcessedPurchase";
 import CreateCategory from "./pages/CreateCategory";
 import ModifyCategory from "./pages/ModifyCategory"
 import MyPurchases from "./pages/MyPurchases";
+import ProductScreen from "./pages/ProductScreen";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/account/manageCategories/createCategory" element={<CreateCategory />} />
         <Route path="/account/manageCategories/modifyCategory" element={<ModifyCategory />} />
         <Route path="/MyPurchases" element={<MyPurchases />} />
+        <Route path="/ProductScreen" element={<ProductScreen />} />
       </Routes>
     </Router>
   );

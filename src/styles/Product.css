@@ -3,13 +3,14 @@
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
+/* PRODUCT MANAGEMENT ---------------------------------------------*/
 .pageProductManagement{
     position: relative;
     margin: 20px 88px;
     padding: 0px 100px 0px 100px;
 }
 
-h1{
+.pageProductManagement h1{
     font-family: 'Pattaya';
     font-size: 40px;
     text-align: center;
@@ -137,14 +138,6 @@ h1{
     transition: all 0.4s ease;
 }
 
-.buttonBack{
-    border: none;
-    position:absolute;
-    cursor: pointer;
-    top: -10px; 
-    left: -90px; 
-}
-
 .buttonModify:hover{
     background-color: #6d961a;
 }
@@ -155,3 +148,67 @@ h1{
 
 .buttonDelete:hover{
     background-color: rgb(234, 234, 234, 0.963);}
+
+/* PRODUCT SCREEN -------------------------------------------------*/
+.pageProductScreen{
+    position: relative;
+    margin: 20px 88px;
+}
+
+.pageProductScreen h1{
+    font-family: 'Pattaya';
+    font-size: 35px;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.pageProductScreen h2{
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: bold;
+    text-align: start;
+    padding-top: 60px;
+}
+
+.pageProductScreen .layout{
+    width: 1366px;
+    height: 500px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.layout img{
+    width: 450px;
+    height: 350px;
+    display: block;
+    margin: auto;
+}
+
+.layout p{
+    font-family: 'Poppins';
+    font-size: 16px;
+}
+
+.layout .infoContainer {
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+/* ALL -------------- ---------------------------------------------*/
+.buttonBack{
+    border: none;
+    position: absolute;
+    cursor: pointer;
+    top: 100px; 
+    left: 90px; 
+}
+
+.buttonBack img{
+    width: 45px;
+    height: 45px;
+}
+
