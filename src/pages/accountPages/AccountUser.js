@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import DeleteAccount from './DeleteAccount';
-import '../styles/Account.css'
-import paletteColors from '../components/assets/paletteColors.png'
-import Navbar from "../../components/Navbar"
 import { useNavigate } from 'react-router-dom'; 
+import Navbar from "../../components/Navbar" 
+import '../../styles/Account.css'
+import paletteColors from '../../components/assets/paletteColors.png'
+import DeleteAccount from './DeleteAccount';
+
 
 export function InfoAccount(){
   const [mostrarDeleteAccount, setMostrarDeleteAccount] = useState(false);

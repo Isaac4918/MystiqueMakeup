@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import '../styles/Category.css'
-import backButton from '../components/assets/back.png'
+import '../../styles/Category.css'
+import backButton from '../../components/assets/back.png'
 import Navbar from "../../components/Navbar" 
 
 export function BackAccount(){
     return(
-        <div className="backCategories"> 
+        <div className="back"> 
             <a href="/account/manageCategories"><img src={backButton} alt=""/></a>
         </div>
     )
@@ -21,11 +21,11 @@ export function InfoCategory(){
     return(
         <div>
             <h1 name='categoryTitle'>Crear Categoría</h1>
-            <label>Nombre</label>
+            <label name='categoryLabel'>Nombre</label>
             <br />
             <input type='text' name='nameCategory'/>
             <br />
-            <label>
+            <label name='categoryLabel'>
                 <input type="checkbox" name='subcategoryCheckBox' checked={isChecked} onChange={Check} />
                 &nbsp;Agregar subcategoría
             </label>
@@ -52,7 +52,7 @@ export function AddSubcategories(){
 
     return(
         <div>
-            <label>
+            <label name='categoryLabel'>
                 Cantidad de subcategorías: 
                 &nbsp;<input type="number" name='numberInput' value={inputCount} onChange={handleInputChange} />
             </label>

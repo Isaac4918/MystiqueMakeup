@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import '../styles/Category.css';
-import backButton from '../components/assets/back.png'
+import '../../styles/Category.css'
+import backButton from '../../components/assets/back.png'
 import Navbar from "../../components/Navbar" 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
 export function BackAccount(){
     return(
-        <div className="backCategories"> 
+        <div className="back"> 
             <a href="/account/manageCategories"><img src={backButton} alt=""/></a>
         </div>
     )
@@ -34,7 +34,7 @@ export function EraseCategory(){
     return(
         <div>
             <h1 name='categoryTitle'>Eliminar Categoría</h1>
-            <label>Seleccione categoría: </label><br />
+            <label name='categoryLabel'>Seleccione categoría: </label><br />
             <Dropdown isOpen={dropdown} toggle={OpenCloseDropdown}>
                 <DropdownToggle caret className='selectBox'>
                     {selectedItem} 
@@ -45,7 +45,7 @@ export function EraseCategory(){
                     <DropdownItem onClick={handleSelect}>Fantasía</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-            <label>
+            <label name='categoryLabel'>
                 <input type="checkbox" name='subcategoryCheckBox' checked={isChecked} onChange={Check} />
                 &nbsp;Eliminar únicamente subcategoría
             </label>
@@ -71,7 +71,7 @@ export function DeleteSubcategories(){
 
     return(
         <div>
-            <label>Seleccione subcategoría:</label>
+            <label name='categoryLabel'>Seleccione subcategoría:</label>
             <Dropdown isOpen={dropdown} toggle={OpenCloseDropdown}>
                 <DropdownToggle caret className='selectBox'>
                     {selectedItem} 
