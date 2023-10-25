@@ -14,10 +14,11 @@
     padding: 30px 80px 0px 80px;
 }
 
-h1{
+.pagePurchase h1{
     font-family: 'Pattaya';
     font-size: 40px;
     text-align: center;
+    margin-left: 10px;
 }
 
 .containerPurchase{
@@ -91,6 +92,8 @@ h1{
     background-color: #6d961a;
 }
 
+/* PROCESSED PURCHASE -----------------------------------------*/
+
 .centered {
     position: fixed;
     justify-content: center;
@@ -122,11 +125,17 @@ h1{
     height: 38px;
 }
 
-.backButton {
-    margin-top: 20px;
-    margin-left: 10px;
-    width: 100px;
-    height: 100px;
-    background-color: transparent;
-    border-width: 0px;
+/* ALL PAGES --------------------------------------------------*/
+
+.buttonBack{
+    border: none;
+    position:absolute;
+    cursor: pointer;
+    top: -10px; 
+    left: -85px; 
+}
+
+.buttonBack img{
+    width: 45px;
+    height: 45px;
 }

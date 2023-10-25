@@ -1,0 +1,332 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url(./fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+/* PRODUCT MANAGEMENT ---------------------------------------------*/
+.pageProductManagement{
+    position: relative;
+    margin: 20px 88px;
+    padding: 0px 100px 0px 100px;
+}
+
+.pageProductManagement h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.containerProductManagement{
+    padding: 20px 20px 20px 0px;
+    margin: 0 20px 0 20px;
+}
+
+.content{
+    margin: 0 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardProductManagement{
+    background-color: rgb(242, 242, 242);
+    width: 350px;
+    height: 450px;
+    position: inherit;
+    transition: all 0.4s ease;
+    position: relative;
+    transform: translate(-50%, -50%);
+    display: flex;
+    margin: 0px 10px 0px 10px;
+    top: 50%;
+    left: 50%;
+    justify-content: space-between;
+}
+
+.cardProductManagement:hover{
+    box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+}
+
+.imageContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 14px 0px;
+}
+
+.cardImage{
+    position: relative;
+    height: 200px;
+    width: 200px;
+    /*padding: 3px;*/
+}
+
+.cardContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardImage img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.names{
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    justify-content: center;
+    margin: 20px 30px 10px; /*30 es el largo del text*/
+    height: 50px;
+}
+
+.description{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: black;
+    text-align: justify;
+    margin: 0px 35px 20px;
+}
+
+.buttonModify{
+    font-family: 'Poppins';
+    font-size: 14px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 150px;
+    height: 33px;
+    position: absolute;
+    position: fixed;
+    bottom: 25px;
+    left: 28%;
+}
+
+.buttonDelete{
+    border: none;
+    position:absolute;
+    cursor: pointer;
+    top: 5px; 
+    right: 5px; 
+}
+
+.buttonDelete img{
+    height: 23px;
+    width: 23px;
+}
+
+.buttonCreate{
+    font-family: 'Poppins';
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    color: black;
+    background-color: rgb(242, 242, 242);
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 10px;
+    width: 230px;
+    height: 33px;
+    position: absolute;
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.4s ease;
+}
+
+.buttonModify:hover{
+    background-color: #6d961a;
+}
+
+.buttonCreate:hover{
+    background-color: rgb(234, 234, 234);
+}
+
+.buttonDelete:hover{
+    background-color: rgb(234, 234, 234, 0.963);}
+
+/* PRODUCT SCREEN -------------------------------------------------*/
+.pageProductScreen{
+    position: relative;
+    margin: 0px 150px;
+}
+
+.pageProductScreen h1{
+    font-family: 'Pattaya';
+    font-size: 35px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+}
+
+.pageProductScreen h2{
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: bold;
+    text-align: start;
+    padding-top: 10px;
+}
+
+.pageProductScreen .layout{
+    width: 1366px;
+    height: 500px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.pageProductScreen .layout img{
+    width: 450px;
+    height: 350px;
+    display: block;
+    margin: auto;
+    border: 2px solid black;
+}
+
+.pageProductScreen .layout p{
+    font-family: 'Poppins';
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 500px;
+    height: 60px;
+}
+
+.pageProductScreen .layout .infoContainer{
+    padding-top: 110px;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageProductScreen button{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+
+    position: absolute;
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* MODIFY PRODUCT -----------------------------------------------*/
+.layoutModifyProduct{
+    width: 1366px;
+    height: 500px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    margin-top: 70px;
+}
+
+.ModifyProduct h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    margin-left: 100px;
+    margin-top: -20px;
+}
+
+.layoutModifyProduct img{
+    width: 450px;
+    height: 350px;
+    margin-bottom: 22px;
+}
+
+.layoutModifyProduct label{
+    font-family: 'Poppins';
+    font-size: 16px;
+    color: black;
+    margin-left: 200px;
+}
+
+.layoutModifyProduct input{
+    background-color: rgb(242, 242, 242);
+    width: 300px;
+    height: 28px;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 20px;
+    margin-left: 200px;
+}
+
+.layoutModifyProduct input[name='descriptionProduct']{
+    width: 300px;
+    height: 100px;
+}
+
+.buttonModifyProduct{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-left: 200px;
+    margin-top: 30px;
+}
+
+.buttonLoadImage{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-left: 75px;
+    margin-top: 20px;
+}
+
+/* DELETE PRODUCT --------------------------------------------------*/
+.buttonDeleteProduct{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+}
+
+/* ALL ------------------------------------------------------------*/
+.backManagement{
+    border: none;
+    cursor: pointer;
+    margin-top: 13px;
+    background-color: white;
+}
+
+.backManagement img{
+    width: 45px;
+    height: 45px;
+}
+
