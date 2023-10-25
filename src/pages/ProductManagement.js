@@ -10,6 +10,40 @@ import labiales from "../components/assets/labiales.jpg";
 import delineador from "../components/assets/delineador.jpg";
 import back from "../components/assets/arrowBack.png";
 
+import { useNavigate } from "react-router";
+
+export function Back(){
+    return(
+        <div className="buttonBack"> 
+            <a href="/"><img src={back} alt=""/></a>
+        </div>
+    )
+}
+
+export function OpenModifyProduct(){
+    return(
+        <div> 
+            <a href="/ModifyProduct"><button className="buttonModify">Modificar</button></a>
+        </div>
+    )
+}
+
+export function OpenDeleteProduct(){
+    return(
+        <div> 
+            <a href="/DeleteProduct"><button className="buttonDelete"><img src={trash} alt=""/></button></a>
+        </div>
+    )
+}
+
+export function OpenCreateProduct(){
+    return(
+        <div> 
+            <a href="/CreateProduct"><button className="buttonCreate">Crear nuevo producto</button></a>
+        </div>
+    )
+}
+
 function ProductManagement(){
     const responsive = {
         superLargeDesktop: {
@@ -33,15 +67,13 @@ function ProductManagement(){
         <div>
             <Navbar showIcons={true} />
             <div className="pageProductManagement">
-                <div className="buttonBack"> 
-                    <a href="/"><img src={back} alt=""/></a>
-                </div>
+                <Back />
                 <h1>Gestión de productos</h1>
-                <button className="buttonCreate">Crear nuevo producto</button>
+                <OpenCreateProduct />
                 <div className="containerProductManagement">
                     <Carousel responsive={responsive}>
                         <div className="cardProductManagement">
-                            <button className="buttonDelete"><img src={trash} alt=""/></button>
+                            <OpenDeleteProduct />
                             <div className="content">
                                 <div className="imageContent">
                                     <div className="cardImage">
@@ -51,12 +83,12 @@ function ProductManagement(){
                                 <div className="cardContent">
                                     <div className="names">Polvito mágico</div>
                                     <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
-                                    <button className="buttonModify">Modificar</button>
+                                    <OpenModifyProduct />
                                 </div>
                             </div>
                         </div>
                         <div className="cardProductManagement">
-                        <button className="buttonDelete"><img src={trash} alt=""/></button>
+                            <OpenDeleteProduct />
                             <div className="content">
                                 <div className="imageContent">
                                     <div className="cardImage">
@@ -64,14 +96,14 @@ function ProductManagement(){
                                     </div>
                                 </div>
                                 <div className="cardContent">
-                                    <h1 className="names">Labial colorcito</h1>
-                                    <p className="description">Decora tus labios con estos nuevos labiales</p>
-                                    <button className="buttonModify">Modificar</button>
+                                    <div className="names">Labial colorcito</div>
+                                    <div className="description">Decora tus labios con estos nuevos labiales</div>
+                                    <OpenModifyProduct />
                                 </div>
                             </div>
                         </div>
                         <div className="cardProductManagement">
-                            <button className="buttonDelete"><img src={trash} alt=""/></button>
+                            <OpenDeleteProduct />
                             <div className="content">
                                 <div className="imageContent">
                                     <div className="cardImage">
@@ -79,14 +111,14 @@ function ProductManagement(){
                                     </div>
                                 </div>
                                 <div className="cardContent">
-                                    <h1 className="names">Delineador maravilla</h1>
-                                    <p className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</p>
-                                    <button className="buttonModify">Modificar</button>
+                                    <div className="names">Delineador maravilla</div>
+                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
+                                    <OpenModifyProduct />
                                 </div>
                             </div>
                         </div>
                         <div className="cardProductManagement">
-                            <button className="buttonDelete"><img src={trash} alt=""/></button>
+                            <OpenDeleteProduct />
                             <div className="content">
                                 <div className="imageContent">
                                     <div className="cardImage">
@@ -94,9 +126,9 @@ function ProductManagement(){
                                     </div>
                                 </div>
                                 <div className="cardContent">
-                                    <h1 className="names">Delineador maravilla</h1>
-                                    <p className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</p>
-                                    <button className="buttonModify">Modificar</button>
+                                    <div className="names">Delineador maravilla</div>
+                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
+                                    <OpenModifyProduct />
                                 </div>
                             </div>
                         </div>

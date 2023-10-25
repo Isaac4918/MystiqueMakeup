@@ -8,9 +8,10 @@ function DeleteProduct(props) {
     return (
         <div>
             <Navbar showIcons={true} />
+            <Link to={"/ProductManagement"}><button className="backManagement"><img src={back} alt=""/></button></Link>
             <div className="centered">
                 <div className="title">¿De verdad desea eliminar?</div>
-                <Link to={"/"}>
+                <Link to={"/ProductManagement"}>
                     <button className="buttonDeleteProduct">Confirmar</button>
                 </Link>
             </div>
