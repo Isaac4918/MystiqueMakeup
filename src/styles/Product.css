@@ -191,14 +191,27 @@
     font-size: 16px;
 }
 
-.layout .infoContainer {
+.layout .infoContainer{
     margin-top: 50px;
     justify-content: center;
     align-items: center;
-  }
+}
 
+/* DELETE PRODUCT --------------------------------------------------*/
 
-/* ALL -------------- ---------------------------------------------*/
+.buttonDeleteProduct{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+}
+
+/* ALL ------------------------------------------------------------*/
 .buttonBack{
     border: none;
     position: absolute;
