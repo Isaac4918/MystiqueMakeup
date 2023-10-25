@@ -189,7 +189,6 @@
 }
 
 
-
 /*-------------------- ACCOUNT USER --------------------------------------------------*/
 
 .AccountUser{
@@ -330,3 +329,64 @@
     margin-bottom: 60px;
 }
 
+/*-------------------- MANAGE ADMIN --------------------------------------------------*/
+
+.manageAdmin h1{
+    font-family: 'Pattaya';
+    margin-left: 240px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.manageAdmin input{
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    border: none;
+    width: 800px;
+    height: 25px;
+    margin-left: 240px;
+}
+
+.manageAdmin button[name='backButton']{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: black;
+    border-radius: 8px;
+    border: none;
+    background-color: #EAEAEA;
+    width: 300px;
+    height: 30px;
+}
+
+.manageAdmin button{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #5E8410;
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 240px;
+    cursor: pointer;
+}
+
+.manageAdmin button[name='searchButton']{
+    margin-left: 20px;
+    width: 200px;
+}
+
+.scroller {
+    width: 600px; 
+    height: 200px;
+    overflow-y: scroll;
+    background-color: #EAEAEA;
+    margin-left: 240px;
+    border-radius: 8px;
+    border: none;    
+}
+
+.scroller li{
+    list-style-type: none;
+}

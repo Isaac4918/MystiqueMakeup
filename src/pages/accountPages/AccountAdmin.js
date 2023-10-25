@@ -12,6 +12,10 @@ export function MenuAdmin(){
     navigate('/account/manageCategories');
   };
 
+  const ManageAdminPage = () => {
+    navigate('/account/manageAdmin');
+  };
+
   const HomePage = () => {
     navigate('/');
   };
@@ -19,7 +23,7 @@ export function MenuAdmin(){
   return(
     <div className='menuAdmin'>
       <h2>Bienvenido/a</h2>
-      <button>Gestionar Administradores</button><br />
+      <button onClick={ManageAdminPage}>Gestionar Administradores</button><br />
       <br />
       <button>Gestionar Publicaciones</button><br />
       <br />
