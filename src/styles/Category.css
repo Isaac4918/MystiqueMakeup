@@ -14,6 +14,78 @@
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
+/*--------------------------------------- GENERAL ------------------------------------------------------*/
+button[name='categoryOption']{
+    font-family: 'Monserrat';
+    margin-left: 240px;
+    margin-top: 40px;
+    background-color: #43A9BF;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    width: 200px;
+    height: 30px;
+}
+
+.backCategories{
+    margin-top: 40px;
+    margin-left: 100px;
+}
+
+h1[name='categoryTitle']{
+    font-family: 'Pattaya';
+    margin-left: 240px;
+}
+
+input[name='nameCategory']{
+    margin-left: 240px;
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 25px;
+    margin-top: 20px;
+}
+
+label{
+    font-family: 'Poppins';
+    margin-top: 20px;
+    margin-left: 240px;
+}
+
+input[name='subcategoryCheckBox']{
+    margin-left: 60px;
+}
+
+input[name='generateInputs']{
+    margin-left: 240px;
+    margin-top: 10px;
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 25px;
+}
+
+input[name='numberInput']{
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    width: 40px;
+    height: 30px;
+    border: none;
+}
+
+.dropdown .selectBox{
+    background-color: #EAEAEA;
+    color: black !important;
+    border: none;
+    margin-left: 240px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
 /*-------------------- MANAGE CATEGORIES --------------------------------------------------*/
 .manageCategories h1{
     font-family: 'Pattaya';
@@ -37,143 +109,5 @@
 .manageCategories button[name="backButton"]{
     background-color: #EAEAEA;
     color: black;
-}
-
-/*-------------------- CREATE CATEGORY --------------------------------------------------*/
-.backCategories{
-    margin-top: 40px;
-    margin-left: 100px;
-}
-
-.createCategory h1{
-    font-family: 'Pattaya';
-    margin-left: 240px;
-}
-
-.createCategory label{
-    font-family: 'Poppins';
-    margin-top: 20px;
-    margin-left: 240px;
-}
-
-.createCategory input[name='nameCategory']{
-    margin-left: 240px;
-    background-color: #EAEAEA;
-    border-radius: 8px;
-    border: none;
-    width: 300px;
-    height: 25px;
-    margin-top: 20px;
-}
-
-.createCategory input[name='addSubcategory']{
-    margin-left: 60px;
-}
-
-.createCategory input[name='generateInputs']{
-    margin-left: 240px;
-    margin-top: 10px;
-    background-color: #EAEAEA;
-    border-radius: 8px;
-    border: none;
-    width: 300px;
-    height: 25px;
-}
-
-.createCategory input[name='numberInput']{
-    background-color: #EAEAEA;
-    border-radius: 8px;
-    width: 40px;
-    height: 30px;
-    border: none;
-}
-
-.createCategory button{
-    font-family: 'Monserrat';
-    margin-left: 240px;
-    margin-top: 40px;
-    background-color: #43A9BF;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    color: white;
-    width: 240px;
-    height: 25px;
-}
-
-/*-------------------- MODIFY CATEGORY --------------------------------------------------*/
-.modifyCategory button[name='modifyData']{
-    font-family: 'Monserrat';
-    margin-left: 240px;
-    margin-top: 40px;
-    background-color: #43A9BF;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    color: white;
-    width: 240px;
-    height: 25px;
-}
-
-.modifyCategory h1{
-    font-family: 'Pattaya';
-    margin-left: 240px;
-}
-
-
-.modifyCategory input[name='nameCategory']{
-    margin-left: 240px;
-    background-color: #EAEAEA;
-    border-radius: 8px;
-    border: none;
-    width: 300px;
-    height: 25px;
-    margin-top: 20px;
-}
-
-.modifyCategory label[name='nameLabel']{
-    font-family: 'Poppins';
-    margin-left: 240px;
-    margin-top: 40px;
-}
-
-.modifyCategory input[name='updateSubcategory']{
-    margin-left: 280px;
-    margin-top: 20px;
-}
-
-.modifyCategory input[name='generateInputs']{
-    margin-left: 240px;
-    margin-top: 10px;
-    background-color: #EAEAEA;
-    border-radius: 8px;
-    border: none;
-    width: 300px;
-    height: 25px;
-}
-
-.modifyCategory input[name='numberInput']{
-    background-color: #EAEAEA;
-    border-radius: 8px;
-    width: 40px;
-    height: 30px;
-    border: none;
-}
-
-.modifyCategory label[name='CategoryLabel']{
-    margin-left: 240px;
-}
-
-.modifyCategory .dropdown .rectangule{
-    background-color: #EAEAEA;
-    color: black !important;
-    border: none;
-    width: 200px;
-    height: 25px;
-    margin-left: 240px;
-    border-radius: 8px;
-    margin-top: 10px;
 }
 
