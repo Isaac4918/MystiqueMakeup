@@ -2,21 +2,34 @@ import React, { useState } from 'react';
 import '../styles/Account.css'
 import paletteColors from '../components/assets/paletteColors.png'
 import DeleteAccount from './DeleteAccount';
+import Navbar from "../components/Navbar" 
+import { useNavigate } from 'react-router-dom';
 
 export function MenuAdmin(){
+  const navigate = useNavigate();
+
+  const ManageCategoriesPage = () => {
+    navigate('/account/manageCategories');
+  };
+
+  const HomePage = () => {
+    navigate('/');
+  };
+
   return(
     <div className='menuAdmin'>
+      <h2>Bienvenido/a</h2>
       <button>Gestionar Administradores</button><br />
       <br />
       <button>Gestionar Publicaciones</button><br />
       <br />
       <button>Gestionar Productos</button><br />
       <br />
-      <button>Gestionar Categorías</button><br />
+      <button onClick={ManageCategoriesPage}>Gestionar Categorías</button><br />
       <br />
       <button>Gestionar Agenda</button><br />
       <br />
-      <button name="LogOut">Cerrar Sesión</button>
+      <button name="LogOut" onClick={HomePage}>Cerrar Sesión</button>
     </div>
   )
 }
@@ -24,6 +37,11 @@ export function MenuAdmin(){
 
 export function InfoAccount(){
   const [mostrarDeleteAccount, setMostrarDeleteAccount] = useState(false);
+  const navigate = useNavigate();
+  
+  const ModifyAccountPage = () => {
+    navigate('/account/modifyAccount');
+  };
 
   const handleClick = () => {
     setMostrarDeleteAccount(true);
@@ -40,7 +58,7 @@ export function InfoAccount(){
       <br />
       <label>Email: XXX@gmail.com</label><br />
       <br />
-      <button name="Update">Modificar datos</button><br />
+      <button name="Update" onClick={ModifyAccountPage}>Modificar datos</button><br />
       <br />
       <button name="Delete" onClick={handleClick}>Eliminar cuenta</button>
       {mostrarDeleteAccount && <DeleteAccount onConfirmar={handleConfirmar} />}
@@ -51,6 +69,8 @@ export function InfoAccount(){
 
 function AccountAdmin(){
   return(
+    <div>
+      <Navbar showIcons={false} />
       <div className='AccountAdmin'> 
           <img src={paletteColors} alt=""/>
           <div style={{display: 'flex', justifyContent: 'flex-start'}}>
@@ -58,6 +78,7 @@ function AccountAdmin(){
               <MenuAdmin />
           </div>
       </div> 
+    </div>
   )
 }
 

@@ -60,6 +60,7 @@
     width: 140px;
     height: 25px;
     margin-left: 80px;
+    cursor: pointer;
 }
     
 .Login form  {
@@ -100,6 +101,7 @@
     width: 140px;
     height: 25px;
     margin-left: 80px;
+    cursor: pointer;
 }
   
 .Login a {
@@ -142,6 +144,7 @@
     font-size: 18px;
     color: white;
     margin-left: 20px;
+    cursor: pointer;
 }
 
 /*-------------------- MODIFY ACCOUNT --------------------------------------------------*/
@@ -189,11 +192,18 @@
     width: 140px;
     height: 25px;
     margin-left: 80px;
+    cursor: pointer;
 }
 
 
 /*-------------------- ACCOUNT USER --------------------------------------------------*/
-  
+
+.AccountUser{
+    display: 'flex';
+    flex-direction: 'column';
+    align-items: 'center';
+}
+
 .AccountUser img{
     margin-top: 30px;
     margin-left: 140px;
@@ -204,12 +214,16 @@
     margin-left: 240px;
 }
 
+.AccountUser .menuUser h2{
+    margin-left: 280px;
+}
+
 .AccountUser label{
     font-family: 'Poppins';
     margin-left: 240px;
 }
 
-.AccountUser button[name="Update"]{
+.AccountUser .infoAccount button{
     font-family: 'Monserrat';
     margin-left: 240px;
     font-size: 14px;
@@ -219,23 +233,13 @@
     background-color: #5E8410;
     width: 140px;
     height: 25px;
+    cursor: pointer;
 }
 
-.AccountUser button[name="Delete"]{
-    font-family: 'Monserrat';
-    margin-left: 240px;
-    font-size: 14px;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    background-color: #5E8410;
-    width: 140px;
-    height: 25px;
-}
 
 .AccountUser button[name="Purchases"]{
     font-family: 'Monserrat';
-    margin-left: 600px;
+    margin-left: 240px;
     font-size: 14px;
     color: white;
     border-radius: 8px;
@@ -243,12 +247,13 @@
     background-color: #43A9BF;
     width: 200px;
     height: 30px;
+    cursor: pointer;
 }
 
 
 .AccountUser button[name="LogOut"]{
     font-family: 'Monserrat';
-    margin-left: 600px;
+    margin-left: 240px;
     font-size: 14px;
     color: black;
     border-radius: 8px;
@@ -256,6 +261,7 @@
     background-color: #EAEAEA;
     width: 200px;
     height: 30px;
+    cursor: pointer;
 }
 
 /*-------------------- ACCOUNT ADMIN --------------------------------------------------*/
@@ -288,13 +294,19 @@
     border-radius: 8px;
     border: none;
     background-color: #5E8410;
-    width: 300px;
+    width: 140px;
     height: 30px;
     margin-top: 10px;
     margin-left: 240px;
+    cursor: pointer;
 }
 
 /*-------------------- ACCOUNT ADMIN -> MENU ADMIN --------------------------------------------------*/
+.AccountAdmin .menuAdmin h2{
+    font-family: 'Pattaya';
+    margin-left: 320px;
+}
+
 .AccountAdmin .menuAdmin button{
     font-family: 'Monserrat';
     font-size: 14px;
@@ -305,7 +317,8 @@
     width: 300px;
     height: 30px;
     margin-top: 10px;
-    margin-left: 300px;
+    margin-left: 240px;
+    cursor: pointer;
 }
 
 .AccountAdmin .menuAdmin button[name="LogOut"]{
@@ -317,5 +330,6 @@
     background-color: #EAEAEA;
     width: 300px;
     height: 30px;
+    margin-bottom: 60px;
 }
 
