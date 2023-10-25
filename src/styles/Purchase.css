@@ -122,15 +122,11 @@ h1{
     height: 38px;
 }
 
-.buttonBack{
-    border: none;
-    position:absolute;
-    cursor: pointer;
-    top: -10px; 
-    left: -85px; 
-}
-
-.buttonBack img{
-    width: 45px;
-    height: 45px;
+.backButton {
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+    border-width: 0px;
 }

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Input } from '../components/Input/Input';
 import '../styles/Publications.css'
+import { BackButton } from '../components/Buttons/BackButton';
+
 
 function CreatePublication() {
     const [username, setUsername] = useState('');
@@ -28,7 +30,7 @@ function CreatePublication() {
             <Navbar />
             <section className='create-layout'>
                 <div>
-                    <button>test</button>
+                    <BackButton navigateTo={"/"}/>
                     <h1 className='title-create'>Crear Publicación</h1>
                 </div>
                 <div></div>
