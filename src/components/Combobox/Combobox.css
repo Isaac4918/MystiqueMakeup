@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url(../../styles/fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+.combo-style{
+    border-radius: 15px;
+    height: 60px;
+    width: 300px;
+    font-family: 'Poppins';
+    padding: 10px;
+    font-size: 20px;
+}
