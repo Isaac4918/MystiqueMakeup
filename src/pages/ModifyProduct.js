@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
-//instalar npm install primereact
 
 const ModifyProduct = () => {
     // Variable of Modify Product
@@ -80,7 +79,7 @@ const ModifyProduct = () => {
         event.preventDefault();
         console.log(data);
 
-        if (!data.name || !data.description || !data.price || !data.available || data.image === null) {
+        if (!data.name || !data.description || !data.price || !data.available || !data.category || !data.subcategory || data.image === null) {
             alert("ERROR: Todos los campos son obligatorios");
             return;
         }
