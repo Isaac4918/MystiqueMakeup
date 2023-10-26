@@ -79,10 +79,37 @@ const ModifyProduct = () => {
         event.preventDefault();
         console.log(data);
 
-        if (!data.name || !data.description || !data.price || !data.available || !data.category || !data.subcategory || data.image === null) {
+        if (!data.name || !data.description || !data.price || !data.available || !data.category || !data.subcategory) {
             alert("ERROR: Todos los campos son obligatorios");
             return;
         }
+
+        if (data.description.length > 122) {
+            alert("ERROR: La descripción es muy larga, el máximo es 122 caracteres");
+            return;
+        }
+
+        if (data.name.length > 22) {
+            alert("ERROR: El nombre es muy largo, el máximo es 22 caracteres");
+            return;
+        }
+
+        if (!/^\d+$/.test(data.available)){
+            alert("ERROR: available");
+            return;
+        }
+
+        if(!/^\d+(\.\d+)?$/.test(data.price)){
+            alert("ERROR: price");
+            return;
+        }
+
+        if(data.image === null){
+            alert("ERROR: Debe seleccionar una imagen");
+            return;
+        }
+
+        //poner que prices y disponibles sean numeros
 
         navigate('/ProductManagement');
 
