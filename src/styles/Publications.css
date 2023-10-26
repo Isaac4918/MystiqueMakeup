@@ -18,6 +18,20 @@
     gap: 15px;
 }
 
+.show-layout {
+    width: 1920px;
+    height: 1080px;
+  
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.show-layout h1{
+    font-family: 'Pattaya';
+}
+
 .create-layout div { 
     margin-top: 40px;
 }
@@ -29,8 +43,13 @@
 
 .labelLayout{
     font-family: 'Poppins';
-    font-size: 24px;
-    
+    font-size: 24px;   
+}
+
+.tagsLayout{
+    font-family: 'Poppins';
+    font-size: 26px;   
+    color: #5E8410;
 }
 
 .images{
