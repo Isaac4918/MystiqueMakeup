@@ -8,13 +8,9 @@
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
-.pagePurchase{
-    position: relative;
-    margin: 20px 100px;
-    padding: 30px 80px 0px 80px;
-}
 
-.pagePurchase h1{
+
+.MyPurchases h1{
     font-family: 'Pattaya';
     font-size: 40px;
     text-align: center;
@@ -22,7 +18,9 @@
 }
 
 .containerPurchase{
-    padding: 50px 100px 100px 100px;
+    margin-left: 150px;
+    margin-right: 200px;
+    padding: 50px 20px 100px 100px;
     position: inherit;
 }
 

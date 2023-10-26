@@ -223,12 +223,12 @@
 
 /* MODIFY PRODUCT -----------------------------------------------*/
 .layoutModifyProduct{
-    width: 1366px;
+    width: 1200px;
     height: 500px;
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
 
     position: fixed;
     justify-content: center;
@@ -239,6 +239,11 @@
     margin-top: 70px;
 }
 
+.layoutModifyProduct .gridPosition{
+    position: relative;
+    margin-bottom: 87px;
+}
+
 .ModifyProduct h1{
     font-family: 'Pattaya';
     font-size: 40px;
@@ -247,33 +252,39 @@
 }
 
 .layoutModifyProduct img{
-    width: 450px;
-    height: 350px;
-    margin-bottom: 22px;
+    width: 460px;
+    height: 360px;
+    background-color: rgb(242, 242, 242);
+    margin-right: 10px;
+    margin-top: 30px;
+    margin-bottom: 2px;
 }
 
 .layoutModifyProduct label{
     font-family: 'Poppins';
     font-size: 16px;
     color: black;
-    margin-left: 200px;
+    margin-left: 30px;
 }
 
 .layoutModifyProduct input{
     background-color: rgb(242, 242, 242);
     width: 300px;
-    height: 28px;
-    margin-top: auto;
-    margin-bottom: auto;
+    height: 35px;
     border-radius: 8px;
     border: none;
-    margin-bottom: 20px;
-    margin-left: 200px;
+    margin-bottom: 40px;
+    margin-left: 30px;
 }
 
-.layoutModifyProduct input[name='descriptionProduct']{
+.layoutModifyProduct textarea{
+    background-color: rgb(242, 242, 242);
+    resize: none;
+    height: 200px;
     width: 300px;
-    height: 100px;
+    border-radius: 8px;
+    border: none;
+    margin-left: 30px;
 }
 
 .buttonModifyProduct{
@@ -286,8 +297,9 @@
     border: none;
     width: 300px;
     height: 38px;
-    margin-left: 200px;
-    margin-top: 30px;
+    margin-left: 30px;
+    margin-top: 78px;
+    position: absolute;
 }
 
 .buttonLoadImage{
@@ -301,7 +313,22 @@
     width: 300px;
     height: 38px;
     margin-left: 75px;
-    margin-top: 20px;
+    margin-top: 40px;
+}
+
+.ModifyProduct .dropdown .rectangule{
+    background-color: rgb(242, 242, 242);
+    color: black !important;
+    border: none;
+    width: 300px;
+    height: 35px;
+    border-radius: 8px;
+    margin-bottom: 50px;
+    margin-left: 30px;
+}
+
+.ModifyProduct .dropdown .options{
+    width: 300px;
 }
 
 /* DELETE PRODUCT --------------------------------------------------*/
