@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import '../styles/Category.css'
-import backButton from '../components/assets/back.png'
-import Navbar from "../components/Navbar" 
+import '../../styles/Category.css'
+import backButton from '../../components/assets/back.png'
+import Navbar from "../../components/Navbar" 
 
 export function BackAccount(){
     return(
-        <div className="backCategories"> 
+        <div className="back"> 
             <a href="/account/manageCategories"><img src={backButton} alt=""/></a>
         </div>
     )
@@ -20,19 +20,19 @@ export function InfoCategory(){
 
     return(
         <div>
-            <h1>Crear Categoría</h1>
-            <label>Nombre</label>
+            <h1 name='categoryTitle'>Crear Categoría</h1>
+            <label name='categoryLabel'>Nombre</label>
             <br />
             <input type='text' name='nameCategory'/>
             <br />
-            <label>
-                <input type="checkbox" name='addSubcategory' checked={isChecked} onChange={Check} />
+            <label name='categoryLabel'>
+                <input type="checkbox" name='subcategoryCheckBox' checked={isChecked} onChange={Check} />
                 &nbsp;Agregar subcategoría
             </label>
             <br />
             {isChecked && <AddSubcategories />}
             <br />
-            <button>Crear Categoría</button>
+            <button name='categoryOption'>Crear</button>
         </div>
     )
 }
@@ -52,7 +52,7 @@ export function AddSubcategories(){
 
     return(
         <div>
-            <label>
+            <label name='categoryLabel'>
                 Cantidad de subcategorías: 
                 &nbsp;<input type="number" name='numberInput' value={inputCount} onChange={handleInputChange} />
             </label>

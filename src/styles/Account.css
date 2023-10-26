@@ -148,51 +148,44 @@
 }
 
 /*-------------------- MODIFY ACCOUNT --------------------------------------------------*/
-.ModifyAccount form  {
-    display: grid;
-    margin-right: 500px;
-    margin-top: 60px;
+
+.back{
+    margin-top: 40px;
+    margin-left: 100px;
 }
 
-.ModifyAccount{
-    display: flex;
-    justify-content: space-around;
-}
-
-.ModifyAccount form h1{
+.modifyAccount form h1{
     font-family: 'Pattaya';
-    margin-left: 30px;
+    margin-left: 620px;
 }
 
-.ModifyAccount form input{
+.modifyAccount form label{
+    font-family: 'Poppins';
+    margin-left: 600px;
+    margin-top: 40px;
+}
+
+.modifyAccount form input{
     background-color: #EAEAEA;
     width: 300px;
     height: 25px;
-    margin-top: auto;
-    margin-bottom: auto;
     border-radius: 8px;
     border: none;
+    margin-left: 600px;
+    margin-top: 20px;
 }
-  
-.ModifyAccount form label{
-    font-family: 'Poppins';
-    margin-top: auto;
-    margin-bottom: auto;
-}
-  
-.ModifyAccount form button{
+
+.modifyAccount form button{
     font-family: 'Poppins';
     font-size: 14px;
     color: white;
-    margin-top: auto;
-    margin-bottom: auto;
     background-color: #5E8410;
     border-radius: 8px;
     border: none;
     width: 140px;
     height: 25px;
-    margin-left: 80px;
     cursor: pointer;
+    margin-left: 680px;
 }
 
 
@@ -212,10 +205,11 @@
 .AccountUser h2{
     font-family: 'Pattaya';
     margin-left: 240px;
+    margin-top: 20px;
 }
 
 .AccountUser .menuUser h2{
-    margin-left: 280px;
+    margin-left: 320px;
 }
 
 .AccountUser label{
@@ -239,7 +233,7 @@
 
 .AccountUser button[name="Purchases"]{
     font-family: 'Monserrat';
-    margin-left: 240px;
+    margin-left: 300px;
     font-size: 14px;
     color: white;
     border-radius: 8px;
@@ -253,7 +247,7 @@
 
 .AccountUser button[name="LogOut"]{
     font-family: 'Monserrat';
-    margin-left: 240px;
+    margin-left: 300px;
     font-size: 14px;
     color: black;
     border-radius: 8px;
@@ -280,6 +274,7 @@
 .AccountAdmin .infoAccount h2{
     font-family: 'Pattaya';
     margin-left: 240px;
+    margin-top: 20px;
 }
 
 .AccountAdmin .infoAccount label{
@@ -304,7 +299,8 @@
 /*-------------------- ACCOUNT ADMIN -> MENU ADMIN --------------------------------------------------*/
 .AccountAdmin .menuAdmin h2{
     font-family: 'Pattaya';
-    margin-left: 320px;
+    margin-left: 360px;
+    margin-top: 20px;
 }
 
 .AccountAdmin .menuAdmin button{
@@ -317,7 +313,7 @@
     width: 300px;
     height: 30px;
     margin-top: 10px;
-    margin-left: 240px;
+    margin-left: 300px;
     cursor: pointer;
 }
 
@@ -333,3 +329,64 @@
     margin-bottom: 60px;
 }
 
+/*-------------------- MANAGE ADMIN --------------------------------------------------*/
+
+.manageAdmin h1{
+    font-family: 'Pattaya';
+    margin-left: 240px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.manageAdmin input{
+    background-color: #EAEAEA;
+    border-radius: 8px;
+    border: none;
+    width: 800px;
+    height: 25px;
+    margin-left: 240px;
+}
+
+.manageAdmin button[name='backButton']{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: black;
+    border-radius: 8px;
+    border: none;
+    background-color: #EAEAEA;
+    width: 300px;
+    height: 30px;
+}
+
+.manageAdmin button{
+    font-family: 'Monserrat';
+    font-size: 14px;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    background-color: #5E8410;
+    width: 300px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 240px;
+    cursor: pointer;
+}
+
+.manageAdmin button[name='searchButton']{
+    margin-left: 20px;
+    width: 200px;
+}
+
+.scroller {
+    width: 600px; 
+    height: 200px;
+    overflow-y: scroll;
+    background-color: #EAEAEA;
+    margin-left: 240px;
+    border-radius: 8px;
+    border: none;    
+}
+
+.scroller li{
+    list-style-type: none;
+}

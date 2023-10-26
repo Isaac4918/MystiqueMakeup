@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/Account.css';
+import '../../styles/Account.css';
 
 function DeleteAccount({ onConfirmar }) {
   const [mensaje, setMensaje] = useState('');

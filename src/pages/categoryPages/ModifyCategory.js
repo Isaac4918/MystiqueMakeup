@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import backButton from '../components/assets/back.png'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-import Navbar from "../components/Navbar" 
+import backButton from '../../components/assets/back.png'
+import Navbar from "../../components/Navbar"  
+import '../../styles/Category.css'
 
 export function BackAccount(){
     return(
-        <div className="backCategories"> 
+        <div className="back"> 
             <a href="/account/manageCategories"><img src={backButton} alt=""/></a>
         </div>
     )
@@ -27,10 +28,10 @@ export function SearchCategory(){
 
     return(
         <div>
-            <h1>Modificar Categoría</h1>
-            <label name='CategoryLabel'>Seleccione una categoría: </label>
+            <h1 name='categoryTitle'>Modificar Categoría</h1>
+            <label name='categoryLabel'>Seleccione una categoría: </label>
             <Dropdown isOpen={dropdown} toggle={OpenCloseDropdown}>
-                <DropdownToggle caret className='rectangule'>
+                <DropdownToggle caret className='selectBox'>
                     {selectedItem}
                 </DropdownToggle>
 
@@ -52,19 +53,19 @@ export function UpdateInfo(){
 
     return(
         <div>
-            <label name='nameLabel'>Nombre</label>
+            <label name='categoryLabel'>Nombre</label>
             <br />
             <input type='text' name='nameCategory'/>
             <br />
-            <label>
-                <input type="checkbox" name='updateSubcategory' checked={isChecked} onChange={Check} />
+            <label name='categoryLabel'>
+                <input type="checkbox" name='subcategoryCheckBox' checked={isChecked} onChange={Check} />
                 &nbsp;Modificar subcategoría
             </label>
-        <br />
-        {isChecked && <UpdateSubcategories />}
-        <br />
-        <button name='modifyData'>Modificar Categoría</button>
-    </div>
+            <br /><br />
+            {isChecked && <UpdateSubcategories />}
+            <br />
+            <button name='categoryOption'>Modificar</button>
+        </div>
     )
 }
 
@@ -84,7 +85,7 @@ export function UpdateSubcategories(){
 
     return(
         <div>
-            <label name='CategoryLabel'>
+            <label name='categoryLabel'>
                 Cantidad de subcategorías: 
                 &nbsp;<input type="number" name='numberInput' value={inputCount} onChange={handleInputChange} />
             </label>

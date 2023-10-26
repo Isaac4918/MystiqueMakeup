@@ -1,23 +1,13 @@
-import React, { useState } from 'react';
-import '../styles/Category.css'
-import Navbar from "../components/Navbar" 
+import React from 'react';
+import '../../styles/Category.css'
+import Navbar from "../../components/Navbar" 
 import { useNavigate } from 'react-router-dom';
-import DeleteAccount from './DeleteAccount';
 
 export function MenuCategories(){
-  const [mostrarDeleteAccount, setMostrarDeleteAccount] = useState(false);
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    setMostrarDeleteAccount(true);
-  }
-
-  const handleConfirmar = () => {
-    setMostrarDeleteAccount(false);
-  }
-
-  const DeleteSubCategoryPage = () => {
-    navigate('/account/manageCategories/deleteSubCategory');
+  const DeleteCategoryPage = () => {
+    navigate('/account/manageCategories/deleteCategory');
   };
 
   const CreateCategoryPage = () => {
@@ -27,6 +17,10 @@ export function MenuCategories(){
   const ModifyCategoryPage = () => {
     navigate('/account/manageCategories/modifyCategory');
   };
+
+  const AccountAdminPage = () => {
+    navigate('/accountAdmin');
+  };
   
   return(
     <div className='manageCategories'>
@@ -35,12 +29,9 @@ export function MenuCategories(){
     <br />
     <button onClick={ModifyCategoryPage}>Modificar Categoría</button><br />
     <br />
-    <button onClick={DeleteSubCategoryPage}>Eliminar Subcategoría</button><br />
+    <button onClick={DeleteCategoryPage}>Eliminar Categoría</button><br />
     <br />
-    <button onClick={handleClick}>Eliminar Categoría</button><br />
-    {mostrarDeleteAccount && <DeleteAccount onConfirmar={handleConfirmar} />}
-    <br />
-    <button name="backButton">Volver</button>
+    <button name="backButton" onClick={AccountAdminPage}>Volver</button>
   </div>
   )
 }
