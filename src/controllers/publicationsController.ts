@@ -1,3 +1,4 @@
+// Publication Controller
 import { Publication } from "../models/publication";
 import {  publicationDAOImpl  } from "../models/DAO/publicationDAOImpl";
 

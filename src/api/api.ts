@@ -39,6 +39,14 @@ app.post('/categories', (req, res) => {
     res.send('Category created successfully');
 });
 
+// Isaac Endpoints
+
+
+
+
+
+
+
 app.use((req, res) => {
     res.status(404).send('404 Not Found');
 });

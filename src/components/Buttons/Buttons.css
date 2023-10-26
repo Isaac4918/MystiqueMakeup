@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url(../../styles/fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+.backButton{
+    width: 70px;
+    height: 70px;
+    background-color: transparent;
+    border-width: 0px;
+}
+
+.backButton:hover{
+    background-color: rgba(0, 0, 0, 0.082);
+    cursor: pointer;
+}
+
+.accept-button{
+    width: 250px;
+    height: 50px;
+    background-color: #5E8410;
+    border-width: 0px;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.accept-button:hover{
+    background-color: #679112;
+    cursor: pointer;
+}
+
+.cancel-button{
+    width: 250px;
+    height: 50px;
+    background-color: #9b1414;
+    border-width: 0px;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.cancel-button:hover{
+    background-color: #ac1a1a;
+    cursor: pointer;
+}
+
+.normal-button{
+    width: 250px;
+    height: 50px;
+    background-color: #43A9BF;
+    border-width: 0px;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.normal-button:hover{
+    background-color: #4cb8d0;
+    cursor: pointer;
+}
