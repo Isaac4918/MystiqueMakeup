@@ -1,23 +1,23 @@
 import React from "react";
-import { useRef, useEffect, useState} from 'react';
+import { useRef , useState } from 'react';
 import "../styles/Product.css";
 import Navbar from "../components/Navbar";
 import back from "../components/assets/arrowBack.png";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Dropdown } from 'primereact/dropdown';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+//instalar npm install primereact
 
 const ModifyProduct = () => {
     // Variable of Modify Product
+    const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
+    const [image, setImage] = useState(null);
 
-    const [dropdownCategory, setDropdownCategory] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-
-    const [dropdownSubcategory, setDropdownSubcategory] = useState(false);
-    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedSubcategory, setSelectedSubcategory] = useState('');
 
     const [data, setData] = useState({
         name: '',
@@ -26,8 +26,11 @@ const ModifyProduct = () => {
         available: '',
         category: '',
         subcategory: '',
-        imageUrl: null
+        image: null
     });
+
+    const categories = ["Labios", "Piel"];
+    const subcategories = ["Terror", "Fantasia"];
 
     // Image
     const handleClickImage = (event) => {
@@ -35,37 +38,35 @@ const ModifyProduct = () => {
     };
 
     const handleChangeImage = (event) => {
-        const fileUploaded = event.target.files[0];
-        setSelectedImage(fileUploaded);
-        console.log(selectedImage);
+        const fileUploaded = event.target.files;
+        console.log(fileUploaded[0].name); 
 
-        if (selectedImage) {
-            setImageUrl(URL.createObjectURL(selectedImage));
+        if (fileUploaded[0].name) {
+            setImage(URL.createObjectURL(fileUploaded[0]));
         }
+
+        setData({
+            ...data,
+            image : fileUploaded[0]
+        })
     };
-
-    useEffect(() => {
-        if (selectedImage) {
-          setImageUrl(URL.createObjectURL(selectedImage));
-        }
-    }, [selectedImage]);
 
     // Categories and subcategories
-    const OpenCloseDropdownCategory = () =>{
-        setDropdownCategory(!dropdownCategory);
-    }
-
-    const OpenCloseDropdownSubcategory = () =>{
-        setDropdownSubcategory(!dropdownSubcategory);
-    }
-
     const handleChangeCategory = (event) => {
-        setSelectedCategory(event.currentTarget.textContext);
-    };
+        setSelectedCategory(event.target.value)
+        setData({
+            ...data,
+            category : event.target.value
+        })
+    }
 
     const handleChangeSubcategory = (event) => {
-        setSelectedSubcategory(event.currentTarget.textContext);
-    };
+        setSelectedSubcategory(event.target.value)
+        setData({
+            ...data,
+            subcategory : event.target.value
+        })
+    }
 
     // Modify product
     const handleInputChange = (event) => {
@@ -79,11 +80,12 @@ const ModifyProduct = () => {
         event.preventDefault();
         console.log(data);
 
-        // Validación de los datos
-        if (!data.name || !data.description || !data.price || !data.available || !data.category || !data.subcategory || data.imageUrl === null) {
-            alert("ERROR: " + "Todos los campos son obligatorios");
+        if (!data.name || !data.description || !data.price || !data.available || data.image === null) {
+            alert("ERROR: Todos los campos son obligatorios");
             return;
         }
+
+        navigate('/ProductManagement');
 
         //falta conexión con el API
         //addData(data.name, data.description, data.price, data.available, data.category, data.subcategory, true);
@@ -104,7 +106,7 @@ const ModifyProduct = () => {
                         <label>Descripción</label><br />
                         <textarea onChange={handleInputChange} type="text" id="descriptionProduct" name="description"/><br />
 
-                        <a href="/ProductManagement" alt=""><button type="submit" className="buttonModifyProduct">Modificar producto</button></a>
+                        <button type="submit" className="buttonModifyProduct">Modificar producto</button>
                     </div>
                     <div>
                         <label>Precio</label><br />
@@ -114,30 +116,16 @@ const ModifyProduct = () => {
                         <input onChange={handleInputChange} type="text" id="availableProduct" name="available"/><br />
 
                         <label>Categoría</label><br />
-                        <Dropdown isOpen={dropdownCategory} toggle={OpenCloseDropdownCategory}>
-                            <DropdownToggle caret className='rectangule'>
-                                Seleccione una opción {selectedCategory} 
-                            </DropdownToggle>
-                            <DropdownMenu className="options">
-                                <DropdownItem onClick={handleChangeCategory}>Terror</DropdownItem>
-                                <DropdownItem onClick={handleChangeCategory}>Fantasía</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
+                        <Dropdown value={selectedCategory} onChange={handleChangeCategory} options={categories} placeholder="Seleccione una opción" className="options" />
+                        <br />
 
                         <label>Subcategoría</label><br />
-                        <Dropdown isOpen={dropdownSubcategory} toggle={OpenCloseDropdownSubcategory}>
-                            <DropdownToggle caret className='rectangule'>
-                                Seleccione una opción {selectedSubcategory}
-                            </DropdownToggle>
-                            <DropdownMenu className="options">
-                                <DropdownItem onClick={handleChangeSubcategory}>Hola</DropdownItem>
-                                <DropdownItem onClick={handleChangeSubcategory}>Hola</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-
+                        <Dropdown value={selectedSubcategory} onChange={handleChangeSubcategory} options={subcategories} placeholder="Seleccione una opción" className="options" />
+                        <br />
+                    
                     </div>
                     <div>
-                        <img src={imageUrl} alt="" name="imageUrl"/>
+                        <img src={image} alt="" name="image"/>
                         <button className="buttonLoadImage" type="button" onClick={handleClickImage}>Cargar imagen</button>
                         <input type="file" onChange={handleChangeImage} ref={hiddenFileInput} style={{display: "none"}}/>
                     </div>
