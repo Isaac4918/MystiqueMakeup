@@ -12,6 +12,10 @@ export function MenuAdmin(){
     navigate('/account/manageCategories');
   };
 
+  const ManageProductsPage = () => {
+    navigate('/ProductManagement');
+  };
+
   const HomePage = () => {
     navigate('/');
   };
@@ -23,7 +27,7 @@ export function MenuAdmin(){
       <br />
       <button>Gestionar Publicaciones</button><br />
       <br />
-      <button>Gestionar Productos</button><br />
+      <button onClick={ManageProductsPage}>Gestionar Productos</button><br />
       <br />
       <button onClick={ManageCategoriesPage}>Gestionar Categorías</button><br />
       <br />

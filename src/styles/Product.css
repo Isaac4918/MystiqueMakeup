@@ -79,8 +79,8 @@
     font-weight: bold;
     color: black;
     justify-content: center;
-    margin: 20px 30px 10px; /*30 es el largo del text*/
-    height: 50px;
+    margin: 20px 15px 10px 15px; /*18 es el largo del text*/
+    height: 40px;
 }
 
 .description{
@@ -88,7 +88,7 @@
     font-size: 14px;
     color: black;
     text-align: justify;
-    margin: 0px 35px 20px;
+    margin: 0px 25px 20px;
 }
 
 .buttonModify{
