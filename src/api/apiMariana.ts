@@ -4,7 +4,8 @@
 
 import express from 'express';
 import { accountController } from '../controllers/accountController';
-import { admin } from "../models/DAO/databaseConfig"
+import { admin } from "../models/DAO/configurationDB/databaseConfig"
+import cors from 'cors';
 
 // Create a new express app
 const app = express();
@@ -17,6 +18,16 @@ const PORT = 5000;
 
 // Define routes
 
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+  }));
+
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     next();
+// });
+
 // main route
 app.get('/', (req, res) => {
     res.send('Welcome to the Mystique Makeup API!');
@@ -27,7 +38,8 @@ app.post('/createAccount', (req, res) => {
     const controller = accountController.getInstanceAccountController();
     const data = req.body;
     controller.createAccount(data.username, data.password, data.email, data.admin);
-    res.send('Account created successfully');
+    const response = {'response': 'Account created successfully'}
+    res.json(response);
 });
 
 // get account

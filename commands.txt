@@ -10,5 +10,8 @@ npm install react-multi-carousel --save -D
 
 instalar npm install primereact -D
 
+npm install cors -D
+npm i --save-dev @types/cors
+
 Si no sirve corranlo asi:
 npm install @types/express

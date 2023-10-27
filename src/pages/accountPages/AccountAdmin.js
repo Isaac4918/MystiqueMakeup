@@ -20,6 +20,10 @@ export function MenuAdmin(){
     navigate('/');
   };
 
+  const ManageProductsPage = () => {
+    navigate('/ProductManagement');
+  };
+
   return(
     <div className='menuAdmin'>
       <h2>Bienvenido/a</h2>
