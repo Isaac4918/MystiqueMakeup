@@ -39,7 +39,7 @@ app.get('/getAccount', async (req, res) =>{
     const controller = accountController.getInstanceAccountController();
     const data = req.body;
     const account = await controller.getAccount(data.username)
-    res.send('GetAccount successfully');
+    res.send({ account });
 });
 
 
