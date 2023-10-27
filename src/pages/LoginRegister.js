@@ -5,24 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 export function Register() {
-    let navigate = useNavigate();
-    const [data, setDatos] = useState({
-        username: '',
-        email: '',
-        password: ''
-    });
-
+    const navigate = useNavigate();
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
 
 
     const handleInputChange = (name, value) => {
-        // setDatos({
-        //     ...data,
-        //     [event.target.name] : event.target.value
-        // })
-
         if(name === "username"){
             setUsername(value)
         }
@@ -49,12 +38,13 @@ export function Register() {
                 })
             }).then(res => res.json())
             if(newData.response === 'Account created successfully'){
-                navigate('/publication/create')
-                console.log('Account created successfully')
+                navigate('/');
+                console.log('Account created successfully');
             }
         }
     
-    const prueba = () => {
+    const handleAccount = (event) => {
+        event.preventDefault();
         createAccount(username, password, email)
     }
 
@@ -86,7 +76,7 @@ export function Register() {
                     onChange={(e) => handleInputChange(e.target.name, e.target.value)}
                 />
                 <br />
-                <button type='submit' onClick={prueba}>Crear Cuenta</button>
+                <button onClick={handleAccount}>Crear Cuenta</button>
             </form>
         </div>
     );
