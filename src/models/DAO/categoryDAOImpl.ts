@@ -1,5 +1,5 @@
 import { collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
-import { db } from './databaseConfig';
+import { db } from './configurationDB/databaseConfig';
 import { crudDAO } from "./crudDAO";
 import { Category } from "../category";
 

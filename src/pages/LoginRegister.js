@@ -1,64 +1,92 @@
 import React, { useState } from 'react';
 import '../styles/Account.css';
 import Navbar from "../components/Navbar" 
+import { useNavigate } from 'react-router-dom';
 
 
 export function Register() {
+    let navigate = useNavigate();
     const [data, setDatos] = useState({
         username: '',
         email: '',
         password: ''
     });
 
-    const handleInputChange = (event) => {
-        setDatos({
-            ...data,
-            [event.target.name] : event.target.value
-        })
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('')
+
+
+    const handleInputChange = (name, value) => {
+        // setDatos({
+        //     ...data,
+        //     [event.target.name] : event.target.value
+        // })
+
+        if(name === "username"){
+            setUsername(value)
+        }
+        else if(name === "password"){
+            setPassword(value)
+        }
+        else if(name === "email"){
+            setEmail(value)
+        }
     }
 
-    const sendData = (event) => {
-        event.preventDefault();
-        
-        // Validación de los datos
-        if (!data.username || !data.email || !data.password) {
-            console.log('Todos los campos son obligatorios');
-            return;
+    const createAccount = async(pUser, pPassword, pEmail) => {
+            const newData = await fetch('http://localhost:5000/createAccount',{
+                method: 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: pUser,
+                    password: pPassword,
+                    email: pEmail,
+                    admin: true
+                })
+            }).then(res => res.json())
+            if(newData.response === 'Account created successfully'){
+                navigate('/publication/create')
+                console.log('Account created successfully')
+            }
         }
-
-        //Faltan validaciones y conexión con el API
-        //addData(data.username, data.password, data.email, true);
+    
+    const prueba = () => {
+        createAccount(username, password, email)
     }
 
     return (
         <div className="Register">
-            <form onSubmit={sendData}>
+            <form>
                 <h1>Registrar cuenta</h1>
                 <label>Usuario</label>
                 <br />
                 <input
                     type='text'
-                    onChange={handleInputChange}
                     name='username'
+                    onChange={(e) => handleInputChange(e.target.name, e.target.value)}
                 />
                 <br />
                 <label>Correo electrónico</label>
                 <br />
                 <input
                     type='email'
-                    onChange={handleInputChange}
                     name='email'
+                    onChange={(e) => handleInputChange(e.target.name, e.target.value)}
                 />
                 <br />
                 <label>Contraseña</label>
                 <br />
                 <input
                     type='password'
-                    onChange={handleInputChange}
                     name='password'
+                    onChange={(e) => handleInputChange(e.target.name, e.target.value)}
                 />
                 <br />
-                <button type='submit'>Crear Cuenta</button>
+                <button type='submit' onClick={prueba}>Crear Cuenta</button>
             </form>
         </div>
     );
