@@ -104,10 +104,8 @@ export class accountController{
 
     //---------------------------  LOGIN  ---------------------------------------------------------
     async verifyCredentials(username: string, password: string): Promise<boolean>{
-        console.log("Usuario:", username)
         let account = await this.accountDAO.get(username);
         if(account.getUsername() == username && account.getPassword() == password){
-            console.log("ENCONTRADO")
             return true;
         }
         return false;

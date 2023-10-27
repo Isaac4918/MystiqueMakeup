@@ -1,7 +1,3 @@
-// import
-// const categoryController = require('../controllers/categoryController');
-// const express = require('express');
-
 import express from 'express';
 import { accountController } from '../controllers/accountController';
 import { admin } from "../models/DAO/configurationDB/databaseConfig"
@@ -23,10 +19,6 @@ app.use(cors({
     origin: 'http://localhost:3000',
   }));
 
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     next();
-// });
 
 // main route
 app.get('/', (req, res) => {
@@ -57,7 +49,6 @@ app.post('/loginAccount',async (req, res) => {
     const data = req.body;
     const isValid = await controller.verifyCredentials(data.username, data.password);
     if (isValid == true) {
-        // Si las credenciales son válidas, genera un token de autenticación y envíalo al cliente
         const token = await admin.auth().createCustomToken(data.username);
         res.status(200).send({ token });
       } else {
@@ -86,26 +77,3 @@ app.listen(PORT, () => {
     console.log(`Server listening at http://localhost:${PORT}`);
 });
 
-
-/*
-const fetchData = async(user, contra) => {
-        const newData = await fetch('http://localhost:5000/inicio',{
-            method: 'POST',
-            headers : {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                {"subcategory": ["Subprueba1", "Subprueba2"], "name": "PruebaAPI" }
-            })
-        }).then(res => res.json())
-        if(newData.outResult == 0){
-            console.log(true)
-            navigate("/home")
-        }else{
-            console.log(false)
-            setPasswordError(true);
-        }
-        
-    }
-*/
