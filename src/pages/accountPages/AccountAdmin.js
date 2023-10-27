@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import paletteColors from '../../components/assets/paletteColors.png';
-import Navbar from "../../components/Navbar";
-import '../../styles/Account.css';
-
+import paletteColors from '../../components/assets/paletteColors.png'
+import Navbar from "../../components/Navbar"
+import '../../styles/Account.css'
+import DeleteAccount from './DeleteAccount';
 
 export function MenuAdmin(){
   const navigate = useNavigate();
@@ -14,14 +14,14 @@ export function MenuAdmin(){
 
   const ManageAdminPage = () => {
     navigate('/account/manageAdmin');
-  }
-
-  const ManageProductsPage = () => {
-    navigate('/ProductManagement');
   };
 
   const HomePage = () => {
     navigate('/');
+  };
+
+  const ManageProductsPage = () => {
+    navigate('/ProductManagement');
   };
 
   return(
@@ -44,16 +44,21 @@ export function MenuAdmin(){
 
 
 export function InfoAccount(){
+  const [mostrarDeleteAccount, setMostrarDeleteAccount] = useState(false);
   const navigate = useNavigate();
   
   const ModifyAccountPage = () => {
     navigate('/account/modifyAccount');
   };
 
-  const DeleteAccountPage = () => {
-    navigate('/account/deleteAccount');
-  };
+  const handleClick = () => {
+    setMostrarDeleteAccount(true);
+  }
 
+  const handleConfirmar = () => {
+    setMostrarDeleteAccount(false);
+  }
+  
   return(
     <div className='infoAccount'>  
       <h2>Información</h2>
@@ -63,7 +68,8 @@ export function InfoAccount(){
       <br />
       <button name="Update" onClick={ModifyAccountPage}>Modificar datos</button><br />
       <br />
-      <button name="Delete" onClick={DeleteAccountPage}>Eliminar cuenta</button>
+      <button name="Delete" onClick={handleClick}>Eliminar cuenta</button>
+      {mostrarDeleteAccount && <DeleteAccount onConfirmar={handleConfirmar} />}
     </div>
   )
 }
