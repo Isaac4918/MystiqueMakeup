@@ -4,7 +4,7 @@
 
 import express from 'express';
 import { accountController } from '../controllers/accountController';
-import { admin } from "../models/DAO/databaseConfig"
+import { admin } from "../models/DAO/configurationDB/databaseConfig"
 
 // Create a new express app
 const app = express();

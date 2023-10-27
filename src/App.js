@@ -19,6 +19,7 @@ import ProductScreen from "./pages/ProductScreen";
 import DeleteProduct from "./pages/DeleteProduct";
 import ModifyProduct from "./pages/ModifyProduct";
 import PublicationScreen from "./pages/PublicationScreen";
+import DeleteAccount from "./pages/accountPages/DeleteAccount";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/accountUser" element={<AccountUser/>} />
         <Route path="/accountAdmin" element={<AccountAdmin/>} />
         <Route path="/account/modifyAccount" element={<ModifyAccount/>} />
+        <Route path="/account/deleteAccount" element={<DeleteAccount/>} />
         <Route path="/account/manageCategories" element={<ManageCategories/>} />
         <Route path="/account/manageCategories/deleteCategory" element={<DeleteCategory/>} />
         <Route path="/ProductManagement" element={<ProductManagement />} />
