@@ -90,15 +90,6 @@ export class categoryController{
     }
 
     private async validateRepeatedSubCategories(pSubCategory: string[]): Promise<boolean> { //returns true if repeated names are entered
-        for(let category of await this.categoryDAO.getAll()){
-            for (let subcategory of category.getSubcategory()) {
-                console.log(subcategory);
-                /*
-                if (pSubCategory.includes(element.getName())) {
-                    return true;
-                }*/
-            }
-        }
         return false;
-      }
+    }
 }

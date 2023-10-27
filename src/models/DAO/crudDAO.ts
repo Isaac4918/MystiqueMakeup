@@ -1,4 +1,3 @@
-
 export interface crudDAO{
     getAll(): Promise<Object[]>;
     get(pId:string): Promise<Object>;

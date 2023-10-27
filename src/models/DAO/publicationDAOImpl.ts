@@ -1,5 +1,5 @@
 import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
-import { db } from './databaseConfig';
+import { db } from './configurationDB/databaseConfig';
 import { crudDAO } from './crudDAO';
 import { Publication } from '../publication';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
