@@ -28,53 +28,49 @@ function MyPurchases(){
         }
     };
     return (
-        <div>
+        <div className="MyPurchases">
             <Navbar showIcons={true} />
-            <div className="pagePurchase">
-                <div className="buttonBack"> 
-                    <a href="/"><img src={back} alt=""/></a>
-                </div>
-                <h1>Mis compras</h1>
-                <div className="containerPurchase">
-                    <Carousel responsive={responsive}>
-                        <div className="cardPurchase">
-                            <div className="contentPurchase">
-                                <div className="cardContentPurchase">
-                                    <div className="numPurchase">No. 45677</div>
-                                    <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                    <button className="buttonConsult">Consultar estado</button>
-                                </div>
+            <Link to={"/"}><button className="backManagement"><img src={back} alt=""/></button></Link>
+            <h1>Mis compras</h1>
+            <div className="containerPurchase">
+                <Carousel responsive={responsive}>
+                    <div className="cardPurchase">
+                        <div className="contentPurchase">
+                            <div className="cardContentPurchase">
+                                <div className="numPurchase">No. 45677</div>
+                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
+                                <button className="buttonConsult">Consultar estado</button>
                             </div>
                         </div>
-                        <div className="cardPurchase">
-                            <div className="contentPurchase">
-                                <div className="cardContentPurchase">
-                                    <div className="numPurchase">No. 12345</div>
-                                    <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                    <button className="buttonConsult">Consultar estado</button>
-                                </div>
+                    </div>
+                    <div className="cardPurchase">
+                        <div className="contentPurchase">
+                            <div className="cardContentPurchase">
+                                <div className="numPurchase">No. 12345</div>
+                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
+                                <button className="buttonConsult">Consultar estado</button>
                             </div>
                         </div>
-                        <div className="cardPurchase">
-                            <div className="contentPurchase">
-                                <div className="cardContentPurchase">
-                                    <div className="numPurchase">No. 434334</div>
-                                    <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                    <button className="buttonConsult">Consultar estado</button>
-                                </div>
+                    </div>
+                    <div className="cardPurchase">
+                        <div className="contentPurchase">
+                            <div className="cardContentPurchase">
+                                <div className="numPurchase">No. 434334</div>
+                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
+                                <button className="buttonConsult">Consultar estado</button>
                             </div>
                         </div>
-                        <div className="cardPurchase">
-                            <div className="contentPurchase">
-                                <div className="cardContentPurchase">
-                                    <div className="numPurchase">No. 33333</div>
-                                    <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                    <button className="buttonConsult">Consultar estado</button>
-                                </div>
+                    </div>
+                    <div className="cardPurchase">
+                        <div className="contentPurchase">
+                            <div className="cardContentPurchase">
+                                <div className="numPurchase">No. 33333</div>
+                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
+                                <button className="buttonConsult">Consultar estado</button>
                             </div>
                         </div>
-                    </Carousel>
-                </div>
+                    </div>
+                </Carousel>
             </div>
         </div>
     );

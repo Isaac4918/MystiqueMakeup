@@ -10,12 +10,11 @@ import labiales from "../components/assets/labiales.jpg";
 import delineador from "../components/assets/delineador.jpg";
 import back from "../components/assets/arrowBack.png";
 
-import { useNavigate } from "react-router";
 
 export function Back(){
     return(
         <div className="buttonBack"> 
-            <a href="/"><img src={back} alt=""/></a>
+            <a href="/AccountAdmin"><img src={back} alt=""/></a>
         </div>
     )
 }
@@ -82,7 +81,7 @@ function ProductManagement(){
                                 </div>
                                 <div className="cardContent">
                                     <div className="names">Polvito mágico</div>
-                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
+                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea</div>
                                     <OpenModifyProduct />
                                 </div>
                             </div>
