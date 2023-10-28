@@ -1,10 +1,11 @@
 import React from "react";
 import '../styles/Cart.css'; 
+import Navbar from "../components/Navbar" 
 
 function Cart() {
   return (
     <div className="Cart">
-      <h1>Productos  Precio  Cantidad</h1>
+          <Navbar showIcons={true} />
     </div>
   );
 }

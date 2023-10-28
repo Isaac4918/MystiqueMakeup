@@ -9,9 +9,12 @@
   src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
+
 .Search h1{
   font-family: 'Pattaya';
-  margin-left: 20px;
+  font-size: 40px;
+  text-align: center;
+  margin-left: 10px;
 }
 
 .Search select{
@@ -98,3 +101,16 @@
   margin-left: 20px;
 }
   
+/* ALL ------------------------------------------------------------*/
+.backSearch{
+  border: none;
+  cursor: pointer;
+  margin-top: 13px;
+  background-color: white;
+}
+
+.backSearch img{
+  width: 45px;
+  height: 45px;
+}
+

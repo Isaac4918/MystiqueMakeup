@@ -1,5 +1,15 @@
 import '../styles/Search.css'; 
+import Navbar from "../components/Navbar" 
+import back from "../components/assets/arrowBack.png";
 import React, { useState } from "react";
+
+export function Back(){
+  return(
+      <div className="buttonBack"> 
+          <a href="/Home"><img src={back} alt=""/></a>
+      </div>
+  )
+}
 // Component to represent a category and its subcategories
 function Category({ category, subcategories, setVisibleSubcategories }) {
   const [selected, setSelected] = useState(false);
@@ -105,7 +115,9 @@ function Search() {
 
   return (
     <div className="Search">
+      <Navbar showIcons={true} />
       <h1>Busqueda</h1>
+      <Back />
       <input
         type="search"
         placeholder="¿Que desea buscar?"
