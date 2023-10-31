@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Navbar from "../components/Navbar";
 import {Link} from 'react-router-dom';
 import back from "../components/assets/arrowBack.png";
 
-function DeleteProduct(props) {
+function DeleteProduct() {
     return (
         <div>
             <Navbar showIcons={true} />
@@ -18,14 +17,5 @@ function DeleteProduct(props) {
         </div>
     );
 }
-
-DeleteProduct.propTypes = {
-    prop1: PropTypes.string.isRequired,
-    prop2: PropTypes.number,
-};
-
-DeleteProduct.defaultProps = {
-    prop2: 0,
-};
 
 export default DeleteProduct;
