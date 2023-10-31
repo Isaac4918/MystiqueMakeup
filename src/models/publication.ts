@@ -1,7 +1,6 @@
-import { publicationFactory } from './itemFactory';
-import { service } from './service';
+import { Service } from './service';
 
-export class Publication extends service implements publicationFactory{
+export class Publication extends Service{
     static id = 0
     private date: string;
     private keyWords: string[];
@@ -22,8 +21,4 @@ export class Publication extends service implements publicationFactory{
         return this.keyWords;
     }
 
-    //Method
-    createItem(pDescripcion: string, pName: string, pImage: Blob, pDate: string, pKeyWords: string[]): Object {
-        return new Publication(pImage, pDescripcion, pName, pDate, pKeyWords);
-    }
 }
