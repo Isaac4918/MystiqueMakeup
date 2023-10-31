@@ -1,0 +1,112 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url(./fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+/* PRODUCT ---------------------------------------------*/
+.pageHome{
+    position: relative;
+    margin: 20px 88px;
+    padding: 0px 100px 0px 100px;
+}
+
+.pageHome h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.containerHome{
+    padding: 20px 20px 20px 0px;
+    margin: 0 20px 0 20px;
+}
+
+.content{
+    margin: 0 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardHome{
+    background-color: rgb(242, 242, 242);
+    width: 350px;
+    height: 450px;
+    position: inherit;
+    transition: all 0.4s ease;
+    position: relative;
+    transform: translate(-50%, -50%);
+    display: flex;
+    margin: 0px 10px 0px 10px;
+    top: 50%;
+    left: 50%;
+    justify-content: space-between;
+}
+
+.cardHome:hover{
+    box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+}
+
+.imageContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 14px 0px;
+}
+
+.cardImage{
+    position: relative;
+    height: 200px;
+    width: 200px;
+    
+}
+
+.cardContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardImage img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.names{
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    justify-content: center;
+    margin: 20px 15px 10px 15px; /*18 es el largo del text*/
+    height: 40px;
+}
+
+.description{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: black;
+    text-align: justify;
+    margin: 0px 25px 20px;
+}
+
+.buttonSee{
+    font-family: 'Poppins';
+    font-size: 14px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 150px;
+    height: 33px;
+    position: absolute;
+    position: fixed;
+    bottom: 25px;
+    left: 28%;
+}
+
+.buttonSee:hover{
+    background-color: #6d961a;
+}
