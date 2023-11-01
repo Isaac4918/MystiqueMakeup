@@ -118,16 +118,16 @@
 
 
 /*-------------------- DELETE ACCOUNT --------------------------------------------------*/
-.DeleteAccount{
+.deleteAccount .infoDelete{
     margin-left: 500px;
-    margin-top: 240px;
+    margin-top: 150px;
 }
 
-.DeleteAccount h1{
+.deleteAccount h1{
     font-family: 'Pattaya';
 }
 
-.DeleteAccount button{
+.deleteAccount button{
     background-color: #43A9BF;
     border-radius: 8px;
     border: none;
@@ -138,6 +138,7 @@
     margin-left: 200px;
     cursor: pointer;
 }
+
 
 /*-------------------- MODIFY ACCOUNT --------------------------------------------------*/
 

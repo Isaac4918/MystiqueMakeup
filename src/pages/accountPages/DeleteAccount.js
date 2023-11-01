@@ -16,7 +16,7 @@ export function BackAccount( { account } ){
   };
 
   return(
-      <div className="back"> 
+      <div> 
           <a onClick={accountPage}><img src={backButton} alt=""/></a>
       </div>
   )
@@ -44,46 +44,39 @@ export function RemoveAccount({ account, setAccount }) {
       setAccount(data.account);
     }
     
-}
+  }
 
-useEffect(() => {
+  useEffect(() => {
     getAccount();
-}, []);
+  }, []);
 
-const confirmRemove = async() => {
-  const response = await fetch('http://localhost:5000/deleteAccount',{
-      method: 'DELETE',
-      headers : {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-          username: username
-      })
-  })
+  const confirmRemove = async() => {
+    const response = await fetch('http://localhost:5000/deleteAccount',{
+        method: 'DELETE',
+        headers : {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username
+        })
+    })
 
-  if(response.ok) {
+    if(response.ok) {
       const data = await response.text();
       alert('Cuenta eliminada con éxito', data);
-      
-      if(account.admin === true){
-          navigate('/accountAdmin');
-      }else{
-          navigate('/accountUser');
-      }
+      navigate('/');
+    }
   }
-}
 
   return (
-    <div>
+    <div className='infoDelete'>
       <h1>¿En verdad desea eliminar la cuenta?</h1>
       <br />
       <br />
       <button onClick={confirmRemove}>Confirmar</button>
-  </div> 
+    </div> 
   );
-
-
 }
 
 
@@ -92,7 +85,7 @@ function DeleteAccount(){
   return (
     <div>
         <Navbar showIcons={false} />
-        <div className="DeleteAccount">
+        <div className="deleteAccount">
             <BackAccount account={account}/>
             <RemoveAccount account={account} setAccount={setAccount}/>
         </div>
