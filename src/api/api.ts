@@ -1,10 +1,11 @@
-// import
-// const categoryController = require('../controllers/categoryController');
-// const express = require('express');
-
+// imports
 import express from 'express';
-import { categoryController } from '../controllers/categoryController';
+import { CategoryController } from '../controllers/CategoryController';
+import { ProductsController } from '../controllers/ProductsController';
 
+// controllers instances
+const categoryController = CategoryController.getInstance();
+const productsController = ProductsController.getInstance();
 
 // Create a new express app
 const app = express();
@@ -16,38 +17,44 @@ app.use(express.json());
 const PORT = 5000;
 
 // Define routes
-
 // main route
 app.get('/', (req, res) => {
     res.send('Welcome to the Mystique Makeup API!');
 });
 
+// ====================== CATEGORIES ======================
 // get all categories
 app.get('/categories/all', (req, res) => {
-    const controller = new categoryController();
-    controller.getAllCategories().then((data) => {
+    categoryController.getAllCategories().then((data) => {
     console.log(data)
     res.json(data)
     })
 });
 
-
 // post a new category
 app.post('/categories', (req, res) => {
-    const controller = new categoryController();
     const data = req.body;
-    controller.createCategory(data.name, data.subcategory)
+    categoryController.createCategory(data.name, data.subcategory)
     res.send('Category created successfully');
 });
 
-// Isaac Endpoints
+// ====================== PRODUCTS ======================
+// get all products
+app.get('/products/all', (req, res) => {
+    res.send('All products');
+});
+
+// post a new product
+// app.post('/products', (req, res) => {
+//     if (!req.file) {
+//         res.status(400).send('No file uploaded.');
+//         return;
+//     }
+// });
 
 
-
-
-
-
-
+// ====================== GENERAL USES ======================
+// handling 404 errors
 app.use((req, res) => {
     res.status(404).send('404 Not Found');
 });

@@ -4,8 +4,8 @@ import { CrudDAO } from './CrudDAO';
 import { Product } from '../Product';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export class productDAOImpl implements CrudDAO{
-    private static instance: productDAOImpl;
+export class ProductDAOImpl implements CrudDAO{
+    private static instance: ProductDAOImpl;
 
     //Constructor
     private constructor(){
@@ -13,11 +13,11 @@ export class productDAOImpl implements CrudDAO{
     }
 
     //Getter
-    public static getInstanceProduct(): productDAOImpl {
-        if (!productDAOImpl.instance) {
-            productDAOImpl.instance = new productDAOImpl();
+    public static getInstanceProduct(): ProductDAOImpl {
+        if (!ProductDAOImpl.instance) {
+            ProductDAOImpl.instance = new ProductDAOImpl();
         }
-        return productDAOImpl.instance;
+        return ProductDAOImpl.instance;
     }
 
     //Methods
@@ -25,7 +25,7 @@ export class productDAOImpl implements CrudDAO{
     //--------------------------- CREATE ---------------------------------------------------------
     async create(pObj: Product): Promise<void> {
         try{ 
-            let urlImage = await this.uploadImage(pObj.getImage(), 'Products/${id}');  // Upload image to Firebase Storage y get URL
+            let urlImage = await this.uploadImage(pObj.getImage(), `Products/${pObj.getId()}`); // Upload image to Firebase Storage y get URL
             const docRef = await addDoc(collection(db, "Products"), {
                 id: pObj.getId(), 
                 name: pObj.getName(), 

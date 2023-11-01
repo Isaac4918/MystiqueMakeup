@@ -1,8 +1,9 @@
-import { Category } from "../models/category";
+import { Category } from "../models/Category";
 import { SubCategory } from "../models/SubCategory";
 import { categoryDAOImpl  } from "../models/DAO/categoryDAOImpl";
 
-export class categoryController{
+export class CategoryController{
+    private static instance: CategoryController;
     private categoryDAO: categoryDAOImpl;
     private subCategoryList: SubCategory[];
 
@@ -10,6 +11,14 @@ export class categoryController{
     constructor(){
         this.categoryDAO = categoryDAOImpl.getInstanceCategory();
         this.subCategoryList = []; 
+    }
+
+    //Getter
+    public static getInstance(): CategoryController {
+        if (!CategoryController.instance) {
+            CategoryController.instance = new CategoryController();
+        }
+        return CategoryController.instance;
     }
 
     //Methods

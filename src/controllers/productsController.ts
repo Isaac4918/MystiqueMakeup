@@ -1,31 +1,33 @@
 import { Product } from "../models/Product";
-import {  productDAOImpl  } from "../models/DAO/productDAOImpl";
+import {  ProductDAOImpl  } from "../models/DAO/productDAOImpl";
 import { ProductFactory } from "../models/productFactory";
+import { SubCategory } from "../models/SubCategory";
 
-class productsController{
-    private static instance: productsController;
-    private productDAO: productDAOImpl;
+export class ProductsController{
+    private static instance: ProductsController;
+    private productDAO: ProductDAOImpl;
+    private productFactory: ProductFactory
     
     //Constructor
     constructor(){
-        this.productDAO = productDAOImpl.getInstanceProduct();
+        this.productDAO = ProductDAOImpl.getInstanceProduct();
+        this.productFactory = new ProductFactory();
     }
 
     //Getter
-    public static getInstanceAccountController(): productsController {
-        if (!productsController.instance) {
-            productsController.instance = new productsController();
+    public static getInstance(): ProductsController {
+        if (!ProductsController.instance) {
+            ProductsController.instance = new ProductsController();
         }
-        return productsController.instance;
+        return ProductsController.instance;
     }
 
     //Methods
     //---------------------------------------------------- REGISTER ---------------------------------------------------------
     
     //--------------------------- CREATE ---------------------------------------------------------
-    async createProduct(name: string, descripcion: string, price: number, available: number, pImage: Blob){
-        let productFactory = new ProductFactory();
-        let product = productFactory.createItem(name, descripcion, price, available, pImage);
+    async createProduct(name: string, descripcion: string, price: number, available: number, pImage: Blob, pSubCategory: SubCategory){
+        let product = this.productFactory.createItem(name, descripcion, price, available, pImage, pSubCategory);
         this.productDAO.create(product);
     }
 
