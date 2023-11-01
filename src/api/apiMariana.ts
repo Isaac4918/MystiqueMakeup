@@ -36,10 +36,23 @@ app.post('/createAccount', (req, res) => {
 
 // get account
 app.get('/getAccount', async (req, res) =>{
-    const controller = accountController.getInstanceAccountController();
-    const data = req.body;
-    const account = await controller.getAccount(data.username)
-    res.send({ account });
+    if (!req.headers.authorization) {
+        res.status(401).send('No Authorization header');
+        return;
+    }
+
+    const token = req.headers.authorization.split(' ')[1];
+    try {
+        const decodedToken = await admin.auth().verifyIdToken(token); // Verifica y decodifica el token
+        const data = decodedToken.username; // Obtén el nombre de usuario del token decodificado
+        
+        const controller = accountController.getInstanceAccountController();
+        const account = await controller.getAccount(data.username)
+        res.send({ account });
+      } catch (error) {
+        // Si la verificación falla, devuelve un error
+        res.status(401).send('Unauthorized');
+      }
 });
 
 

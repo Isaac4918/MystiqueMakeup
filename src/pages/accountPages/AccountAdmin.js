@@ -5,8 +5,6 @@ import Navbar from "../../components/Navbar"
 import '../../styles/Account.css'
 import DeleteAccount from './DeleteAccount';
 
-
-
 export function MenuAdmin(){
   const navigate = useNavigate();
 
@@ -55,17 +53,14 @@ export function InfoAccount(){
     navigate('/account/modifyAccount');
   };
  
-  const getAccount = async(pUser) => {
+  const getAccount = async() => {
     const response = await fetch('http://localhost:5000/getAccount',{
       method: 'GET',
       headers : {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}` 
-      },
-      body: JSON.stringify({
-          username: pUser
-      })
+      }
     })
 
     const data = await response.json(); // Esto convierte la respuesta en un objeto JSON
@@ -76,11 +71,8 @@ export function InfoAccount(){
   }
 
   useEffect(() => {
-    const decodedToken = jwt.decode(token); // Decodifica el token
-    const username = decodedToken.username; // Obtén el nombre de usuario del token decodificado
-
-    getAccount(username); // Llama a getAccount con el nombre de usuario
-}, [])
+    getAccount();
+  }, []);
 
   const handleClick = () => {
     setMostrarDeleteAccount(true);
