@@ -155,7 +155,7 @@ const categories = [
 // Define publications
 const publications = [
   {
-    name: "Maquillaje Cruella", createdAt: "2021-01-01", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#cruella", "#Disney"]
+    name: "Maquillaje Malefica", createdAt: "2021-01-01", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#malefica", "#Disney"]
       
   },
   {
