@@ -1,10 +1,10 @@
 import { collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
-import { crudDAO } from './crudDAO';
+import { CrudDAO } from './CrudDAO';
 import { Account } from '../account';
 
-export class accountDAOImpl implements crudDAO{
-    private static instance: accountDAOImpl;
+export class AccountDAOImpl implements CrudDAO{
+    private static instance: AccountDAOImpl;
 
     //Constructor
     private constructor(){
@@ -12,11 +12,11 @@ export class accountDAOImpl implements crudDAO{
     }
 
     //Getter
-    public static getInstanceAccount(): accountDAOImpl {
-        if (!accountDAOImpl.instance) {
-            accountDAOImpl.instance = new accountDAOImpl();
+    public static getInstanceAccount(): AccountDAOImpl {
+        if (!AccountDAOImpl.instance) {
+            AccountDAOImpl.instance = new AccountDAOImpl();
         }
-        return accountDAOImpl.instance;
+        return AccountDAOImpl.instance;
     }
 
     //Methods

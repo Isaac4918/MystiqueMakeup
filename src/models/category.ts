@@ -1,12 +1,12 @@
-import { subCategory } from "./subCategory";
+import { SubCategory } from "./SubCategory";
 
 export class Category{
   private name: string;
-  private subcategory: subCategory[];
+  private subcategory: SubCategory[];
   
   //Constructor
-  constructor(idSubcategory: subCategory[], name: string){
-    this.subcategory = idSubcategory;
+  constructor(name: string){
+    this.subcategory = [];
     this.name = name;
   }
   
@@ -20,12 +20,12 @@ export class Category{
     this.name = name;
   }
 
-  public getSubcategory(): subCategory[]{
+  public getSubcategory(): SubCategory[]{
     return this.subcategory;
   }
 
-  public setSubcategory(subcategory: subCategory[]): void{
-    this.subcategory = subcategory;
+  public addSubcategory(pSubcategory: SubCategory): void{
+    this.subcategory.push(pSubcategory);
+    pSubcategory.setCategory(this);
   }
-
 }

@@ -42,6 +42,14 @@ app.patch('/updateAccount', (req, res) =>{
   res.status(200).send('Account updated successfully');
 });
 
+// delete account
+app.delete('/deleteAccount', (req, res) =>{
+  const controller = accountController.getInstanceAccountController();
+  const data = req.body;
+  controller.deleteAccount(data.username);
+  res.status(200).send('Account removed successfully');
+});
+
 // get account
 app.get('/getAccount', async (req, res) =>{
     if (!req.headers.authorization) {

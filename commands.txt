@@ -13,5 +13,8 @@ instalar npm install primereact -D
 npm install cors -D
 npm i --save-dev @types/cors
 
+npm install --save multer
+npm i @types/multer --save-dev
+
 Si no sirve corranlo asi:
 npm install @types/express

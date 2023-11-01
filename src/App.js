@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home"; 
+import Cart from "./pages/Cart"; 
+import Search from "./pages/Search"; 
 import LoginRegister from "./pages/LoginRegister"
 import ManageCategories from "./pages/categoryPages/ManageCategories"
 import CreatePublication from "./pages/publicationPages/CreatePublication"
@@ -18,16 +20,18 @@ import MyPurchases from "./pages/MyPurchases";
 import ProductScreen from "./pages/ProductScreen";
 import DeleteProduct from "./pages/DeleteProduct";
 import ModifyProduct from "./pages/ModifyProduct";
+import PublicationManagement from "./pages/publicationPages/PublicationManagement";
 import PublicationScreen from "./pages/publicationPages/PublicationScreen";
 import DeleteAccount from "./pages/accountPages/DeleteAccount";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
-import PublicationManagement from "./pages/publicationPages/PublicationManagement";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/Search" element={<Search />} />
         <Route path="/LoginRegister" element={<LoginRegister />} />
         <Route path="/accountAdmin/ManageCategories" element={<ManageCategories/>} />
         <Route path="/publication/create" element={<CreatePublication/>}/>

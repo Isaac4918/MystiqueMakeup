@@ -1,9 +1,9 @@
 import { collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
-import { crudDAO } from "./crudDAO";
+import { CrudDAO } from "./CrudDAO";
 import { Category } from "../category";
 
-export class categoryDAOImpl implements crudDAO{
+export class categoryDAOImpl implements CrudDAO{
     private static instance: categoryDAOImpl;
 
     //Constructor

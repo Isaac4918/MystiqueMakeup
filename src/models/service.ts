@@ -1,29 +1,21 @@
-export abstract class service{
+import { SubCategory } from "./SubCategory";
+
+export abstract class Service{
     private id: number;
     private image: Blob;
     private descripcion: String;
     private name: String;
-    private idSubCategory: subCategory;
+    private subCategory: SubCategory;
 
-    //Constructors
-    constructor(pId: number, pImage: Blob, pDescription: string, pName: string);
-    constructor( pId: number, pImage: Blob, pDescripcion: string, pName: string, idSubcategory: subCategory);
 
-    //Implementation
-    constructor(pId: number, pImage: Blob, pDescription: string, pName: string, idSubcategory?: subCategory | null) {
+    //Constructor
+    constructor(pId: number, pImage: Blob, pDescripcion: String, pName: String, subCategory: SubCategory){
         this.id = pId;
-        if (idSubcategory instanceof subCategory) {
-            this.idSubCategory = idSubcategory;
-            this.image = pImage;
-            this.descripcion = pDescription;
-            this.name = pName;
-        } else {
-            this.image = pImage;
-            this.descripcion = pDescription;
-            this.name = pName
-        }
+        this.image = pImage;
+        this.descripcion = pDescripcion;
+        this.name = pName;
+        this.subCategory = subCategory;
     }
-
 
     //Getters
     public getId(): number{
@@ -40,6 +32,31 @@ export abstract class service{
 
     public getName(): String{
         return this.name;
+    }
+
+    public getSubCategory(): SubCategory{
+        return this.subCategory;
+    }
+
+    //Setters
+    public setId(id: number): void{
+        this.id = id;
+    }
+
+    public setImage(image: Blob): void{
+        this.image = image;
+    }
+
+    public setDescription(description: String): void{
+        this.descripcion = description;
+    }
+
+    public setName(name: String): void{
+        this.name = name;
+    }
+
+    public setSubCategory(subCategory: SubCategory): void{
+        this.subCategory = subCategory;
     }
 
 }

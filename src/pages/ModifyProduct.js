@@ -118,13 +118,13 @@ const ModifyProduct = () => {
     };
 
     return (
-        <div className="ModifyProduct">
+        <div className="ModifyCreateProduct">
+            <Navbar showIcons={true} />
             <form onSubmit={sendData}>
-                <Navbar showIcons={true} />
                 <Link to={"/ProductManagement"}><button className="backManagement"><img src={back} alt=""/></button></Link>
                 <h1>Polvo mágico</h1>
                 
-                <section className="layoutModifyProduct">
+                <section className="layoutModifyCreateProduct">
                     <div className="gridPosition">
                         <label>Nombre</label><br />
                         <input onChange={handleInputChange} type="text" id="nameProduct" name="name"/><br />
@@ -132,7 +132,7 @@ const ModifyProduct = () => {
                         <label>Descripción</label><br />
                         <textarea onChange={handleInputChange} type="text" id="descriptionProduct" name="description"/><br />
 
-                        <button type="submit" className="buttonModifyProduct">Modificar producto</button>
+                        <button type="submit" className="buttonModifyCreateProduct">Modificar producto</button>
                     </div>
                     <div>
                         <label>Precio</label><br />
