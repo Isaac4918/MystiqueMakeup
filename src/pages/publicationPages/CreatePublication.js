@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import { Input, InputArea } from '../components/Input/Input';
-import '../styles/Publications.css'
-import { BackButton } from '../components/Buttons/BackButton';
-import {Combobox} from '../components/Combobox/Combobox';
-import { StdButton } from '../components/Buttons/StdButton';
-import imagePlaceholder from '../components/assets/imagePlaceHolder.png';
+import Navbar from '../../components/Navbar';
+import { Input, InputArea } from '../../components/Input/Input';
+import '../../styles/Publications.css'
+import { BackButton } from '../../components/Buttons/BackButton';
+import {Combobox} from '../../components/Combobox/Combobox';
+import { StdButton } from '../../components/Buttons/StdButton';
+import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
 
 function CreatePublication() {

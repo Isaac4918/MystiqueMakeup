@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
-import { Input, InputArea } from '../components/Input/Input';
-import '../styles/Publications.css'
-import { BackButton } from '../components/Buttons/BackButton';
-import imagePlaceholder from '../components/assets/imagePlaceHolder.png';
+import Navbar from '../../components/Navbar';
+import { Input, InputArea } from '../../components/Input/Input';
+import '../../styles/Publications.css'
+import { BackButton } from '../../components/Buttons/BackButton';
+import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
 
 function PublicationScreen() {
