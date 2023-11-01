@@ -1,11 +1,11 @@
 // imports
 import express from 'express';
-//import { CategoryController } from '../controllers/CategoryController';
+import { CategoryController } from '../controllers/CategoryController';
 import { ProductsController } from '../controllers/ProductsController';
 import multer from 'multer';
 
 // controllers instances
-//const categoryController = CategoryController.getInstance();
+const categoryController = CategoryController.getInstance();
 const productsController = ProductsController.getInstance();
 
 // multer configuration
@@ -29,19 +29,19 @@ app.get('/', (req, res) => {
 
 // ====================== CATEGORIES ======================
 // get all categories
-// app.get('/categories/all', (req, res) => {
-//     categoryController.getAllCategories().then((data) => {
-//     console.log(data)
-//     res.json(data)
-//     })
-// });
+app.get('/categories/all', (req, res) => {
+    categoryController.getAllCategories().then((data) => {
+    console.log(data)
+    res.json(data)
+    })
+});
 
 // // post a new category
-// app.post('/categories', (req, res) => {
-//     const data = req.body;
-//     categoryController.createCategory(data.name, data.subcategory)
-//     res.send('Category created successfully');
-// });
+app.post('/categories', (req, res) => {
+    const data = req.body;
+    categoryController.createCategory(data.name, data.subcategory)
+    res.send('Category created successfully');
+});
 
 // ====================== PRODUCTS ======================
 // get all products

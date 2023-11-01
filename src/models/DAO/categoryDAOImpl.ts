@@ -1,7 +1,7 @@
 import { collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
 import { CrudDAO } from "./CrudDAO";
-import { Category } from "../category";
+import { Category } from "../Category";
 
 export class categoryDAOImpl implements CrudDAO{
     private static instance: categoryDAOImpl;
@@ -39,22 +39,23 @@ export class categoryDAOImpl implements CrudDAO{
 
     //--------------------------- GET ALL ---------------------------------------------------------
     async getAll(): Promise<Category[]> {
+        let data: Category[] = [];
         try {
             const querySnapshot = await getDocs(collection(db, 'Categories'));
-            let data: Category[] = [];
+            ;
              
             querySnapshot.forEach((doc) => {
               // Add objects
               let categoryData = doc.data();
-              let category = new Category(categoryData.subCategory, categoryData.name);
+              let category = new Category(categoryData.name, categoryData.subCategory);
               data.push(category);
             });
-  
             //Return object array
             return data;
   
           } catch (error) {
-            throw new Error('Por el momento, no existen categorías');
+            data = [];
+            return data;
           }
     }
 

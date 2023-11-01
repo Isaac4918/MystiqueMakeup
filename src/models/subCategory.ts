@@ -7,6 +7,7 @@ export class SubCategory{
     //Contructor
     constructor(name: string){
         this.name = name;
+        this.category = new Category("", []);
     }
 
     //Getters and setters
