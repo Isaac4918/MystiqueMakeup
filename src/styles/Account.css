@@ -119,20 +119,12 @@
 
 /*-------------------- DELETE ACCOUNT --------------------------------------------------*/
 .DeleteAccount{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.507);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-left: 500px;
+    margin-top: 240px;
 }
 
 .DeleteAccount h1{
     font-family: 'Pattaya';
-    color: white;
 }
 
 .DeleteAccount button{
@@ -143,7 +135,7 @@
     height: 30px;
     font-size: 18px;
     color: white;
-    margin-left: 20px;
+    margin-left: 200px;
     cursor: pointer;
 }
 

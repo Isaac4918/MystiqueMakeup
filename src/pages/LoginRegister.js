@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Account.css';
 import Navbar from "../components/Navbar" 
 import { useNavigate } from 'react-router-dom';
@@ -138,12 +138,9 @@ export function Login() {
         })
 
         if(response.ok) {
-            const data = await response.json();
-            const token = data.token;
-            console.log('Token:', token);
-
-            localStorage.setItem('token', token);
-            navigate('/accountAdmin');
+            const data = await response.text();
+            localStorage.setItem('username', data);
+            navigate('/');
         } else {
             alert("ERROR: Revisar los datos ingresados");
         }
@@ -204,12 +201,16 @@ export function Login() {
 
 
 function LoginRegister() {
+    useEffect(() => {
+        localStorage.removeItem('username');
+    }, []);
+
     return (
         <div>
             <Navbar showIcons={false} />
             <div className='LoginRegister'>
-                    <Register />
-                    <Login />
+                <Register />
+                <Login />
             </div>
         </div>
 

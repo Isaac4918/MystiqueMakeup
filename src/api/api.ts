@@ -31,6 +31,7 @@ app.get('/categories/all', (req, res) => {
     })
 });
 
+
 // post a new category
 app.post('/categories', (req, res) => {
     const controller = new categoryController();

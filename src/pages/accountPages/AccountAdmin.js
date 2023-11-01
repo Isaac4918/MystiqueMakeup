@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import paletteColors from '../../components/assets/paletteColors.png'
 import Navbar from "../../components/Navbar"
 import '../../styles/Account.css'
-import DeleteAccount from './DeleteAccount';
 
 export function MenuAdmin(){
   const navigate = useNavigate();
@@ -44,55 +43,50 @@ export function MenuAdmin(){
 
 
 export function InfoAccount(){
-  const [mostrarDeleteAccount, setMostrarDeleteAccount] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [ account, setAccount] = useState({});
   const navigate = useNavigate();
-  let token = localStorage.getItem('token');
-  
+  let username = localStorage.getItem('username');
+
   const ModifyAccountPage = () => {
     navigate('/account/modifyAccount');
+  };
+
+  const DeleteAccountPage = () => {
+    navigate('/account/deleteAccount');
   };
  
   const getAccount = async() => {
     const response = await fetch('http://localhost:5000/getAccount',{
       method: 'GET',
       headers : {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${token}` 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': username 
       }
-    })
+    });
 
-    const data = await response.json(); // Esto convierte la respuesta en un objeto JSON
-
-    console.log(data.account); // Esto imprimirá el objeto account en la consola
-
-    setUserData(data.account); // Esto actualiza el estado con los nuevos datos
+    if(response.ok){
+      const data = await response.json();
+      console.log("Cuenta recibida", data);
+      setAccount(data.account);
+    }
+    
   }
 
   useEffect(() => {
     getAccount();
   }, []);
-
-  const handleClick = () => {
-    setMostrarDeleteAccount(true);
-  }
-
-  const handleConfirmar = () => {
-    setMostrarDeleteAccount(false);
-  }
   
   return(
     <div className='infoAccount'>  
       <h2>Información</h2>
-      <label>Usuario: { userData.username}</label><br />
+      <label>Usuario: { account.username}</label><br />
       <br />
-      <label>Email: { userData.email }</label><br />
+      <label>Email: {account.email}</label><br />
       <br />
       <button name="Update" onClick={ModifyAccountPage}>Modificar datos</button><br />
       <br />
-      <button name="Delete" onClick={handleClick}>Eliminar cuenta</button>
-      {mostrarDeleteAccount && <DeleteAccount onConfirmar={handleConfirmar} />}
+      <button name="Delete" onClick={DeleteAccountPage}>Eliminar cuenta</button>
     </div>
   )
 }
