@@ -1,4 +1,4 @@
-export interface itemFactory{
+export interface ItemFactory{
     createItem(...args: any[]): Object;
 }
 

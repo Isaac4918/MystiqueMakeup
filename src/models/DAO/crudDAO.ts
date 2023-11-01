@@ -1,4 +1,4 @@
-export interface crudDAO{
+export interface CrudDAO{
     getAll(): Promise<Object[]>;
     get(pId:string): Promise<Object>;
     create(pObj:Object): Promise<void>;

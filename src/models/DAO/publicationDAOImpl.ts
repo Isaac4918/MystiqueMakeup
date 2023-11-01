@@ -1,10 +1,10 @@
 import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
-import { crudDAO } from './crudDAO';
+import { CrudDAO } from './CrudDAO';
 import { Publication } from '../publication';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export class publicationDAOImpl implements crudDAO{
+export class publicationDAOImpl implements CrudDAO{
     private static instance: publicationDAOImpl;
 
     //Constructor

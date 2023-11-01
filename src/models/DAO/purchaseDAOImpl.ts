@@ -1,9 +1,9 @@
 import { collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
-import { crudDAO } from './crudDAO';
-import { purchase } from '../purchase';
+import { CrudDAO } from './CrudDAO';
+import { Purchase } from '../Purchase';
 
-export class purchaseDAOImpl implements crudDAO{
+export class purchaseDAOImpl implements CrudDAO{
     private static instance: purchaseDAOImpl;
 
     //Constructor
@@ -22,7 +22,7 @@ export class purchaseDAOImpl implements crudDAO{
     //Methods
 
     //--------------------------- CREATE ---------------------------------------------------------    
-    async create(pObj: purchase): Promise<void> {
+    async create(pObj: Purchase): Promise<void> {
         let orderNumber = pObj.getOrderNumber().toString();
         try {
             const docRef = await addDoc(collection(db, "Purchases"), {
@@ -38,14 +38,14 @@ export class purchaseDAOImpl implements crudDAO{
     }
 
      //--------------------------- GET ALL ---------------------------------------------------------
-    async getAll(): Promise<purchase[]> {
+    async getAll(): Promise<Purchase[]> {
         try {
             const querySnapshot = await getDocs(collection(db, 'ShoppingCart'));
-            let data: purchase[] = [];
+            let data: Purchase[] = [];
   
             querySnapshot.forEach((doc) => {
               // Add objects
-              data.push({ id: doc.id, ...doc.data() } as unknown as purchase);
+              data.push({ id: doc.id, ...doc.data() } as unknown as Purchase);
             });
   
             //Return object array
@@ -57,13 +57,13 @@ export class purchaseDAOImpl implements crudDAO{
     }
 
      //--------------------------- GET ONE ACCOUNT ---------------------------------------------------------
-    async get(pId: string): Promise<purchase> {
+    async get(pId: string): Promise<Purchase> {
         try {
             const docSnapshot = await getDoc(doc(db, 'ShoppingCart', pId));
           
             if (docSnapshot.exists()) {
               // Get data
-              let data = {id: docSnapshot.id, ...docSnapshot.data()} as unknown as purchase;
+              let data = {id: docSnapshot.id, ...docSnapshot.data()} as unknown as Purchase;
           
               // Return object
               return data;
@@ -77,7 +77,7 @@ export class purchaseDAOImpl implements crudDAO{
     }
 
     //--------------------------- UPDATE ---------------------------------------------------------
-    async update(pObj: purchase): Promise<void> {
+    async update(pObj: Purchase): Promise<void> {
         try {
             const docRef = doc(db, 'ShoppingCart', "un id");
 
@@ -91,7 +91,7 @@ export class purchaseDAOImpl implements crudDAO{
     }
 
     //--------------------------- DELETE ---------------------------------------------------------
-    async delete(pObj: purchase): Promise<void> {
+    async delete(pObj: Purchase): Promise<void> {
         try {
             const docRef = doc(db, 'ShoppingCart', "un id");
             await deleteDoc(docRef);

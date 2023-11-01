@@ -1,4 +1,4 @@
-import { Service } from './service';
+import { Service } from './Service';
 
 export class Publication extends Service{
     static id = 0

@@ -1,4 +1,4 @@
-export class subCategory{
+export class SubCategory{
     private name: string;
 
     //Contructor

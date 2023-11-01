@@ -1,4 +1,4 @@
-import { Product } from "../models/product";
+import { Product } from "../models/Product";
 import {  productDAOImpl  } from "../models/DAO/productDAOImpl";
 import { ProductFactory } from "../models/productFactory";
 

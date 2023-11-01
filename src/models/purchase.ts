@@ -1,4 +1,4 @@
-export class purchase{
+export class Purchase{
     private orderNumber: number;
     private finalPrice: number;
     private address: string;

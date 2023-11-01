@@ -1,10 +1,10 @@
 import { Category } from "../models/category";
-import { subCategory } from "../models/subCategory";
+import { SubCategory } from "../models/SubCategory";
 import { categoryDAOImpl  } from "../models/DAO/categoryDAOImpl";
 
 export class categoryController{
     private categoryDAO: categoryDAOImpl;
-    private subCategoryList: subCategory[];
+    private subCategoryList: SubCategory[];
 
     //Constructor
     constructor(){
@@ -27,7 +27,7 @@ export class categoryController{
                 if(uniqueCategoryName == true){
                     for(let name of pSubCategory){
                         if(this.validateEmpty(name) == false){
-                            this.subCategoryList.push(new subCategory(name));
+                            this.subCategoryList.push(new SubCategory(name));
                         }  
                     }
     
@@ -49,7 +49,7 @@ export class categoryController{
     async updateCategory(pCategory: string, pSubCategory: string[]): Promise<void>{
         for(let name of pSubCategory){
             if(this.validateEmpty(name) == false){
-                this.subCategoryList.push(new subCategory(name));
+                this.subCategoryList.push(new SubCategory(name));
             }  
         }
 
@@ -61,7 +61,7 @@ export class categoryController{
     async deleteCategory(pCategory: string, pSubCategory: string[]): Promise<void>{
         for(let name of pSubCategory){
             if(this.validateEmpty(name) == false){
-                this.subCategoryList.push(new subCategory(name));
+                this.subCategoryList.push(new SubCategory(name));
             }  
         }
 
