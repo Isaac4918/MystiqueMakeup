@@ -1,17 +1,33 @@
-// Publication Controller
-import { Publication } from "../models/publication";
-import {  publicationDAOImpl  } from "../models/DAO/publicationDAOImpl";
+import { Publication } from "../models/Publication";
+import {  PublicationDAOImpl  } from "../models/DAO/publicationDAOImpl";
+import { PublicationFactory } from "../models/PublicationFactory";
+import { SubCategory } from "../models/SubCategory";
 
-class publicationsController{
-    private publicationDAO: publicationDAOImpl;
+export class PublicationsController{
+    private static instance: PublicationsController;
+    private publicationDAO: PublicationDAOImpl;
+    private publicationFactory: PublicationFactory;
     
     //Constructor
     constructor(){
-        this.publicationDAO = publicationDAOImpl.getInstancePublication();
+        this.publicationDAO = PublicationDAOImpl.getInstancePublication();
+        this.publicationFactory = new PublicationFactory();
     }
 
-    createPublication(pDescripcion: String, pName: String, pImageName: String, pDate: String, pKeyWords: String[]): void{
-        
+    //Getter
+    public static getInstance(): PublicationsController {
+        if (!PublicationsController.instance) {
+            PublicationsController.instance = new PublicationsController();
+        }
+        return PublicationsController.instance;
+    }
+
+    //Methods
+
+    //--------------------------- CREATE ---------------------------------------------------------
+    async createPublication(pName: string, pDescripcion: string, pImage: Blob, pDate: string, pKeyWords: string[], pSubCategory: SubCategory){
+        let publication = this.publicationFactory.createItem(pName, pDescripcion, pImage, pDate, pKeyWords, pSubCategory);
+        this.publicationDAO.create(publication);
     }
 
 }

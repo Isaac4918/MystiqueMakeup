@@ -1,11 +1,11 @@
-import { collection, getDocs, doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
-import { crudDAO } from './crudDAO';
-import { Product } from '../product';
+import { CrudDAO } from './CrudDAO';
+import { Product } from '../Product';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export class productDAOImpl implements crudDAO{
-    private static instance: productDAOImpl;
+export class ProductDAOImpl implements CrudDAO{
+    private static instance: ProductDAOImpl;
 
     //Constructor
     private constructor(){
@@ -13,11 +13,11 @@ export class productDAOImpl implements crudDAO{
     }
 
     //Getter
-    public static getInstanceProduct(): productDAOImpl {
-        if (!productDAOImpl.instance) {
-            productDAOImpl.instance = new productDAOImpl();
+    public static getInstanceProduct(): ProductDAOImpl {
+        if (!ProductDAOImpl.instance) {
+            ProductDAOImpl.instance = new ProductDAOImpl();
         }
-        return productDAOImpl.instance;
+        return ProductDAOImpl.instance;
     }
 
     //Methods
@@ -25,16 +25,15 @@ export class productDAOImpl implements crudDAO{
     //--------------------------- CREATE ---------------------------------------------------------
     async create(pObj: Product): Promise<void> {
         try{ 
-            let id = pObj.getId;
-            let urlImage = await this.uploadImage(pObj.getImage(), 'Product/${id}');  // Upload image to Firebase Storage y get URL
-
-            await setDoc(doc(db, "Publications", id.toString()), {
-                id: pObj.getId, 
-                image: pObj.getImage,
-                imagePath: urlImage,
-                name: pObj.getName,
-                date: pObj.getDate,
-                keyWords: pObj.getKeyWords
+            let urlImage = await this.uploadImage(pObj.getImage(), `Products/${pObj.getId()}`); // Upload image to Firebase Storage y get URL
+            const docRef = await addDoc(collection(db, "Products"), {
+                id: pObj.getId(), 
+                name: pObj.getName(), 
+                description: pObj.getDescription(),
+                price: pObj.getPrice(),
+                available: pObj.getAvailable(),
+                image: pObj.getImage(),
+                imagePath: urlImage
             });
             console.log("Agregó con éxito");
         }catch(error){
@@ -43,7 +42,7 @@ export class productDAOImpl implements crudDAO{
     }
 
     
-    async  uploadImage(pImagen: Blob, pPath: string): Promise<string> {
+    async uploadImage(pImagen: Blob, pPath: string): Promise<string> {
         const storage = getStorage();         //Get a reference to the Firebase storage service
         const imagenRef = ref(storage, pPath);  //Create a reference to the location where you want to save the image
         await uploadBytes(imagenRef, pImagen);  //Upload the image to Firebase Storage
@@ -55,7 +54,7 @@ export class productDAOImpl implements crudDAO{
     //--------------------------- GET ALL ---------------------------------------------------------
     async getAll(): Promise<Product[]> {
         try {
-            const querySnapshot = await getDocs(collection(db, 'Publications'));
+            const querySnapshot = await getDocs(collection(db, 'Products'));
             let data: Product[] = [];
   
             querySnapshot.forEach((doc) => {
@@ -67,15 +66,14 @@ export class productDAOImpl implements crudDAO{
             return data;
   
           } catch (error) {
-            throw new Error('Por el momento, no existen publicaciones');
+            throw new Error('Por el momento, no existen productos');
           }
     }
 
     //--------------------------- GET ONE Product---------------------------------------------------------
-    async get(pObj: Product): Promise<Product> {
-        let idPublication = pObj.getId().toString();
+    async get(pId: string): Promise<Product> {
         try {
-            const docSnapshot = await getDoc(doc(db, 'Publications', idPublication));
+            const docSnapshot = await getDoc(doc(db, 'Products', pId));
           
             if (docSnapshot.exists()) {
               // Get data

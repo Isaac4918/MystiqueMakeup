@@ -1,9 +1,9 @@
 import { collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
-import { crudDAO } from './crudDAO';
-import { shoppingCart } from '../shoppingCart';
+import { CrudDAO } from './CrudDAO';
+import { ShoppingCart } from '../ShoppingCart';
 
-export class shoppingCartDAOImpl implements crudDAO{
+export class shoppingCartDAOImpl implements CrudDAO{
     private static instance: shoppingCartDAOImpl;
 
     //Constructor
@@ -22,7 +22,7 @@ export class shoppingCartDAOImpl implements crudDAO{
     //Methods
 
     //--------------------------- CREATE ---------------------------------------------------------
-    async create(pObj: shoppingCart): Promise<void> {
+    async create(pObj: ShoppingCart): Promise<void> {
         try {
             await setDoc(doc(db, "ShoppingCart", "un id"), {
                 id: "Una prueba"
@@ -34,14 +34,14 @@ export class shoppingCartDAOImpl implements crudDAO{
     }
 
      //--------------------------- GET ALL ---------------------------------------------------------
-    async getAll(): Promise<shoppingCart[]> {
+    async getAll(): Promise<ShoppingCart[]> {
         try {
             const querySnapshot = await getDocs(collection(db, 'ShoppingCart'));
-            let data: shoppingCart[] = [];
+            let data: ShoppingCart[] = [];
   
             querySnapshot.forEach((doc) => {
               // Add objects
-              data.push({ id: doc.id, ...doc.data() } as unknown as shoppingCart);
+              data.push({ id: doc.id, ...doc.data() } as unknown as ShoppingCart);
             });
   
             //Return object array
@@ -53,13 +53,13 @@ export class shoppingCartDAOImpl implements crudDAO{
     }
 
      //--------------------------- GET ONE ACCOUNT ---------------------------------------------------------
-    async get(pId: string): Promise<shoppingCart> {
+    async get(pId: string): Promise<ShoppingCart> {
         try {
             const docSnapshot = await getDoc(doc(db, 'ShoppingCart', pId));
           
             if (docSnapshot.exists()) {
               // Get data
-              let data = {id: docSnapshot.id, ...docSnapshot.data()} as unknown as shoppingCart;
+              let data = {id: docSnapshot.id, ...docSnapshot.data()} as unknown as ShoppingCart;
           
               // Return object
               return data;
@@ -73,7 +73,7 @@ export class shoppingCartDAOImpl implements crudDAO{
     }
 
     //--------------------------- UPDATE ---------------------------------------------------------
-    async update(pObj: shoppingCart): Promise<void> {
+    async update(pObj: ShoppingCart): Promise<void> {
         try {
             const docRef = doc(db, 'ShoppingCart', "un id");
 
@@ -87,7 +87,7 @@ export class shoppingCartDAOImpl implements crudDAO{
     }
 
     //--------------------------- DELETE ---------------------------------------------------------
-    async delete(pObj: shoppingCart): Promise<void> {
+    async delete(pObj: ShoppingCart): Promise<void> {
         try {
             const docRef = doc(db, 'ShoppingCart', "un id");
             await deleteDoc(docRef);

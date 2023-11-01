@@ -1,11 +1,11 @@
 import { collection, getDocs, doc, getDoc, addDoc } from 'firebase/firestore';
 import { db } from './configurationDB/databaseConfig';
-import { crudDAO } from './crudDAO';
-import { Publication } from '../publication';
+import { CrudDAO } from './CrudDAO';
+import { Publication } from '../Publication';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export class publicationDAOImpl implements crudDAO{
-    private static instance: publicationDAOImpl;
+export class PublicationDAOImpl implements CrudDAO{
+    private static instance: PublicationDAOImpl;
 
     //Constructor
     private constructor(){
@@ -13,11 +13,11 @@ export class publicationDAOImpl implements crudDAO{
     }
 
     //Getter
-    public static getInstancePublication(): publicationDAOImpl {
-        if (!publicationDAOImpl.instance) {
-            publicationDAOImpl.instance = new publicationDAOImpl();
+    public static getInstancePublication(): PublicationDAOImpl {
+        if (!PublicationDAOImpl.instance) {
+            PublicationDAOImpl.instance = new PublicationDAOImpl();
         }
-        return publicationDAOImpl.instance;
+        return PublicationDAOImpl.instance;
     }
 
     //Methods
