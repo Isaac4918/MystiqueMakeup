@@ -5,14 +5,19 @@ import React, { useState } from "react";
 
 export function Back(){
   return(
-      <div className="buttonBack"> 
-          <a href="/Home"><img src={back} alt=""/></a>
+      <div className="backSearch"> 
+          <a href="/"><img src={back} alt=""/></a>
       </div>
   )
 }
 // Component to represent a category and its subcategories
 function Category({ category, subcategories, setVisibleSubcategories }) {
   const [selected, setSelected] = useState(false);
+
+  const buttonStyle = {
+    textAlign: 'left', 
+  };
+
 
   const handleSelect = () => {
     setSelected(!selected);
@@ -21,12 +26,12 @@ function Category({ category, subcategories, setVisibleSubcategories }) {
 
   return (
     <div className="Category">
-      <button onClick={handleSelect}>{category.name}</button>
+      <button style={buttonStyle}onClick={handleSelect}>{category.name}</button>
       {selected && (
         <ul>
           {subcategories.map((subcategory) => (
             <li key={subcategory.name}>
-              {subcategory.name}
+              <button style={buttonStyle}>{subcategory.name}</button>
             </li>
           ))}
         </ul>
@@ -36,41 +41,22 @@ function Category({ category, subcategories, setVisibleSubcategories }) {
 }
 
 // Component to represent a publication
-function Publications({ publications, publication, setVisiblePublication }) {
-  const [selected, setSelected] = useState(false);
-
-  const handleSelect = () => {
-    setSelected(!selected);
-    setVisiblePublication(publication);
+function Publication({ publication }) {
+  const buttonStyle = {
+    textAlign: 'left', 
   };
 
   return (
-    <div className="Publications">
-      <button onClick={handleSelect}>{publications.name}</button>
-      {selected && (
-        <ul>
-          {publication.map((publication) => (
-            <li key={publication.name}>
-              {publication.name}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <button style={buttonStyle}>{publication.name}</button>
   );
 }
+
 
 // Component to represent the search bar
 function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("");
   const [visibleSubcategories, setVisibleSubcategories] = useState([]);
-  const [visiblePublications, setVisiblePublications] = useState([]);
-  const [selectedPublication, setSelectedPublication] = useState(null);
-
-  const setVisiblePublication = (publication) => {
-    setSelectedPublication(publication);
-  };
 
   const handleSearchTermChange = (event) => {
     setSearchTerm(event.target.value);
@@ -83,10 +69,6 @@ function Search() {
   const handleCategorySelect = (category) => {
     const subcategories = category.subcategories;
     setVisibleSubcategories(subcategories);
-  };
-
-  const handlePublicationsVisibility = (publications) => {
-    setSelectedPublication(null);
   };
 
   const filteredCategories = categories.filter((category) => {
@@ -115,9 +97,9 @@ function Search() {
 
   return (
     <div className="Search">
-      <Navbar showIcons={true} />
+        <Navbar showIcons={true} />
+        <Back/>
       <h1>Busqueda</h1>
-      <Back />
       <input
         type="search"
         placeholder="¿Que desea buscar?"
@@ -137,20 +119,16 @@ function Search() {
             <Category category={category} subcategories={category.subcategories} setVisibleSubcategories={setVisibleSubcategories} />
           </li>
         ))}
-        {filteredPublications.map((publications) => (
-          <li key={publications.name}>
-            <Publications publications={publications} publication={publications.publication} setVisiblePublication={setVisiblePublication} />
+        <div className="Publications">
+        {filteredPublications.map((publication) => (
+          <li key={publication.name}>
+            <Publication publication={publication} />
           </li>
         ))}
+        </div>
       </ul>
-      {selectedPublication && (
-        <ul>
-          <li key={selectedPublication.name}>
-            {selectedPublication.name}
-          </li>
-        </ul>
-      )}
-    </div>
+      </div>
+    
   );
 }
 
@@ -177,25 +155,20 @@ const categories = [
 // Define publications
 const publications = [
   {
-    name:"Publicacion 1",
-    publication: [
-      {name: "Maquillaje Cruella", createdAt: "2021-01-01", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#cruella", "#Disney"]}
-      ]
+    name: "Maquillaje Cruella", createdAt: "2021-01-01", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#cruella", "#Disney"]
+      
   },
   {
-    name:"Publicacion 2",
-    publication: [
-      {name: "Maquillaje Bruja", createdAt: "2021-01-21", description: "haz magia",Tags: ["#bruja", "#magia"]}
-      ]
+    
+    name: "Maquillaje Bruja", createdAt: "2021-01-21", description: "haz magia",Tags: ["#bruja", "#magia"]
+      
   },
 
   {
-    name:"Publicacion 3",
-    publication: [
-      {name: "Maquillaje Ursula", createdAt: "2021-01-21", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#Disney", "#Ursula"]}
-      ]
+    name: "Maquillaje Ursula", createdAt: "2021-01-21", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#Disney", "#Ursula"]
+      
   }
 
 ];
 
-export default Search;
+export default Search; 

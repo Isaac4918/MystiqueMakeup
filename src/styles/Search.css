@@ -15,6 +15,7 @@
   font-size: 40px;
   text-align: center;
   margin-left: 10px;
+  flex: 1;
 }
 
 .Search select{
@@ -98,15 +99,17 @@
   border: none;
   width: 140px;
   height: 25px;
-  margin-left: 20px;
+  margin-left: 9px;
 }
-  
+
 /* ALL ------------------------------------------------------------*/
-.backSearch{
+.backSearch {
+  display: flex;
+  align-items: center;
   border: none;
   cursor: pointer;
-  margin-top: 13px;
   background-color: white;
+  margin-left: 10px;
 }
 
 .backSearch img{
