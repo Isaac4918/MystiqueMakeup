@@ -12,9 +12,9 @@ const Navbar = ({ showIcons = true }) => {
         </div>
         {showIcons && (
           <div className="rightSide">
-            <li><a href="/"><img src={shoppingIcon} alt=""/></a></li>
+            <li><a href="/Cart"><img src={shoppingIcon} alt=""/></a></li>
             <li><a href="/LoginRegister"><img src={accountIcon} alt=""/></a></li>
-            <li><a href="/"><img src={searchIcon} alt=""/></a></li>
+            <li><a href="/Search"><img src={searchIcon} alt=""/></a></li>
           </div>
         )}
     </div>
