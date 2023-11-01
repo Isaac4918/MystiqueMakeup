@@ -22,7 +22,7 @@
     margin: 0 20px 0 20px;
 }
 
-.content{
+.contentHome{
     margin: 0 40px;
     align-items: center;
     justify-content: center;
@@ -47,33 +47,33 @@
     box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
 }
 
-.imageContent{
+.imageContentHome{
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 15px 14px 0px;
 }
 
-.cardImage{
+.cardImageHome{
     position: relative;
     height: 200px;
     width: 200px;
     
 }
 
-.cardContent{
+.cardContentHome{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.cardImage img{
+.cardImageHome img{
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
 
-.names{
+.namesHome{
     font-family: 'Poppins';
     font-size: 20px;
     font-weight: bold;
@@ -83,7 +83,7 @@
     height: 40px;
 }
 
-.description{
+.descriptionHome{
     font-family: 'Poppins';
     font-size: 14px;
     color: black;
@@ -91,7 +91,7 @@
     margin: 0px 25px 20px;
 }
 
-.buttonSee{
+.buttonSeeHome{
     font-family: 'Poppins';
     font-size: 14px;
     cursor: pointer;    
@@ -107,6 +107,6 @@
     left: 28%;
 }
 
-.buttonSee:hover{
+.buttonSeeHome:hover{
     background-color: #6d961a;
 }

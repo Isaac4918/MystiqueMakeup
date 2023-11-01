@@ -20,7 +20,7 @@ import MyPurchases from "./pages/MyPurchases";
 import ProductScreen from "./pages/ProductScreen";
 import DeleteProduct from "./pages/DeleteProduct";
 import ModifyProduct from "./pages/ModifyProduct";
-import CreateProduct from "./pages/CreateProduct";
+//import CreateProduct from "./pages/CreateProduct";
 import PublicationScreen from "./pages/publicationPages/PublicationScreen";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
 import PublicationManagement from "./pages/publicationPages/PublicationManagement";import DeleteAccount from "./pages/accountPages/DeleteAccount";
@@ -51,7 +51,7 @@ function App() {
         <Route path="/MyPurchases" element={<MyPurchases />} />
         <Route path="/ProductScreen" element={<ProductScreen />} />
         <Route path="/DeleteProduct" element={<DeleteProduct />} />
-        <Route path="/CreateProduct" element={<CreateProduct />} />
+        {/*<Route path="/CreateProduct" element={<CreateProduct />} />*/}
         <Route path="/ModifyProduct" element={<ModifyProduct />} />
         <Route path="/publication/modify" element={<ModifyPublication/>}/>
         <Route path="/publication/manage" element={<PublicationManagement/>}/>
