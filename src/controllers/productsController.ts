@@ -6,7 +6,7 @@ import { SubCategory } from "../models/SubCategory";
 export class ProductsController{
     private static instance: ProductsController;
     private productDAO: ProductDAOImpl;
-    private productFactory: ProductFactory
+    private productFactory: ProductFactory;
     
     //Constructor
     constructor(){
@@ -23,11 +23,10 @@ export class ProductsController{
     }
 
     //Methods
-    //---------------------------------------------------- REGISTER ---------------------------------------------------------
-    
+
     //--------------------------- CREATE ---------------------------------------------------------
-    async createProduct(name: string, descripcion: string, price: number, available: number, pImage: Blob, pSubCategory: SubCategory){
-        let product = this.productFactory.createItem(name, descripcion, price, available, pImage, pSubCategory);
+    async createProduct(pName: string, pDescripcion: string, pPrice: number, pAvailable: number, pImage: Blob, pSubCategory: SubCategory){
+        let product = this.productFactory.createItem(pName, pDescripcion, pPrice, pAvailable, pImage, pSubCategory);
         this.productDAO.create(product);
     }
 

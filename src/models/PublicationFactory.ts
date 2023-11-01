@@ -1,9 +1,10 @@
 import { ItemFactory } from "./ItemFactory";
 import { Publication } from "./Publication";
+import { SubCategory } from "./SubCategory";
 
-class PublicationFactory implements ItemFactory{
-    createItem(pDescripcion: string, pName: string, pImage: Blob, pDate: string, pKeyWords: string[]): Object {
-        return new Publication(pImage, pDescripcion, pName, pDate, pKeyWords);
+export class PublicationFactory implements ItemFactory{
+    createItem(pName: string, pDescripcion: string, pImage: Blob, pDate: string, pKeyWords: string[], pSubCategory: SubCategory): Publication {
+        return new Publication(pName, pDescripcion, pImage, pDate, pKeyWords, pSubCategory);
     }
 }
 
