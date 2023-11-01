@@ -143,7 +143,7 @@ export function Login() {
             console.log('Token:', token);
 
             localStorage.setItem('token', token);
-            navigate('/');
+            navigate('/accountAdmin');
         } else {
             alert("ERROR: Revisar los datos ingresados");
         }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import paletteColors from '../../components/assets/paletteColors.png'
 import Navbar from "../../components/Navbar"
@@ -45,11 +45,34 @@ export function MenuAdmin(){
 
 export function InfoAccount(){
   const [mostrarDeleteAccount, setMostrarDeleteAccount] = useState(false);
+  const [userData, setUserData] = useState({});
   const navigate = useNavigate();
+  let token = localStorage.getItem('token');
   
   const ModifyAccountPage = () => {
     navigate('/account/modifyAccount');
   };
+ 
+  const getAccount = async() => {
+    const response = await fetch('http://localhost:5000/getAccount',{
+      method: 'GET',
+      headers : {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}` 
+      }
+    })
+
+    const data = await response.json(); // Esto convierte la respuesta en un objeto JSON
+
+    console.log(data.account); // Esto imprimirá el objeto account en la consola
+
+    setUserData(data.account); // Esto actualiza el estado con los nuevos datos
+  }
+
+  useEffect(() => {
+    getAccount();
+  }, []);
 
   const handleClick = () => {
     setMostrarDeleteAccount(true);
@@ -62,9 +85,9 @@ export function InfoAccount(){
   return(
     <div className='infoAccount'>  
       <h2>Información</h2>
-      <label>Usuario: XXXXX</label><br />
+      <label>Usuario: { userData.username}</label><br />
       <br />
-      <label>Email: XXX@gmail.com</label><br />
+      <label>Email: { userData.email }</label><br />
       <br />
       <button name="Update" onClick={ModifyAccountPage}>Modificar datos</button><br />
       <br />
