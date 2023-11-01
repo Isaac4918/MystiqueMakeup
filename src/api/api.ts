@@ -1,11 +1,16 @@
 // imports
 import express from 'express';
-import { CategoryController } from '../controllers/CategoryController';
+//import { CategoryController } from '../controllers/CategoryController';
 import { ProductsController } from '../controllers/ProductsController';
+import multer from 'multer';
 
 // controllers instances
-const categoryController = CategoryController.getInstance();
+//const categoryController = CategoryController.getInstance();
 const productsController = ProductsController.getInstance();
+
+// multer configuration
+const storage = multer.memoryStorage()
+const upload = multer({ storage })
 
 // Create a new express app
 const app = express();
@@ -24,19 +29,19 @@ app.get('/', (req, res) => {
 
 // ====================== CATEGORIES ======================
 // get all categories
-app.get('/categories/all', (req, res) => {
-    categoryController.getAllCategories().then((data) => {
-    console.log(data)
-    res.json(data)
-    })
-});
+// app.get('/categories/all', (req, res) => {
+//     categoryController.getAllCategories().then((data) => {
+//     console.log(data)
+//     res.json(data)
+//     })
+// });
 
-// post a new category
-app.post('/categories', (req, res) => {
-    const data = req.body;
-    categoryController.createCategory(data.name, data.subcategory)
-    res.send('Category created successfully');
-});
+// // post a new category
+// app.post('/categories', (req, res) => {
+//     const data = req.body;
+//     categoryController.createCategory(data.name, data.subcategory)
+//     res.send('Category created successfully');
+// });
 
 // ====================== PRODUCTS ======================
 // get all products
@@ -45,12 +50,18 @@ app.get('/products/all', (req, res) => {
 });
 
 // post a new product
-// app.post('/products', (req, res) => {
-//     if (!req.file) {
-//         res.status(400).send('No file uploaded.');
-//         return;
-//     }
-// });
+app.post('/products', upload.single('image'), (req, res) => {
+    if (!req.file) {
+        res.status(400).send('No file uploaded.');
+        console.log('No file uploaded.');
+    }
+    else{
+        const blob = new Blob([req.file.buffer], { type: req.file.mimetype });
+        const data = req.body;
+        productsController.createProduct(data.name, data.description, data.price, data.available, blob, data.subcategory);
+    }
+    
+});
 
 
 // ====================== GENERAL USES ======================

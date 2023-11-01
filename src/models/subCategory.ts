@@ -5,9 +5,8 @@ export class SubCategory{
     private category: Category;
 
     //Contructor
-    constructor(name: string, category: Category){
+    constructor(name: string){
         this.name = name;
-        this.category = category;
     }
 
     //Getters and setters

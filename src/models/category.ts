@@ -5,8 +5,8 @@ export class Category{
   private subcategory: SubCategory[];
   
   //Constructor
-  constructor(idSubcategory: SubCategory[], name: string){
-    this.subcategory = idSubcategory;
+  constructor(name: string){
+    this.subcategory = [];
     this.name = name;
   }
   
@@ -24,8 +24,8 @@ export class Category{
     return this.subcategory;
   }
 
-  public setSubcategory(subcategory: SubCategory[]): void{
-    this.subcategory = subcategory;
+  public addSubcategory(pSubcategory: SubCategory): void{
+    this.subcategory.push(pSubcategory);
+    pSubcategory.setCategory(this);
   }
-
 }
