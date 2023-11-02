@@ -8,6 +8,9 @@ import 'react-multi-carousel/lib/styles.css';
 import labiales from "../components/assets/labiales.jpg";
 import delineador from "../components/assets/delineador.jpg";
 import polvos from "../components/assets/polvos.jpg";
+import MBruja from "../components/assets/bruja.jpg";
+import MMalefica from "../components/assets/malefica.jpg";
+import MUrsula from "../components/assets/ursula.jpg";
 
 export function OpenSeeProduct(){
   return(
@@ -16,6 +19,14 @@ export function OpenSeeProduct(){
       </div>
   )
 }
+
+export function OpenSeePublication(){
+    return(
+        <div> 
+            <a href="/PublicationScreen"><button className="buttonSee">Ver Publicacion</button></a>
+        </div>
+    )
+  }
 
 function Home(){
   const responsive = {
@@ -96,6 +107,68 @@ function Home(){
                                   <div className="names">Delineador maravilla</div>
                                   <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
                                   <OpenSeeProduct />
+                              </div>
+                          </div>
+                      </div>
+                  </Carousel>
+
+                  <hr className="divider" />
+
+                <h1>Nuevos Maquillajes</h1>
+                  <Carousel responsive={responsive}>
+                      <div className="cardHome">
+                          <div className="content">
+                              <div className="imageContent">
+                                  <div className="cardImage">
+                                      <img src={MMalefica} alt=""/>
+                                  </div>
+                              </div>
+                              <div className="cardContent">
+                                  <div className="names">Maquillaje Malefica</div>
+                                  <div className="description">Sorprende a tus amigos con villanos de Disney</div>
+                                  <OpenSeePublication />
+                              </div>
+                          </div>
+                      </div>
+                      <div className="cardHome">
+                          <div className="content">
+                              <div className="imageContent">
+                                  <div className="cardImage">
+                                      <img src={MBruja} alt=""/>
+                                  </div>
+                              </div>
+                              <div className="cardContent">
+                                  <div className="names">Maquillaje Bruja</div>
+                                  <div className="description">Haz magia</div>
+                                  <OpenSeePublication/>
+                              </div>
+                          </div>
+                      </div>
+                      <div className="cardHome">
+                          <div className="content">
+                              <div className="imageContent">
+                                  <div className="cardImage">
+                                      <img src={MUrsula} alt=""/>
+                                  </div>
+                              </div>
+                              <div className="cardContent">
+                                  <div className="names">Maquillaje Ursula</div>
+                                  <div className="description">Sorprende a tus amigos con villanos de Disney</div>
+                                  <OpenSeePublication />
+                              </div>
+                          </div>
+                      </div>
+                      <div className="cardHome">
+                          <div className="content">
+                              <div className="imageContent">
+                                  <div className="cardImage">
+                                      <img src={MUrsula} alt=""/>
+                                  </div>
+                              </div>
+                              <div className="cardContent">
+                                  <div className="names">Maquillaje Ursula</div>
+                                  <div className="description">Sorprende a tus amigos con villanos de Disney</div>
+                                  <OpenSeePublication />
                               </div>
                           </div>
                       </div>

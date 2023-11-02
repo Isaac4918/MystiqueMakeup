@@ -20,11 +20,10 @@ import MyPurchases from "./pages/MyPurchases";
 import ProductScreen from "./pages/ProductScreen";
 import DeleteProduct from "./pages/DeleteProduct";
 import ModifyProduct from "./pages/ModifyProduct";
-//import CreateProduct from "./pages/CreateProduct";
+import PublicationManagement from "./pages/publicationPages/PublicationManagement";
 import PublicationScreen from "./pages/publicationPages/PublicationScreen";
+import DeleteAccount from "./pages/accountPages/DeleteAccount";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
-import PublicationManagement from "./pages/publicationPages/PublicationManagement";import DeleteAccount from "./pages/accountPages/DeleteAccount";
-
 
 function App() {
   return (
