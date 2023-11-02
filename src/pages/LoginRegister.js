@@ -2,7 +2,21 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Account.css';
 import Navbar from "../components/Navbar" 
 import { useNavigate } from 'react-router-dom';
+import backButton from '../components/assets/back.png'
 
+export function Back(){
+    const navigate = useNavigate();
+  
+    const HomePage = () => {
+        navigate('/');
+    };
+  
+    return(
+        <div className='back'> 
+            <a onClick={HomePage}><img src={backButton} alt=""/></a>
+        </div>
+    )
+  }
 
 export function Register() {
     const navigate = useNavigate();
@@ -208,6 +222,7 @@ function LoginRegister() {
     return (
         <div>
             <Navbar showIcons={false} />
+            <Back/>
             <div className='LoginRegister'>
                 <Register />
                 <Login />

@@ -24,6 +24,7 @@ import PublicationManagement from "./pages/publicationPages/PublicationManagemen
 import PublicationScreen from "./pages/publicationPages/PublicationScreen";
 import DeleteAccount from "./pages/accountPages/DeleteAccount";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
+import DeliveryPending from "./pages/DeliveryPending";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="/ModifyProduct" element={<ModifyProduct />} />
         <Route path="/publication/modify" element={<ModifyPublication/>}/>
         <Route path="/publication/manage" element={<PublicationManagement/>}/>
+        <Route path="/deliveryPending" element={<DeliveryPending/>}/>
       </Routes>
     </Router>
   );

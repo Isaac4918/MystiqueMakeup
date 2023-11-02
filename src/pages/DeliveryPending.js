@@ -8,7 +8,7 @@ import 'react-multi-carousel/lib/styles.css';
 import back from "../components/assets/arrowBack.png";
 import {Link} from 'react-router-dom';
 
-function MyPurchases(){
+function DeliveryPending(){
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -30,8 +30,8 @@ function MyPurchases(){
     return (
         <div className="MyPurchases">
             <Navbar showIcons={true} />
-            <Link to={"/accountUser"}><button className="backManagement"><img src={back} alt=""/></button></Link>
-            <h1>Mis compras</h1>
+            <Link to={"/"}><button className="backManagement"><img src={back} alt=""/></button></Link>
+            <h1>Entrega de Productos Pendientes</h1>
             <div className="containerPurchase">
                 <Carousel responsive={responsive}>
                     <div className="cardPurchase">
@@ -39,7 +39,7 @@ function MyPurchases(){
                             <div className="cardContentPurchase">
                                 <div className="numPurchase">No. 45677</div>
                                 <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Consultar estado</button>
+                                <button className="buttonConsult">Agendar entrega</button>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@ function MyPurchases(){
                             <div className="cardContentPurchase">
                                 <div className="numPurchase">No. 12345</div>
                                 <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Consultar estado</button>
+                                <button className="buttonConsult">Agendar entrega</button>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@ function MyPurchases(){
                             <div className="cardContentPurchase">
                                 <div className="numPurchase">No. 434334</div>
                                 <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Consultar estado</button>
+                                <button className="buttonConsult">Agendar entrega</button>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ function MyPurchases(){
                             <div className="cardContentPurchase">
                                 <div className="numPurchase">No. 33333</div>
                                 <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Consultar estado</button>
+                                <button className="buttonConsult">Agendar entrega</button>
                             </div>
                         </div>
                     </div>
@@ -76,4 +76,4 @@ function MyPurchases(){
     );
 }
 
-export default MyPurchases;
+export default DeliveryPending;
