@@ -97,6 +97,19 @@ export class accountController{
         return account;
     }
 
+    async getAllUsername(username: string): Promise<string[]>{
+        let usernameList: string[] = [];
+        let usernameDAO = '';
+        
+        for(let account of await this.accountDAO.getAll()){
+            if(account.getUsername().includes(username) && account.getAdmin() == false){
+                usernameDAO = account.getUsername();
+                usernameList.push(usernameDAO);
+            }
+        }
+        return usernameList;
+    }
+
 
     //-------------------------------------------------------------------------------------------------------------------------------------
 

@@ -40,7 +40,6 @@ export function UpdateAccount( { account, setAccount } ){
     
         if(response.ok){
           const data = await response.json();
-          console.log("Cuenta recibida", data);
           setAccount(data.account);
         }
         
@@ -76,7 +75,7 @@ export function UpdateAccount( { account, setAccount } ){
                 username: pUser,
                 password: pPassword,
                 email: pEmail,
-                admin: true
+                admin: false
             })
         })
 

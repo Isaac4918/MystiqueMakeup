@@ -16,7 +16,7 @@ export function BackAccount( { account } ){
   };
 
   return(
-      <div> 
+      <div className='back'> 
           <a onClick={accountPage}><img src={backButton} alt=""/></a>
       </div>
   )

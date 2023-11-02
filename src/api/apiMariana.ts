@@ -1,6 +1,5 @@
 import express from 'express';
 import { accountController } from '../controllers/accountController';
-import { admin } from "../models/DAO/configurationDB/databaseConfig"
 import cors from 'cors';
 
 // Create a new express app
@@ -58,7 +57,6 @@ app.get('/getAccount', async (req, res) =>{
     }
 
     const username = req.headers.authorization;
-    console.log("Token del header", username);
     const controller = accountController.getInstanceAccountController();
     const account = await controller.getAccount(username);
     res.send({ account });
@@ -77,16 +75,13 @@ app.post('/loginAccount',async (req, res) => {
     }
   });
 
-
-
-// get all categories
-/*app.get('/categories/all', (req, res) => {
-    const controller = new categoryController();
-    controller.getAllCategories().then((data) => {
-    console.log(data)
-    res.json(data)
-    })
-});*/
+// search username
+app.post('/getUsernames', async (req, res) =>{
+  const controller = accountController.getInstanceAccountController();
+  const data = req.body;
+  const usernameList = await controller.getAllUsername(data.username);
+  res.status(200).json(usernameList);
+});
 
 
 app.use((req, res) => {

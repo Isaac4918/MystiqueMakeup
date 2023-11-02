@@ -34,12 +34,12 @@ export function Register() {
                 username: pUser,
                 password: pPassword,
                 email: pEmail,
-                admin: true
+                admin: false
             })
         }).then(res => res.json())
         if(newData.response === 'Account created successfully'){
+            alert('Cuenta creada con éxito');
             navigate('/');
-            console.log('Account created successfully');
         }
     }
     
