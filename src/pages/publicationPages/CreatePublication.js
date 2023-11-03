@@ -71,7 +71,7 @@ const CreatePublication = () => {
     const handlePublication = (event) => {
         event.preventDefault();
 
-        if (!data.name || !data.description || !data.tags || !data.date || !data.category || !data.subcategory) {
+        if (!data.name || !data.description || !data.tags || !data.category || !data.subcategory) {
             alert("ERROR: Todos los campos son obligatorios");
             return;
         }
@@ -83,12 +83,6 @@ const CreatePublication = () => {
 
         if (data.name.length > 22) {
             alert("ERROR: El nombre es muy largo, el máximo es 22 caracteres");
-            return;
-        }
-
-        const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
-        if (!datePattern.test(data.date)) {
-            alert("ERROR: El formato de fecha debe ser DD/MM/YYYY");
             return;
         }
 
@@ -139,8 +133,6 @@ const CreatePublication = () => {
                         <button type="submit" className="buttonModifyCreatePublication">Crear publicacion</button>
                     </div>
                     <div>
-                        <label>Fecha (DD/MM/YYYY)</label><br />
-                        <input onChange={handleInputChange} type="text" id="datePublication" name="date" pattern="\d{2}/\d{2}/\d{4}" /><br />
 
                         <label>Tags</label><br />
                         <input onChange={handleInputChange} type="text" id="tagsPublication" name="tags" /><br />
