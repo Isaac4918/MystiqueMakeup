@@ -1,82 +1,164 @@
-import React, { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import { Input, InputArea } from '../../components/Input/Input';
-import '../../styles/Publications.css'
-import { BackButton } from '../../components/Buttons/BackButton';
-import {Combobox} from '../../components/Combobox/Combobox';
-import { StdButton } from '../../components/Buttons/StdButton';
-import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
+import React, { useRef, useState } from 'react';
+import "../../styles/Publications.css";
+import Navbar from "../../components/Navbar";
+import back from "../../components/assets/arrowBack.png";
+import { Dropdown } from 'primereact/dropdown';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+const CreatePublication = () => {
+    const navigate = useNavigate();
+    const hiddenFileInput = useRef(null);
+    const [image, setImage] = useState(null);
+
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedSubcategory, setSelectedSubcategory] = useState('');
+
+    const [data, setData] = useState({
+        name: '',
+        description: '',
+        tags: '',
+        date: '',
+        category: '',
+        subcategory: '',
+        image: null
+    });
+
+    const categories = ["Disney", "Spooky"];
+    const subcategories = ["Villanos", "Magia"];
 
 
-function CreatePublication() {
-    const [publicationName, setPublicationName] = useState('');
-    const [description, setDescription] = useState('');
-    const [tags, setTags] = useState([]);
-    const [imageSource, setImageSource] = useState(imagePlaceholder);
-
-    const handleSubmit = () => {
-        console.log('publicationName: ', publicationName);
-        console.log('description', description);
-        console.log('tags', tags);
-        // handle form submission logic here
+    const handleClickImage = (event) => {
+        hiddenFileInput.current.click();
     };
 
-    const handleChangeInputs = (id,value) => {
-        if(id === "publicationName"){
-            setPublicationName(value);
-            //console.log('publicationName: ', publicationName);
+    const handleChangeImage = (event) => {
+        const fileUploaded = event.target.files;
+        if (fileUploaded[0].name) {
+            setImage(URL.createObjectURL(fileUploaded[0]));
         }
-        else if(id === "description"){
-            setDescription(value);
-            //console.log('description', description);
+        setData({
+            ...data,
+            image: fileUploaded[0]
+        });
+    };
+
+    const handleInputChange = (event) => {
+        setData({
+            ...data,
+            [event.target.name]: event.target.value
+        });
+    };
+
+        // Categories and subcategories
+        const handleChangeCategory = (event) => {
+            setSelectedCategory(event.target.value)
+            setData({
+                ...data,
+                category : event.target.value
+            })
         }
-        else if(id === "tags"){
-            setTags(value);
-            //console.log('tags', tags);
+    
+        const handleChangeSubcategory = (event) => {
+            setSelectedSubcategory(event.target.value)
+            setData({
+                ...data,
+                subcategory : event.target.value
+            })
+        }
+
+    const handlePublication = (event) => {
+        event.preventDefault();
+
+        if (!data.name || !data.description || !data.tags || !data.date || !data.category || !data.subcategory) {
+            alert("ERROR: Todos los campos son obligatorios");
+            return;
+        }
+
+        if (data.description.length > 122) {
+            alert("ERROR: La descripción es muy larga, el máximo es 122 caracteres");
+            return;
+        }
+
+        if (data.name.length > 22) {
+            alert("ERROR: El nombre es muy largo, el máximo es 22 caracteres");
+            return;
+        }
+
+        const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+        if (!datePattern.test(data.date)) {
+            alert("ERROR: El formato de fecha debe ser DD/MM/YYYY");
+            return;
+        }
+
+        if (data.image === null) {
+            alert("ERROR: Debe seleccionar una imagen");
+            return;
+        }
+
+        navigate('/PublicationManagement');
+    };
+
+    const CreatePublication = async(publiName, publiDescription, publitags, publidate, publiCategory, publiSubcategory, publiImage) => {
+        const newData = await fetch('http://localhost:5000/createPublication',{
+            method: 'POST',
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                name: publiName,
+                description: publiDescription,
+                tags: publitags,
+                date: publidate,
+                category: publiCategory,
+                subcategory: publiSubcategory,
+                image: publiImage
+            })
+        }).then(res => res.json())
+        if(newData.response === 'Publication created successfully'){
+            navigate('/PublicationManagement');
+            console.log('Publication created successfully');
         }
     }
 
-    let options = [1,2,3];
-    let options2 = [1,2,3];
-
     return (
-        <div>
-            <Navbar />
-            <section className='create-layout'>
-                <div>
-                    <BackButton navigateTo={"/"}/>
-                    <h1>Crear Publicación</h1>
-                    <br/>
-                    <label className='labelLayout'>Nombre</label>
-                    <br/>
-                    <Input id="publicationName" type="text" placeholder="Nombre de la publicación" handleChange={handleChangeInputs}/>
-                    <br/>
-                    <label className='labelLayout'>Descripción</label>
-                    <br/>
-                    <InputArea id="description" type="text" placeholder="Descripción" area={true} handleChange={handleChangeInputs}/>
-                </div>
-                <div>
-                    <label className='labelLayout'>Seleccione Categoría</label>
-                    <br/>
-                    <Combobox options={options}/>
-                    <br/>
-                    <label className='labelLayout'>Seleccione Sub-categoría</label>
-                    <br/>
-                    <Combobox options={options2}/>
-                    <br/>
-                    <label className='labelLayout'>Tags</label>
-                    <br/>
-                    <Input id="tags" type="text" placeholder="Tags de la publicación" handleChange={handleChangeInputs}/>
-                </div>
-                <div className='image-container'>
-                    <img className="images" src={imageSource} alt= "Prueba"/>
-                    <br/>
-                    <StdButton text="Seleccionar Imagen" handleClick={() => console.log("Seleccionar Imagen")}/>
-                </div>
-            </section>
-            <section>
-                <StdButton text="Crear Publicación" buttonType = "Accept" handleClick={handleSubmit}/>
-            </section>
+        <div className="ModifyCreatePublication">
+            <Navbar showIcons={true} />
+            <Link to={"/PublicationManagement"}><button className="backManagementPublication"><img src={back} alt=""/></button></Link>
+
+                <section className="layoutModifyCreatePublication">
+                    <div className="gridPosition">
+                        <label>Nombre</label><br />
+                        <input onChange={handleInputChange} type="text" id="namePublication" name="name" /><br />
+
+                        <label>Descripción</label><br />
+                        <textarea onChange={handleInputChange} type="text" id="descriptionPublication" name="description" /><br />
+
+                        <button type="submit" className="buttonModifyCreatePublication">Crear publicacion</button>
+                    </div>
+                    <div>
+                        <label>Fecha (DD/MM/YYYY)</label><br />
+                        <input onChange={handleInputChange} type="text" id="datePublication" name="date" pattern="\d{2}/\d{2}/\d{4}" /><br />
+
+                        <label>Tags</label><br />
+                        <input onChange={handleInputChange} type="text" id="tagsPublication" name="tags" /><br />
+
+                        <label>Categoría</label><br />
+                        <Dropdown value={selectedCategory} onChange={handleChangeCategory} options={categories} placeholder="Seleccione una opción" className="options" />
+                        <br />
+
+                        <label>Subcategoría</label><br />
+                        <Dropdown value={selectedSubcategory} onChange={handleChangeSubcategory} options={subcategories} placeholder="Seleccione una opción" className="options" />
+                        <br />
+                    </div>
+                    <div>
+                        <img src={image} alt="" name="image" />
+                        <button className="buttonLoadImage" type="button" onClick={handleClickImage}>Cargar imagen</button>
+                        <input type="file" onChange={handleChangeImage} ref={hiddenFileInput} style={{ display: "none" }} />
+                    </div>
+                </section>
         </div>
     );
 }

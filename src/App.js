@@ -26,6 +26,7 @@ import CreatePublication from "./pages/publicationPages/CreatePublication"
 import PublicationManagement from "./pages/publicationPages/PublicationManagement";
 import DeletePublication from "./pages/publicationPages/DeletePublication";
 import DeleteAccount from "./pages/accountPages/DeleteAccount";
+import PaymentDetails from "./pages/PaymentDetails";
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         <Route path="/CreatePublication" element={<CreatePublication/>}/>
         <Route path="/DeletePublication" element={<DeletePublication/>}/>
         <Route path="/PublicationScreen" element={<PublicationScreen/>}/>
+        <Route path="/PaymentDetails" element={<PaymentDetails />} />
       </Routes>
     </Router>
   );
