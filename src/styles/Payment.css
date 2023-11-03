@@ -74,7 +74,6 @@
     margin-bottom: 30px;
     margin-right: 10px;
     align-items: center;
-    text-align: center;
 }
 
 .layoutPayment img{
@@ -101,6 +100,7 @@
     height: 38px;
     margin-top: 20px;
     margin-left: 160px;
+    transition: all 0.4s ease;
 }
 
 .buttonLoadPayment{
@@ -114,5 +114,14 @@
     width: 300px;
     height: 38px;
     margin-top: 20px;
+    transition: all 0.4s ease;
+}
+
+.buttonLoadPayment:hover{
+    background-color: #6d961a;
+}
+
+.buttonEnd:hover{
+    background-color: #26b9cd;
 }
 
