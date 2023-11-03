@@ -10,7 +10,7 @@ import MBruja from "../../components/assets/bruja.jpg";
 import MMalefica from "../../components/assets/malefica.jpg";
 import MUrsula from "../../components/assets/ursula.jpg";
 
-
+// BUTTONS -----------------------------------------------------------------
 export function Back(){
     return(
         <div className="buttonBack"> 
@@ -28,9 +28,15 @@ export function OpenModifyPublication(){
 }
 
 export function OpenDeletePublication(){
+    const handleConfirmation = () => {
+        if (window.confirm("¿Está seguro que desea eliminar esta publicación?")) {
+            window.location.href = "/PublicationManagement";
+            //aqui se elimina la publicacion
+        }
+    }
     return(
         <div> 
-            <a href="/DeletePublication"><button className="buttonDeletePublication"><img src={trash} alt=""/></button></a>
+            <button className="buttonDeletePublication" onClick={handleConfirmation}><img src={trash} alt=""/></button>
         </div>
     )
 }
@@ -43,6 +49,7 @@ export function OpenCreatePublication(){
     )
 }
 
+// FUNCTIONS -----------------------------------------------------------------
 function PublicationManagement(){
     const responsive = {
         superLargeDesktop: {

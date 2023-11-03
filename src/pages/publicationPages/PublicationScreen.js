@@ -28,7 +28,7 @@ function PublicationScreen(){
                         <h2>Descripción: </h2>
                         <p>Soprende a tus amigos con los villanos de Disney</p>
                         <h2>Fecha: </h2>
-                        <p>02-02-2023</p>
+                        <p>02/02/2023</p>
                         <h2>Tags: </h2>
                         <div className="tagsPublication">
                         <p>#Disney #Villanos</p>

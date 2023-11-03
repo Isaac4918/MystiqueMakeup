@@ -106,7 +106,6 @@
     font-size: 14px;
     color: #5E8410;
     text-align: justify;
-    margin: 0px 25px 20px;
 }
 
 .buttonModifyPublication{
@@ -200,7 +199,7 @@
 }
 
 .pagePublicationScreen .layout img{
-    width: 450px;
+    width: 400px;
     height: 350px;
     display: block;
     margin: auto;
@@ -215,7 +214,7 @@
     height: 60px;
 }
 
-.pagePublicationScreen .layout .infoContainer{
+.pagePublicationScreen .layout .infoContainerPublication{
     padding-top: 110px;
     justify-content: center;
     align-items: center;
@@ -237,6 +236,11 @@
     bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
+    transition: all 0.4s ease;
+}
+
+.pagePublicationScreen button:hover{
+    background-color: #26b9cd;
 }
 
 /* MODIFY Publication -----------------------------------------------*/
@@ -326,6 +330,11 @@
     margin-left: 30px;
     margin-top: 78px;
     position: absolute;
+    transition: all 0.4s ease;
+}
+
+.buttonModifyCreatePublication:hover{
+    background-color: #26b9cd;
 }
 
 .buttonLoadImagePublication{
@@ -340,6 +349,11 @@
     height: 38px;
     margin-left: 75px;
     margin-top: 40px;
+    transition: all 0.4s ease;
+}
+
+.buttonLoadImagePublication:hover{
+    background-color: #6d961a;
 }
 
 .ModifyCreatePublication .options {
@@ -351,6 +365,7 @@
     border-radius: 8px;
     margin-left: 30px;
     margin-bottom: 50px;
+    align-items: center;
   }
 
 /* DELETE Publication --------------------------------------------------*/
