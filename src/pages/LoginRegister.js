@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Account.css';
 import Navbar from "../components/Navbar" 
 import { useNavigate } from 'react-router-dom';
+import backButton from '../components/assets/back.png'
 
+export function Back(){
+    const navigate = useNavigate();
+  
+    const HomePage = () => {
+        navigate('/');
+    };
+  
+    return(
+        <div className='back'> 
+            <a onClick={HomePage}><img src={backButton} alt=""/></a>
+        </div>
+    )
+  }
 
 export function Register() {
     const navigate = useNavigate();
@@ -34,12 +48,12 @@ export function Register() {
                 username: pUser,
                 password: pPassword,
                 email: pEmail,
-                admin: true
+                admin: false
             })
         }).then(res => res.json())
         if(newData.response === 'Account created successfully'){
+            alert('Cuenta creada con éxito');
             navigate('/');
-            console.log('Account created successfully');
         }
     }
     
@@ -138,11 +152,8 @@ export function Login() {
         })
 
         if(response.ok) {
-            const data = await response.json();
-            const token = data.token;
-            console.log('Token:', token);
-
-            localStorage.setItem('token', token);
+            const data = await response.text();
+            localStorage.setItem('username', data);
             navigate('/');
         } else {
             alert("ERROR: Revisar los datos ingresados");
@@ -204,12 +215,17 @@ export function Login() {
 
 
 function LoginRegister() {
+    useEffect(() => {
+        localStorage.removeItem('username');
+    }, []);
+
     return (
         <div>
             <Navbar showIcons={false} />
+            <Back/>
             <div className='LoginRegister'>
-                    <Register />
-                    <Login />
+                <Register />
+                <Login />
             </div>
         </div>
 

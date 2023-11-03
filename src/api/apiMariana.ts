@@ -1,6 +1,5 @@
 import express from 'express';
 import { accountController } from '../controllers/accountController';
-import { admin } from "../models/DAO/configurationDB/databaseConfig"
 import cors from 'cors';
 
 // Create a new express app
@@ -34,12 +33,33 @@ app.post('/createAccount', (req, res) => {
     res.json(response);
 });
 
+// update account
+app.patch('/updateAccount', (req, res) =>{
+  const controller = accountController.getInstanceAccountController();
+  const data = req.body;
+  controller.updateAccount(data.username, data.password, data.email, data.admin);
+  res.status(200).send('Account updated successfully');
+});
+
+// delete account
+app.delete('/deleteAccount', (req, res) =>{
+  const controller = accountController.getInstanceAccountController();
+  const data = req.body;
+  controller.deleteAccount(data.username);
+  res.status(200).send('Account removed successfully');
+});
+
 // get account
 app.get('/getAccount', async (req, res) =>{
+    if (!req.headers.authorization) {
+        res.status(401).send('No Authorization header');
+        return;
+    }
+
+    const username = req.headers.authorization;
     const controller = accountController.getInstanceAccountController();
-    const data = req.body;
-    const account = await controller.getAccount(data.username)
-    res.send('GetAccount successfully');
+    const account = await controller.getAccount(username);
+    res.send({ account });
 });
 
 
@@ -49,23 +69,19 @@ app.post('/loginAccount',async (req, res) => {
     const data = req.body;
     const isValid = await controller.verifyCredentials(data.username, data.password);
     if (isValid == true) {
-        const token = await admin.auth().createCustomToken(data.username);
-        res.status(200).send({ token });
-      } else {
-        res.status(401).send('Unauthorized');
-      }
+      res.status(200).send(data.username);
+    }else{
+      res.status(401).send('Unauthorized');
+    }
   });
 
-
-
-// get all categories
-/*app.get('/categories/all', (req, res) => {
-    const controller = new categoryController();
-    controller.getAllCategories().then((data) => {
-    console.log(data)
-    res.json(data)
-    })
-});*/
+// search username
+app.post('/getUsernames', async (req, res) =>{
+  const controller = accountController.getInstanceAccountController();
+  const data = req.body;
+  const usernameList = await controller.getAllUsername(data.username);
+  res.status(200).json(usernameList);
+});
 
 
 app.use((req, res) => {

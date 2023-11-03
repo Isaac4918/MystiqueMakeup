@@ -47,6 +47,8 @@ function Home(){
           items: 1
       }
   };
+
+
   return (
     <div className="Home">
           <Navbar showIcons={true} />

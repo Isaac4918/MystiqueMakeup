@@ -19,15 +19,15 @@ import MyPurchases from "./pages/MyPurchases";
 import ProductScreen from "./pages/ProductScreen";
 import DeleteProduct from "./pages/DeleteProduct";
 import ModifyProduct from "./pages/ModifyProduct";
-import CreateProduct from "./pages/CreateProduct";
+import PublicationManagement from "./pages/publicationPages/PublicationManagement";
 import PublicationScreen from "./pages/publicationPages/PublicationScreen";
+import DeleteAccount from "./pages/accountPages/DeleteAccount";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
 import CreatePublication from "./pages/publicationPages/CreatePublication"
-import PublicationManagement from "./pages/publicationPages/PublicationManagement";
-import DeletePublication from "./pages/publicationPages/DeletePublication";
-import DeleteAccount from "./pages/accountPages/DeleteAccount";
-import PaymentDetails from "./pages/PaymentDetails";
 
+import DeletePublication from "./pages/publicationPages/DeletePublication";
+import DeliveryPending from "./pages/DeliveryPending";
+import PaymentDetails from "./pages/PaymentDetails";
 
 function App() {
   return (
@@ -52,7 +52,6 @@ function App() {
         <Route path="/MyPurchases" element={<MyPurchases />} />
         <Route path="/ProductScreen" element={<ProductScreen />} />
         <Route path="/DeleteProduct" element={<DeleteProduct />} />
-        <Route path="/CreateProduct" element={<CreateProduct />} />
         <Route path="/ModifyProduct" element={<ModifyProduct />} />
         <Route path="/PublicationManagement" element={<PublicationManagement />} />
         <Route path="/ModifyPublication" element={<ModifyPublication/>}/>
@@ -60,6 +59,7 @@ function App() {
         <Route path="/DeletePublication" element={<DeletePublication/>}/>
         <Route path="/PublicationScreen" element={<PublicationScreen/>}/>
         <Route path="/PaymentDetails" element={<PaymentDetails />} />
+        <Route path="/deliveryPending" element={<DeliveryPending/>}/>
       </Routes>
     </Router>
   );

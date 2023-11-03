@@ -44,8 +44,6 @@ export class accountController{
         }
     }
 
-    //-------------------------------------------------------------------------------------------------------------------------------------
-
     //---------------------------------------------------- MANAGER ACCOUNT ---------------------------------------------------------
 
     //--------------------------- UPDATE ---------------------------------------------------------
@@ -97,6 +95,19 @@ export class accountController{
     async getAccount(username: string): Promise<Account>{
         let account = await this.accountDAO.get(username);
         return account;
+    }
+
+    async getAllUsername(username: string): Promise<string[]>{
+        let usernameList: string[] = [];
+        let usernameDAO = '';
+        
+        for(let account of await this.accountDAO.getAll()){
+            if(account.getUsername().includes(username) && account.getAdmin() == false){
+                usernameDAO = account.getUsername();
+                usernameList.push(usernameDAO);
+            }
+        }
+        return usernameList;
     }
 
 
