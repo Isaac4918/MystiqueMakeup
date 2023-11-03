@@ -11,110 +11,74 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 
 function CreateProduct() {
-    // Variables of Create Product
+    // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
-    const [image, setImage] = useState(imagePlaceholder);
 
+    const [selectedName, setSelectedName] = useState('');
+    const [selectedDescription, setSelectedDescription] = useState('');
+    const [selectedPrice, setSelectedPrice] = useState(0);
+    const [selectedAvailable, setSelectedAvailable] = useState(0);
+    
+    const [selectedImage, setImage] = useState(imagePlaceholder);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
-
-    const [data, setData] = useState({
-        name: '',
-        description: '',
-        price: '',
-        available: '',
-        category: '',
-        subcategory: '',
-        image: null
-    });
 
     const categories = ["Labios", "Piel"];
     const subcategories = ["Terror", "Fantasia"];
 
-    // Image
+    // 
     const handleClickImage = (event) => {
         hiddenFileInput.current.click();
     };
 
     const handleChangeImage = (event) => {
         const fileUploaded = event.target.files;
-        console.log(fileUploaded[0].name); 
 
         if (fileUploaded[0].name) {
             setImage(URL.createObjectURL(fileUploaded[0]));
         }
-
-        setData({
-            ...data,
-            image : fileUploaded[0]
-        })
     };
-
-    // Categories and subcategories
-    const handleChangeCategory = (event) => {
-        setSelectedCategory(event.target.value)
-        setData({
-            ...data,
-            category : event.target.value
-        })
-    }
-
-    const handleChangeSubcategory = (event) => {
-        setSelectedSubcategory(event.target.value)
-        setData({
-            ...data,
-            subcategory : event.target.value
-        })
-    }
-
-    // Create product
-    const handleInputChange = (event) => {
-        setData({
-            ...data,
-            [event.target.name] : event.target.value
-        })
-    }
 
     const handleProduct = (event) => {
         event.preventDefault();
 
-        if (!data.name || !data.description || !data.price || !data.available || !data.category || !data.subcategory) {
+        if (!selectedName || !selectedDescription || !selectedPrice || !selectedAvailable || !selectedCategory || !selectedSubcategory || !selectedImage) {
             alert("ERROR: Todos los campos son obligatorios");
             return;
         }
 
-        if (data.description.length > 122) {
+        if (selectedDescription.length > 122) {
             alert("ERROR: La descripción es muy larga, el máximo es 122 caracteres");
             return;
         }
 
-        if (data.description.length < 28) {
+        if (selectedDescription.length < 28) {
             alert("ERROR: La descripción es muy corta, el mínimo es 28 caracteres");
             return;
         }
 
-        if (data.name.length > 22) {
+        if (selectedName.length > 22) {
             alert("ERROR: El nombre es muy largo, el máximo es 22 caracteres");
             return;
         }
 
-        if (data.description.length < 3) {
+        if (selectedDescription.length < 3) {
             alert("ERROR: La descripción es muy corta, el mínimo es 3 caracteres");
             return;
         }
 
-        if (!/^\d+$/.test(data.available)){
+        if (!/^\d+$/.test(selectedAvailable)){
             alert("ERROR: El número de disponibles debe ser un número entero");
             return;
         }
 
-        if(!/^\d+(\.\d+)?$/.test(data.price)){
+        if(!/^\d+(\.\d+)?$/.test(selectedPrice)){
             alert("ERROR: El precio debe ser un número entero o decimal");
             return;
         }
 
-        if(data.image === null){
+        if(selectedImage === imagePlaceholder){
             alert("ERROR: Debe seleccionar una imagen");
             return;
         }
@@ -154,31 +118,31 @@ function CreateProduct() {
             <section className="layoutModifyCreateProduct">
                 <div className="gridPosition">
                     <label>Nombre</label><br />
-                    <input onChange={handleInputChange} type="text" id="nameProduct" name="name"/><br />
+                    <input value={selectedName} onChange={(e) => setSelectedName(e.target.value)} type="text" id="nameProduct" name="name"/><br />
                 
                     <label>Descripción</label><br />
-                    <textarea onChange={handleInputChange} type="text" id="descriptionProduct" name="description"/><br />
+                    <textarea value={selectedDescription} onChange={(e) => setSelectedDescription(e.target.value)} type="text" id="descriptionProduct" name="description"/><br />
 
                     <button type="submit" className="buttonModifyCreateProduct" onClick={handleProduct}>Crear producto</button>
                 </div>
                 <div>
                     <label>Precio</label><br />
-                    <input onChange={handleInputChange} type="number" min="0" id="priceProduct" name="price"/><br />
+                    <input value={selectedPrice} onChange={(e) => setSelectedPrice(e.target.value)} type="number" min="0" id="priceProduct" name="price"/><br />
 
                     <label>Disponibles</label><br />
-                    <input onChange={handleInputChange} type="number" min="0" id="availableProduct" name="available"/><br />
+                    <input value={selectedAvailable} onChange={(e) => setSelectedAvailable(e.target.value)} type="number" min="0" id="availableProduct" name="available"/><br />
 
                     <label>Categoría</label><br />
-                    <Dropdown value={selectedCategory} onChange={handleChangeCategory} options={categories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} options={categories} placeholder="Seleccione una opción" className="options" />
                     <br />
 
                     <label>Subcategoría</label><br />
-                    <Dropdown value={selectedSubcategory} onChange={handleChangeSubcategory} options={subcategories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)} options={subcategories} placeholder="Seleccione una opción" className="options" />
                     <br />
                 
                 </div>
                 <div>
-                    <img src={image} alt="" name="image"/>
+                    <img src={selectedImage} alt="" name="image"/>
                     <button className="buttonLoadImage" type="button" onClick={handleClickImage}>Cargar imagen</button>
                     <input type="file" onChange={handleChangeImage} ref={hiddenFileInput} style={{display: "none"}}/>
                 </div>

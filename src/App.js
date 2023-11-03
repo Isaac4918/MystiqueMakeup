@@ -24,7 +24,7 @@ import PublicationScreen from "./pages/publicationPages/PublicationScreen";
 import DeleteAccount from "./pages/accountPages/DeleteAccount";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
 import CreatePublication from "./pages/publicationPages/CreatePublication"
-
+import CreateProduct from "./pages/CreateProduct";
 import DeletePublication from "./pages/publicationPages/DeletePublication";
 import DeliveryPending from "./pages/DeliveryPending";
 import PaymentDetails from "./pages/PaymentDetails";
@@ -51,6 +51,7 @@ function App() {
         <Route path="/account/manageAdmin" element={<ManageAdmin/>} />
         <Route path="/MyPurchases" element={<MyPurchases />} />
         <Route path="/ProductScreen" element={<ProductScreen />} />
+        <Route path="/CreateProduct" element={<CreateProduct />} />
         <Route path="/DeleteProduct" element={<DeleteProduct />} />
         <Route path="/ModifyProduct" element={<ModifyProduct />} />
         <Route path="/PublicationManagement" element={<PublicationManagement />} />
