@@ -10,7 +10,7 @@ import labiales from "../components/assets/labiales.jpg";
 import delineador from "../components/assets/delineador.jpg";
 import back from "../components/assets/arrowBack.png";
 
-
+// BUTTONS -----------------------------------------------------------------
 export function Back(){
     return(
         <div className="buttonBack"> 
@@ -28,6 +28,12 @@ export function OpenModifyProduct(){
 }
 
 export function OpenDeleteProduct(){
+    const handleConfirmation = () => {
+        if(window.confirm("¿De verdad desea eliminar?")){
+            window.location.href = "/ProductManagement";
+            //aqui se elimina el producto
+        }
+    }
     return(
         <div> 
             <button className="buttonDelete" onClick={handleConfirmation}><img src={trash} alt=""/></button>
@@ -43,13 +49,7 @@ export function OpenCreateProduct(){
     )
 }
 
-function handleConfirmation(){
-    if(window.confirm("¿De verdad desea eliminar?")){
-        window.location.href = "/ProductManagement";
-        //aqui se elimina el producto
-    }
-}
-
+// FUNCTIONS -----------------------------------------------------------------
 function ProductManagement(){
     const responsive = {
         superLargeDesktop: {
@@ -75,25 +75,25 @@ function ProductManagement(){
             id: 1,
             name: "Polvito mágico", 
             description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea", 
-            image: polvos 
+            imageURL: polvos 
         },
         { 
             id: 2,
             name: "Labial colorcito", 
             description: "Decora tus labios con estos nuevos labiales", 
-            image: labiales 
+            imageURL: labiales 
         },
         { 
             id: 3,
             name: "Delineador maravilla", 
             description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd", 
-            image: delineador 
+            imageURL: delineador 
         },
         { 
             id: 4,
-            name: "Delineador loco", 
+            name: "Gel brillo", 
             description: "Otra descripcion loca para s", 
-            image: delineador 
+            imageURL: labiales
         }
     ];
 
@@ -112,7 +112,7 @@ function ProductManagement(){
                                 <div className="content">
                                     <div className="imageContent">
                                         <div className="cardImage">
-                                            <img src={product.image} alt=""/>
+                                            <img src={product.imageURL} alt=""/>
                                         </div>
                                     </div>
                                     <div className="cardContent">

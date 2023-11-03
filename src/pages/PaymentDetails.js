@@ -139,7 +139,6 @@ function PaymentDetails(){
         if (selectedCanton) {
           const canton = cantons.find((c) => c.canton === selectedCanton);
           setDistricts(canton ? canton.districts : []);
-          console.log(districts)
         } 
         else {
           setDistricts([]);

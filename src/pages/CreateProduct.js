@@ -27,7 +27,7 @@ function CreateProduct() {
     const categories = ["Labios", "Piel"];
     const subcategories = ["Terror", "Fantasia"];
 
-    // 
+    // FUNCTIONS -----------------------------------------------------------------
     const handleClickImage = (event) => {
         hiddenFileInput.current.click();
     };
@@ -109,6 +109,7 @@ function CreateProduct() {
         }
     }
 
+    // RETURN -----------------------------------------------------------------
     return (
         <div className="ModifyCreateProduct">
             <Navbar showIcons={true} />
