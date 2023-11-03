@@ -28,36 +28,34 @@ export function OpenPayment(){
 }
 
 const products = [
- {
-    name: "Labial Ultra Mate", price: 1500, quantity: 1 , cateory: "Labios", subcategory: "Labiales", image: LabialM
-      
- },
- {
-    
-    name: "Labial purple", price: 1500, quantity: 5 , cateory: "Labios", subcategory: "Labiales", image: LabialP
-      
- },
-
- {
-    name: 'Gel brillo', price: 3000, quantity: 1, cateory: "Body", subcategory: "Glitter", image: Brillo
-      
- }
-
+  {
+     name: "Labial Ultra Mate", description: "El labial matecito" , price: 2000, available: 1, category: "Labios", subcategory: "Labiales", image: LabialM
+       
+  },
+  {
+     
+     name: "Labial purple", description: "El labial mas morado" , price: 1500, available: 5 , category: "Labios", subcategory: "Labiales", image: LabialP
+       
+  },
+ 
+  {
+     name: 'Gel brillo', description: "El labial mas morado" , price: 3000, available: 5 , category: "Body", subcategory: "Glitter", image: Brillo
+  }
 ];
 
 const calculateTotal = (products) => {
- return products.reduce((total, product) => total + product.price * product.quantity, 0);
+ return products.reduce((total, product) => total + product.price * product.available, 0);
 };
 
-const ModifyQuantity = ({ quantity, onIncrement, onDecrement }) => {
+const ModifyQuantity = ({ available, onIncrement, onDecrement }) => {
 
  return (
      <div>
       <div className="buttonIncrement">
-        <div className="quantity">
+        <div className="available">
         <button onClick={onDecrement}>-</button>
   
-        <span>{quantity}</span>
+        <span>{available}</span>
   
         <button onClick={onIncrement}>+</button>
         </div>
@@ -74,7 +72,7 @@ function Cart() {
 
  const onIncrement = (index) => {
     setProductList((prevProducts) => {
-      const updatedProduct = { ...prevProducts[index], quantity: prevProducts[index].quantity + 1 };
+      const updatedProduct = { ...prevProducts[index], available: prevProducts[index].available + 1 };
       const updatedProducts = [...prevProducts];
       updatedProducts[index] = updatedProduct;
       setTotal(calculateTotal(updatedProducts));
@@ -84,12 +82,12 @@ function Cart() {
 
  const onDecrement = (index) => {
   setProductList((prevProducts) => {
-    const updatedProduct = { ...prevProducts[index], quantity: prevProducts[index].quantity - 1 };
+    const updatedProduct = { ...prevProducts[index], available: prevProducts[index].available - 1 };
     const updatedProducts = [...prevProducts];
     updatedProducts[index] = updatedProduct;
 
-    // If the quantity is zero, remove the product from the cart
-    if (updatedProduct.quantity === 0) {
+    // If the available is zero, remove the product from the cart
+    if (updatedProduct.available === 0) {
       updatedProducts.splice(index, 1);
     }
 
@@ -128,12 +126,12 @@ function Cart() {
               <td>{product.price}</td>
               <td>        
                 <ModifyQuantity
-                 quantity={product.quantity}
+                 available={product.available}
                  onIncrement={() => onIncrement(index)}
                  onDecrement={() => onDecrement(index)}
                 />
               </td>
-              <td>{product.price * product.quantity}</td>
+              <td>{product.price * product.available}</td>
             </tr>
           ))}
         </tbody>
