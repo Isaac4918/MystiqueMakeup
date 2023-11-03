@@ -10,136 +10,13 @@ export function Back(){
       </div>
   )
 }
-// Component to represent a category and its subcategories
-function Category({ category, subcategories, setVisibleSubcategories }) {
-  const [selected, setSelected] = useState(false);
-
-  const buttonStyle = {
-    textAlign: 'left', 
-  };
-
-
-  const handleSelect = () => {
-    setSelected(!selected);
-    setVisibleSubcategories(subcategories);
-  };
-
-  return (
-    <div className="Category">
-      <button style={buttonStyle}onClick={handleSelect}>{category.name}</button>
-      {selected && (
-        <ul>
-          {subcategories.map((subcategory) => (
-            <li key={subcategory.name}>
-              <button style={buttonStyle}>{subcategory.name}</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
-
-// Component to represent a publication
-function Publication({ publication }) {
-  const buttonStyle = {
-    textAlign: 'left', 
-  };
-
-  return (
-    <button style={buttonStyle}>{publication.name}</button>
-  );
-}
-
-
-// Component to represent the search bar
-function Search() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filterType, setFilterType] = useState("");
-  const [visibleSubcategories, setVisibleSubcategories] = useState([]);
-
-  const handleSearchTermChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleFilterTypeChange = (event) => {
-    setFilterType(event.target.value);
-  };
-
-  const handleCategorySelect = (category) => {
-    const subcategories = category.subcategories;
-    setVisibleSubcategories(subcategories);
-  };
-
-  const filteredCategories = categories.filter((category) => {
-    switch (filterType) {
-      case "descripcion":
-        return category.description.toLowerCase().includes(searchTerm.toLowerCase());
-      case "Tags":
-        return category.Tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-      default:
-        return category.name.toLowerCase().includes(searchTerm.toLowerCase());
-    }
-  });
-
-  const filteredPublications = publications.filter((publications) => {
-    switch (filterType) {
-      case "fecha":
-        return publications.createdAt.toLowerCase().includes(searchTerm.toLowerCase());
-      case "descripcion":
-        return publications.description.toLowerCase().includes(searchTerm.toLowerCase());
-      case "Tags":
-        return publications.Tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-      default:
-        return publications.name.toLowerCase().includes(searchTerm.toLowerCase());
-    }
-  });
-
-  return (
-    <div className="Search">
-        <Navbar showIcons={true} />
-        <Back/>
-      <h1>Busqueda</h1>
-      <input
-        type="search"
-        placeholder="¿Que desea buscar?"
-        value={searchTerm}
-        onChange={handleSearchTermChange}
-      />
-      <select onChange={handleFilterTypeChange}>
-        <option value="fecha">Fecha</option>
-        <option value="descripcion">Descripción</option>
-        <option value="Tags">Tags</option>
-      </select>
-      <button type="submit">Buscar</button>
-
-      <ul>
-        {filteredCategories.map((category) => (
-          <li key={category.name}>
-            <Category category={category} subcategories={category.subcategories} setVisibleSubcategories={setVisibleSubcategories} />
-          </li>
-        ))}
-        <div className="Publications">
-        {filteredPublications.map((publication) => (
-          <li key={publication.name}>
-            <Publication publication={publication} />
-          </li>
-        ))}
-        </div>
-      </ul>
-      </div>
-    
-  );
-}
-
-
 
 // Define categories
 const categories = [
   {
     name: "Labios",
     subcategories: [
-      { name: "Brillos", description: "Brillos para labios",Tags: ["#brillo", "#labios"]},
+      { name: "Brillos"},
       { name: "Labiales" }
     ]
   },
@@ -149,26 +26,137 @@ const categories = [
       { name: "Día" },
       { name: "Noche" }
     ]
+  },
+
+  {
+    name: "Disney",
+    subcategories: [
+      { name: "Villanos" },
+      { name: "Heroes" }
+    ]
   }
 ];
 
 // Define publications
 const publications = [
   {
-    name: "Maquillaje Malefica", createdAt: "2021-01-01", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#malefica", "#Disney"]
-      
+    name: "Maquillaje Malefica", createdAt: "01-01-2021", description: "Sorprende a tus amigos con villanos de Disney",tags: ["#malefica", "#Disney"]
+    , category: "Disney", subcategory: "Villanos"      
   },
   {
     
-    name: "Maquillaje Bruja", createdAt: "2021-01-21", description: "haz magia",Tags: ["#bruja", "#magia"]
+    name: "Maquillaje Bruja", createdAt: "23-01-2021", description: "haz magia",tags: ["#bruja", "#magia"]
+    , category: "Halloween", subcategory: "Magic"
       
   },
 
   {
-    name: "Maquillaje Ursula", createdAt: "2021-01-21", description: "Sorprende a tus amigos con villanos de Disney",Tags: ["#Disney", "#Ursula"]
-      
+    name: "Maquillaje Ursula", createdAt: "23-01-2021", description: "Sorprende a tus amigos con villanos de Disney",tags: ["#Disney", "#Ursula"]
+    , category: "Disney", subcategory: "Villanos"
   }
 
 ];
 
-export default Search; 
+const products = [
+  {
+     name: "Labial Ultra Mate", description: "El labial matecito" , price: 2000, available: 1, category: "Labios", subcategory: "Labiales"
+       
+  },
+  {
+     
+     name: "Labial purple", description: "El labial mas morado" , price: 1500, available: 5 , category: "Labios", subcategory: "Labiales"
+       
+  },
+ 
+  {
+     name: 'Gel brillo', description: "El labial mas morado" , price: 3000, available: 5 , category: "Body", subcategory: "Glitter"
+  }
+];
+
+
+function Search() {
+ const [searchText, setSearchText] = useState('');
+ const [selectedCategory, setSelectedCategory] = useState('');
+ const [selectedSubcategory, setSelectedSubcategory] = useState('');
+
+ const handleSearch = (event) => {
+    setSearchText(event.target.value);
+ };
+
+ const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+    setSelectedSubcategory('');
+ };
+
+ const handleSubcategoryChange = (event) => {
+    setSelectedSubcategory(event.target.value);
+ };
+
+ const filteredPublications = publications.filter(
+    (publication) => {
+      if (selectedCategory && selectedCategory !== publication.category) {
+        return false;
+      }
+      if (selectedSubcategory && selectedSubcategory !== publication.subcategory) {
+        return false;
+      }
+      return publication.name.toLowerCase().includes(searchText.toLowerCase()) ||
+             publication.createdAt.toLowerCase().includes(searchText.toLowerCase()) ||
+             publication.description.toLowerCase().includes(searchText.toLowerCase()) ||
+             publication.tags.join(' ').toLowerCase().includes(searchText.toLowerCase()) ||
+             publication.category.toLowerCase().includes(searchText.toLowerCase()) ||
+             publication.subcategory.toLowerCase().includes(searchText.toLowerCase());
+    }
+  );
+
+  const filteredProducts = products.filter(
+    (product) => {
+      if (selectedCategory && selectedCategory !== product.category) {
+        return false;
+      }
+      if (selectedSubcategory && selectedSubcategory !== product.subcategory) {
+        return false;
+      }
+      return  product.name.toLowerCase().includes(searchText.toLowerCase()) ||
+              product.description.toLowerCase().includes(searchText.toLowerCase()) ||
+              product.category.toLowerCase().includes(searchText.toLowerCase()) ||
+              product.subcategory.toLowerCase().includes(searchText.toLowerCase());
+    }
+  );
+
+  return (
+    <div>
+          <div className="Search">
+        <Navbar showIcons={true} />
+        <Back/>
+      <h1>Busqueda</h1>
+      <input type="text" placeholder="Buscar..." value={searchText} onChange={handleSearch} />
+      <select value={selectedCategory} onChange={handleCategoryChange}>
+        <option value="">Todas las categorías</option>
+        {categories.map((category) => (
+          <option key={category.name} value={category.name}>{category.name}</option>
+        ))}
+      </select>
+      <select value={selectedSubcategory} onChange={handleSubcategoryChange}>
+        <option value="">Todas las subcategorías</option>
+        {categories.find((category) => category.name === selectedCategory)?.subcategories.map((subcategory) => (
+          <option key={subcategory.name} value={subcategory.name}>{subcategory.name}</option>
+        ))}
+      </select>
+      <button onClick={handleSearch}>Buscar</button>
+      <ul>
+        {filteredPublications.map((publication) => (
+          <li key={publication.name}>{publication.name}</li>
+        ))}
+      </ul>
+      <ul>
+        {filteredProducts.map((product) => (
+          <li key={product.name}>{product.name}</li>
+        ))}
+      </ul>
+    </div>
+    </div>
+  );
+}
+
+export default Search;
