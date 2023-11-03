@@ -23,7 +23,7 @@
 }
 
 .content{
-    margin: 0 40px;
+    margin: 0px 55px 0px 55px;
     align-items: center;
     justify-content: center;
 }
@@ -79,7 +79,7 @@
     font-weight: bold;
     color: black;
     justify-content: center;
-    margin: 20px 15px 10px 15px; /*18 es el largo del text*/
+    margin: 20px 15px 5px 15px; /*15 es el largo del text*/
     height: 40px;
 }
 
@@ -88,7 +88,9 @@
     font-size: 14px;
     color: black;
     text-align: justify;
-    margin: 0px 25px 20px;
+    margin: 0px 25px 20px 25px;
+    width: 200px;
+    height: 120px;
 }
 
 .buttonModify{
@@ -103,8 +105,8 @@
     height: 33px;
     position: absolute;
     position: fixed;
-    bottom: 25px;
-    left: 28%;
+    bottom: 18px;
+    left: 30%;
 }
 
 .buttonDelete{

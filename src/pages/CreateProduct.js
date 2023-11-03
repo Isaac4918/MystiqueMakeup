@@ -89,8 +89,18 @@ function CreateProduct() {
             return;
         }
 
+        if (data.description.length < 28) {
+            alert("ERROR: La descripción es muy corta, el mínimo es 28 caracteres");
+            return;
+        }
+
         if (data.name.length > 22) {
             alert("ERROR: El nombre es muy largo, el máximo es 22 caracteres");
+            return;
+        }
+
+        if (data.description.length < 3) {
+            alert("ERROR: La descripción es muy corta, el mínimo es 3 caracteres");
             return;
         }
 

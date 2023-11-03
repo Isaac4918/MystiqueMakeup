@@ -69,6 +69,34 @@ function ProductManagement(){
             items: 1
         }
     };
+
+    const products = [ 
+        { 
+            id: 1,
+            name: "Polvito mágico", 
+            description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea", 
+            image: polvos 
+        },
+        { 
+            id: 2,
+            name: "Labial colorcito", 
+            description: "Decora tus labios con estos nuevos labiales", 
+            image: labiales 
+        },
+        { 
+            id: 3,
+            name: "Delineador maravilla", 
+            description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd", 
+            image: delineador 
+        },
+        { 
+            id: 4,
+            name: "Delineador loco", 
+            description: "Otra descripcion loca para s", 
+            image: delineador 
+        }
+    ];
+
     return (
         <div>
             <Navbar showIcons={true} />
@@ -78,66 +106,23 @@ function ProductManagement(){
                 <OpenCreateProduct />
                 <div className="containerProductManagement">
                     <Carousel responsive={responsive}>
-                        <div className="cardProductManagement">
-                            <OpenDeleteProduct />
-                            <div className="content">
-                                <div className="imageContent">
-                                    <div className="cardImage">
-                                        <img src={polvos} alt=""/>
+                        {products.map((product) => (
+                            <div className="cardProductManagement" key={product.id}>
+                                <OpenDeleteProduct />
+                                <div className="content">
+                                    <div className="imageContent">
+                                        <div className="cardImage">
+                                            <img src={product.image} alt=""/>
+                                        </div>
+                                    </div>
+                                    <div className="cardContent">
+                                        <div className="names">{product.name}</div>
+                                        <div className="description">{product.description}</div>
+                                        <OpenModifyProduct />
                                     </div>
                                 </div>
-                                <div className="cardContent">
-                                    <div className="names">Polvito mágico</div>
-                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea</div>
-                                    <OpenModifyProduct />
-                                </div>
                             </div>
-                        </div>
-                        <div className="cardProductManagement">
-                            <OpenDeleteProduct />
-                            <div className="content">
-                                <div className="imageContent">
-                                    <div className="cardImage">
-                                        <img src={labiales} alt=""/>
-                                    </div>
-                                </div>
-                                <div className="cardContent">
-                                    <div className="names">Labial colorcito</div>
-                                    <div className="description">Decora tus labios con estos nuevos labiales</div>
-                                    <OpenModifyProduct />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="cardProductManagement">
-                            <OpenDeleteProduct />
-                            <div className="content">
-                                <div className="imageContent">
-                                    <div className="cardImage">
-                                        <img src={delineador} alt=""/>
-                                    </div>
-                                </div>
-                                <div className="cardContent">
-                                    <div className="names">Delineador maravilla</div>
-                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
-                                    <OpenModifyProduct />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="cardProductManagement">
-                            <OpenDeleteProduct />
-                            <div className="content">
-                                <div className="imageContent">
-                                    <div className="cardImage">
-                                        <img src={delineador} alt=""/>
-                                    </div>
-                                </div>
-                                <div className="cardContent">
-                                    <div className="names">Delineador maravilla</div>
-                                    <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
-                                    <OpenModifyProduct />
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </Carousel>
                 </div>
             </div>
