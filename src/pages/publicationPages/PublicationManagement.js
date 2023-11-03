@@ -1,17 +1,17 @@
 import React from "react";
-import "../../styles/Product.css";
+import "../../styles/Publications.css";
 import Navbar from "../../components/Navbar";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import polvos from "../../components/assets/polvos.jpg";
 import trash from "../../components/assets/trash.png";
-import labiales from "../../components/assets/labiales.jpg";
-import delineador from "../../components/assets/delineador.jpg";
 import back from "../../components/assets/arrowBack.png";
+import MBruja from "../../components/assets/bruja.jpg";
+import MMalefica from "../../components/assets/malefica.jpg";
+import MUrsula from "../../components/assets/ursula.jpg";
 
 
-function Back(){
+export function Back(){
     return(
         <div className="buttonBack"> 
             <a href="/AccountAdmin"><img src={back} alt=""/></a>
@@ -19,71 +19,29 @@ function Back(){
     )
 }
 
-function OpenModifyProduct(){
+export function OpenModifyPublication(){
     return(
         <div> 
-            <a href="/ModifyProduct"><button className="buttonModify">Modificar</button></a>
+            <a href="/ModifyPublication"><button className="buttonModifyPublication">Modificar</button></a>
         </div>
     )
 }
 
-function OpenDeleteProduct(){
+export function OpenDeletePublication(){
     return(
         <div> 
-            <a href="/DeleteProduct"><button className="buttonDelete"><img src={trash} alt=""/></button></a>
+            <a href="/DeletePublication"><button className="buttonDeletePublication"><img src={trash} alt=""/></button></a>
         </div>
     )
 }
 
-function OpenCreateProduct(){
+export function OpenCreatePublication(){
     return(
         <div> 
-            <a href="/CreateProduct"><button className="buttonCreate">Crear nuevo producto</button></a>
+            <a href="/CreatePublication"><button className="buttonCreatePublication">Crear nueva publicación</button></a>
         </div>
     )
 }
-
-function createCarrouselElement(data){
-    console.log("======>",data.imagePath);
-    const imagePublication = require(data.imagePath);
-    return(
-        <div className="cardProductManagement">
-            <OpenDeleteProduct />
-            <div className="content">
-                <div className="imageContent">
-                    <div className="cardImage">
-                        <img src={imagePublication} alt=""/>
-                    </div>
-                </div>
-                <div className="cardContent">
-                    <div className="names">{data.name}</div>
-                    <div className="description">{data.description}</div>
-                    <OpenModifyProduct />
-                </div>
-            </div>
-        </div>
-    )
-
-}
-
-const dataList = [
-    {
-        name: "Polvito mágico",
-        description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea",
-        imagePath: "./../../components/assets/polvos.jpg"
-    },
-    {
-        name: "Labial colorcito",
-        description: "Decora tus labios con estos nuevos labiales",
-        imagePath: "../../components/assets/labiales.jpg"
-    },
-    {
-        name: "Delineador maravilla",
-        description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd",
-        imagePath: "../../components/assets/delineador.jpg"
-    }
-]
-
 
 function PublicationManagement(){
     const responsive = {
@@ -107,13 +65,72 @@ function PublicationManagement(){
     return (
         <div>
             <Navbar showIcons={true} />
-            <div className="pageProductManagement">
+            <div className="pagePublicationManagement">
                 <Back />
-                <h1>Gestión de productos</h1>
-                <OpenCreateProduct />
-                <div className="containerProductManagement">
+                <h1>Gestión de publicaciones</h1>
+                <OpenCreatePublication />
+                <div className="containerPublicationManagement">
                     <Carousel responsive={responsive}>
-                        {dataList.map((data) => createCarrouselElement(data))}
+                        <div className="cardPublicationManagement">
+                            <OpenDeletePublication />
+                            <div className="contentPublication">
+                                <div className="imageContentPublication">
+                                    <div className="cardImagePublication">
+                                        <img src={MBruja} alt=""/>
+                                    </div>
+                                </div>
+                                <div className="cardContentPublication">
+                                    <div className="namesPublication">Maquillaje Bruja</div>
+                                    <div className="descriptionPublication">Has Magia</div>
+                                    <OpenModifyPublication />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="cardPublicationManagement">
+                            <OpenDeletePublication />
+                            <div className="contentPublication">
+                                <div className="imageContentPublication">
+                                    <div className="cardImagePublication">
+                                        <img src={MMalefica} alt=""/>
+                                    </div>
+                                </div>
+                                <div className="cardContentPublication">
+                                    <div className="namesPublication">Maquillaje Malefica</div>
+                                    <div className="descriptionPublication">Sorprende a tus amigos con villanos de Disney</div>
+                                    <OpenModifyPublication />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="cardPublicationManagement">
+                            <OpenDeletePublication />
+                            <div className="contentPublication">
+                                <div className="imageContentPublication">
+                                    <div className="cardImagePublication">
+                                        <img src={MUrsula} alt=""/>
+                                    </div>
+                                </div>
+                                <div className="cardContentPublication">
+                                    <div className="namesPublication">Maquillaje Ursula</div>
+                                    <div className="descriptionPublication">Sorprende a tus amigos con villanos de Disney</div>
+                                    <OpenModifyPublication />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="cardPublicationManagement">
+                            <OpenDeletePublication />
+                            <div className="contentPublication">
+                                <div className="imageContentPublication">
+                                    <div className="cardImagePublication">
+                                        <img src={MUrsula} alt=""/>
+                                    </div>
+                                </div>
+                                <div className="cardContentPublication">
+                                    <div className="namesPublication">Maquillaje Ursula</div>
+                                    <div className="descriptionPublication">Sorprende a tus amigos con villanos de Disney</div>
+                                    <OpenModifyPublication />
+                                </div>
+                            </div>
+                        </div>
                     </Carousel>
                 </div>
             </div>
