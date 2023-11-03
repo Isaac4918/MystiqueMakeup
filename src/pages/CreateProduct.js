@@ -95,12 +95,12 @@ function CreateProduct() {
         }
 
         if (!/^\d+$/.test(data.available)){
-            alert("ERROR: available");
+            alert("ERROR: El número de disponibles debe ser un número entero");
             return;
         }
 
         if(!/^\d+(\.\d+)?$/.test(data.price)){
-            alert("ERROR: price");
+            alert("ERROR: El precio debe ser un número entero o decimal");
             return;
         }
 
@@ -153,10 +153,10 @@ function CreateProduct() {
                 </div>
                 <div>
                     <label>Precio</label><br />
-                    <input onChange={handleInputChange} type="text" id="priceProduct" name="price"/><br />
+                    <input onChange={handleInputChange} type="number" min="0" id="priceProduct" name="price"/><br />
 
                     <label>Disponibles</label><br />
-                    <input onChange={handleInputChange} type="text" id="availableProduct" name="available"/><br />
+                    <input onChange={handleInputChange} type="number" min="0" id="availableProduct" name="available"/><br />
 
                     <label>Categoría</label><br />
                     <Dropdown value={selectedCategory} onChange={handleChangeCategory} options={categories} placeholder="Seleccione una opción" className="options" />

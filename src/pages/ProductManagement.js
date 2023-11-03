@@ -30,7 +30,7 @@ export function OpenModifyProduct(){
 export function OpenDeleteProduct(){
     return(
         <div> 
-            <a href="/DeleteProduct"><button className="buttonDelete"><img src={trash} alt=""/></button></a>
+            <button className="buttonDelete" onClick={handleConfirmation}><img src={trash} alt=""/></button>
         </div>
     )
 }
@@ -41,6 +41,13 @@ export function OpenCreateProduct(){
             <a href="/CreateProduct"><button className="buttonCreate">Crear nuevo producto</button></a>
         </div>
     )
+}
+
+function handleConfirmation(){
+    if(window.confirm("¿De verdad desea eliminar?")){
+        window.location.href = "/ProductManagement";
+        //aqui se elimina el producto
+    }
 }
 
 function ProductManagement(){
