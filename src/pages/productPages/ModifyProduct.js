@@ -1,14 +1,14 @@
 import React from "react";
 import { useRef , useState } from 'react';
-import "../styles/Product.css";
-import Navbar from "../components/Navbar";
-import back from "../components/assets/arrowBack.png";
+import "../../styles/Product.css";
+import Navbar from "../../components/Navbar";
+import back from "../../components/assets/arrowBack.png";
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
-import imagePlaceholder from '../components/assets/imagePlaceHolder.png';
+import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
 const ModifyProduct = () => {
     // VARIABLES -----------------------------------------------------------------

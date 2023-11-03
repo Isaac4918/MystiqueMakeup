@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import "../styles/Product.css";
-import back from "../components/assets/arrowBack.png";
-import polvos from "../components/assets/polvos.jpg";
+import Navbar from "../../components/Navbar";
+import "../../styles/Product.css";
+import back from "../../components/assets/arrowBack.png";
+import polvos from "../../components/assets/polvos.jpg";
 
 export function BackMain(){
     return(

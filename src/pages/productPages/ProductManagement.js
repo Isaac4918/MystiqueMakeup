@@ -1,14 +1,14 @@
 import React from "react";
-import "../styles/Product.css";
-import Navbar from "../components/Navbar";
+import "../../styles/Product.css";
+import Navbar from "../../components/Navbar";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import polvos from "../components/assets/polvos.jpg";
-import trash from "../components/assets/trash.png";
-import labiales from "../components/assets/labiales.jpg";
-import delineador from "../components/assets/delineador.jpg";
-import back from "../components/assets/arrowBack.png";
+import polvos from "../../components/assets/polvos.jpg";
+import trash from "../../components/assets/trash.png";
+import labiales from "../../components/assets/labiales.jpg";
+import delineador from "../../components/assets/delineador.jpg";
+import back from "../../components/assets/arrowBack.png";
 
 // BUTTONS -----------------------------------------------------------------
 export function Back(){

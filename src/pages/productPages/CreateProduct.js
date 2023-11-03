@@ -1,10 +1,10 @@
 import React from "react";
 import { useRef , useState } from 'react';
-import "../styles/Product.css";
-import Navbar from "../components/Navbar";
+import "../../styles/Product.css";
+import Navbar from "../../components/Navbar";
 import { Link, useNavigate } from 'react-router-dom';
-import back from "../components/assets/arrowBack.png";
-import imagePlaceholder from '../components/assets/imagePlaceHolder.png';
+import back from "../../components/assets/arrowBack.png";
+import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
 import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/themes/saga-blue/theme.css';
