@@ -126,35 +126,35 @@ function Search() {
 
   return (
     <div>
-          <div className="Search">
-        <Navbar showIcons={true} />
+      <Navbar showIcons={true} />
+      <div className="Search">
         <Back/>
-      <h1>Busqueda</h1>
-      <input type="text" placeholder="Buscar..." value={searchText} onChange={handleSearch} />
-      <select value={selectedCategory} onChange={handleCategoryChange}>
-        <option value="">Todas las categorías</option>
-        {categories.map((category) => (
-          <option key={category.name} value={category.name}>{category.name}</option>
-        ))}
-      </select>
-      <select value={selectedSubcategory} onChange={handleSubcategoryChange}>
-        <option value="">Todas las subcategorías</option>
-        {categories.find((category) => category.name === selectedCategory)?.subcategories.map((subcategory) => (
-          <option key={subcategory.name} value={subcategory.name}>{subcategory.name}</option>
-        ))}
-      </select>
-      <button onClick={handleSearch}>Buscar</button>
-      <ul>
-        {filteredPublications.map((publication) => (
-          <li key={publication.name}>{publication.name}</li>
-        ))}
-      </ul>
-      <ul>
-        {filteredProducts.map((product) => (
-          <li key={product.name}>{product.name}</li>
-        ))}
-      </ul>
-    </div>
+        <h1>Busqueda</h1>
+        <input type="text" placeholder="Buscar..." value={searchText} onChange={handleSearch} />
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="">Todas las categorías</option>
+          {categories.map((category) => (
+            <option key={category.name} value={category.name}>{category.name}</option>
+          ))}
+        </select>
+        <select value={selectedSubcategory} onChange={handleSubcategoryChange}>
+          <option value="">Todas las subcategorías</option>
+          {categories.find((category) => category.name === selectedCategory)?.subcategories.map((subcategory) => (
+            <option key={subcategory.name} value={subcategory.name}>{subcategory.name}</option>
+          ))}
+        </select>
+        <button onClick={handleSearch}>Buscar</button>
+        <ul>
+          {filteredPublications.map((publication) => (
+            <li key={publication.name}>{publication.name}</li>
+          ))}
+        </ul>
+        <ul>
+          {filteredProducts.map((product) => (
+            <li key={product.name}>{product.name}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
