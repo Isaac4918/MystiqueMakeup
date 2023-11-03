@@ -18,6 +18,15 @@ export function Back(){
  )
 }
 
+
+export function OpenPayment(){
+  return(
+      <div> 
+          <a href="/PaymentDetails"><button className="buttonPay">Pagar</button></a>
+      </div>
+  )
+}
+
 const products = [
  {
     name: "Labial Ultra Mate", price: 1500, quantity: 1 , cateory: "Labios", subcategory: "Labiales", image: LabialM
@@ -130,9 +139,9 @@ function Cart() {
         </tbody>
       </table>
 
-      <h2>Total: ${total}</h2>
+      <h2>Total: ₡{total}</h2>
       <div className="buttonPay">
-        <button>Pagar</button>
+          <OpenPayment />
       </div>
             </div>
         </div>
