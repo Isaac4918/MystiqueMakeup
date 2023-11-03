@@ -8,12 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
+import imagePlaceholder from '../components/assets/imagePlaceHolder.png';
 
 const ModifyProduct = () => {
     // Variable of Modify Product
     const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(imagePlaceholder);
 
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
@@ -75,9 +76,8 @@ const ModifyProduct = () => {
         })
     }
 
-    const sendData = (event) => {
+    const handleProduct = (event) => {
         event.preventDefault();
-        console.log(data);
 
         if (!data.name || !data.description || !data.price || !data.available || !data.category || !data.subcategory) {
             alert("ERROR: Todos los campos son obligatorios");
@@ -109,54 +109,73 @@ const ModifyProduct = () => {
             return;
         }
 
-        //poner que prices y disponibles sean numeros
-
         navigate('/ProductManagement');
 
         //falta conexión con el API
         //addData(data.name, data.description, data.price, data.available, data.category, data.subcategory, true);
     };
 
+    const modifyProduct = async(pName, pDescription, pPrice, pAvailable, pCategory, pSubcategory, pImage) => {
+        const newData = await fetch('http://localhost:5000/createProduct',{
+            method: 'POST',
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                name: pName,
+                description: pDescription,
+                price: pPrice,
+                available: pAvailable,
+                category: pCategory,
+                subcategory: pSubcategory,
+                image: pImage
+            })
+        }).then(res => res.json())
+        if(newData.response === 'Product created successfully'){
+            navigate('/ProductManagement');
+            console.log('Product created successfully');
+        }
+    }
+
     return (
         <div className="ModifyCreateProduct">
             <Navbar showIcons={true} />
-            <form onSubmit={sendData}>
-                <Link to={"/ProductManagement"}><button className="backManagement"><img src={back} alt=""/></button></Link>
-                <h1>Polvo mágico</h1>
+            <Link to={"/ProductManagement"}><button className="backManagement"><img src={back} alt=""/></button></Link>
+            <h1>Polvo mágico</h1>
+            
+            <section className="layoutModifyCreateProduct">
+                <div className="gridPosition">
+                    <label>Nombre</label><br />
+                    <input onChange={handleInputChange} type="text" id="nameProduct" name="name"/><br />
                 
-                <section className="layoutModifyCreateProduct">
-                    <div className="gridPosition">
-                        <label>Nombre</label><br />
-                        <input onChange={handleInputChange} type="text" id="nameProduct" name="name"/><br />
-                    
-                        <label>Descripción</label><br />
-                        <textarea onChange={handleInputChange} type="text" id="descriptionProduct" name="description"/><br />
+                    <label>Descripción</label><br />
+                    <textarea onChange={handleInputChange} type="text" id="descriptionProduct" name="description"/><br />
 
-                        <button type="submit" className="buttonModifyCreateProduct">Modificar producto</button>
-                    </div>
-                    <div>
-                        <label>Precio</label><br />
-                        <input onChange={handleInputChange} type="text" id="priceProduct" name="price"/><br />
+                    <button type="submit" className="buttonModifyCreateProduct" onClick={handleProduct}>Modificar producto</button>
+                </div>
+                <div>
+                    <label>Precio</label><br />
+                    <input onChange={handleInputChange} type="text" id="priceProduct" name="price"/><br />
 
-                        <label>Disponibles</label><br />
-                        <input onChange={handleInputChange} type="text" id="availableProduct" name="available"/><br />
+                    <label>Disponibles</label><br />
+                    <input onChange={handleInputChange} type="text" id="availableProduct" name="available"/><br />
 
-                        <label>Categoría</label><br />
-                        <Dropdown value={selectedCategory} onChange={handleChangeCategory} options={categories} placeholder="Seleccione una opción" className="options" />
-                        <br />
+                    <label>Categoría</label><br />
+                    <Dropdown value={selectedCategory} onChange={handleChangeCategory} options={categories} placeholder="Seleccione una opción" className="options" />
+                    <br />
 
-                        <label>Subcategoría</label><br />
-                        <Dropdown value={selectedSubcategory} onChange={handleChangeSubcategory} options={subcategories} placeholder="Seleccione una opción" className="options" />
-                        <br />
-                    
-                    </div>
-                    <div>
-                        <img src={image} alt="" name="image"/>
-                        <button className="buttonLoadImage" type="button" onClick={handleClickImage}>Cargar imagen</button>
-                        <input type="file" onChange={handleChangeImage} ref={hiddenFileInput} style={{display: "none"}}/>
-                    </div>
-                </section>
-            </form>        
+                    <label>Subcategoría</label><br />
+                    <Dropdown value={selectedSubcategory} onChange={handleChangeSubcategory} options={subcategories} placeholder="Seleccione una opción" className="options" />
+                    <br />
+                
+                </div>
+                <div>
+                    <img src={image} alt="" name="image"/>
+                    <button className="buttonLoadImage" type="button" onClick={handleClickImage}>Cargar imagen</button>
+                    <input type="file" onChange={handleChangeImage} ref={hiddenFileInput} style={{display: "none"}}/>
+                </div>
+            </section>       
         </div>
     );
 }
