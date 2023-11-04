@@ -10,20 +10,20 @@ import AccountUser from "./pages/accountPages/AccountUser";
 import AccountAdmin from "./pages/accountPages/AccountAdmin";
 import ModifyAccount from "./pages/accountPages/ModifyAccount";
 import DeleteCategory from "./pages/categoryPages/DeleteCategory";
-import ProductManagement from "./pages/ProductManagement";
+import ProductManagement from "./pages/productPages/ProductManagement";
 import ProcessedPurchase from "./pages/ProcessedPurchase";
 import CreateCategory from "./pages/categoryPages/CreateCategory";
 import ModifyCategory from "./pages/categoryPages/ModifyCategory"
 import ManageAdmin from "./pages/accountPages/ManageAdmin";
 import MyPurchases from "./pages/MyPurchases";
-import ProductScreen from "./pages/ProductScreen";
-import ModifyProduct from "./pages/ModifyProduct";
+import ProductScreen from "./pages/productPages/ProductScreen";
+import ModifyProduct from "./pages/productPages/ModifyProduct";
 import PublicationManagement from "./pages/publicationPages/PublicationManagement";
 import PublicationScreen from "./pages/publicationPages/PublicationScreen";
 import DeleteAccount from "./pages/accountPages/DeleteAccount";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
 import CreatePublication from "./pages/publicationPages/CreatePublication"
-import CreateProduct from "./pages/CreateProduct";
+import CreateProduct from "./pages/productPages/CreateProduct";
 import DeliveryPending from "./pages/DeliveryPending";
 import PaymentDetails from "./pages/PaymentDetails";
 
