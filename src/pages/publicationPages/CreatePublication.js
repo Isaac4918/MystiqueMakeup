@@ -7,6 +7,7 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const CreatePublication = () => {
     // VARIABLES -----------------------------------------------------------------
@@ -18,6 +19,7 @@ const CreatePublication = () => {
     const [selectedTags, setSelectedTags] = useState('');
 
     const [selectedImage, setImage] = useState(imagePlaceholder);
+    const [imageURL, setURL] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
 
@@ -69,35 +71,38 @@ const CreatePublication = () => {
             return;
         }
 
-        navigate('/PublicationManagement');
+        createPublication(1, selectedName, selectedDescription, selectedImage, selectedTags, selectedCategory, selectedSubcategory, imageURL);
     };
 
-    const createPublication = async(pName, pDescription, pTags, pCategory, pSubcategory, pImage) => {
-        const currentDate = new Date(); // get current date
-        const year = currentDate.getFullYear();
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-        const day = String(currentDate.getDate()).padStart(2, '0');
-        const formattedDate = `${day}/${month}/${year}`; 
+    const createPublication = async (pId, pName, pDescription, pImagePath, pTags, pCategory, pSubcategory, pImageURL) => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // months are zero indexed
+        const day = date.getDate();
+        const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
 
-        const newData = await fetch('http://localhost:5000/createPublication',{
+        const newData = await fetch('http://localhost:5000/publications/create',{
             method: 'POST',
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
+                id: pId,
                 name: pName,
                 description: pDescription,
-                tags: pTags,
+                imagePath: pImagePath,
                 date: formattedDate,
+                tags: pTags.split("#").map((tag) => tag.trim()),
                 category: pCategory,
                 subcategory: pSubcategory,
-                image: pImage
+                imageURL: ""
             })
         }).then(res => res.json())
+        console.log(newData.response);
         if(newData.response === 'Publication created successfully'){
+            alert('Publicación creada con éxito');
             navigate('/PublicationManagement');
-            console.log('Publication created successfully');
         }
     }
 
