@@ -8,7 +8,7 @@ function ProcessedPurchase(){
         <div>
             <Navbar showIcons={true} />
             <div className="centered">
-                <div className="title">Su compra fue procesada</div>
+                <div className="title">¡Su compra ha sido procesada!</div>
                 <Link to={"/"}>
                     <button className="buttonHome">Seguir navegando</button>
                 </Link>

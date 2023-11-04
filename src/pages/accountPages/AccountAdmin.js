@@ -16,6 +16,7 @@ export function MenuAdmin(){
   };
 
   const HomePage = () => {
+    localStorage.removeItem('username');
     navigate('/');
   };
 
@@ -54,6 +55,10 @@ export function InfoAccount(){
   const DeleteAccountPage = () => {
     navigate('/account/deleteAccount');
   };
+
+  const backPage = () => {
+    navigate('/');
+  };
  
   const getAccount = async() => {
     const response = await fetch('http://localhost:5000/getAccount',{
@@ -87,6 +92,9 @@ export function InfoAccount(){
       <button name="Update" onClick={ModifyAccountPage}>Modificar datos</button><br />
       <br />
       <button name="Delete" onClick={DeleteAccountPage}>Eliminar cuenta</button>
+      <br />
+      <br />
+      <button name="Delete" onClick={backPage}>Volver</button>
     </div>
   )
 }

@@ -18,3 +18,5 @@ npm i @types/multer --save-dev
 
 Si no sirve corranlo asi:
 npm install @types/express
+
+npm install primereact primeicons -D

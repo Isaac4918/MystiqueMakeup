@@ -8,8 +8,6 @@
     src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
-
-
 .MyPurchases h1{
     font-family: 'Pattaya';
     font-size: 40px;
@@ -59,7 +57,7 @@
     font-weight: bold;
     color: black;
     justify-content: center;
-    margin: 30px 30px 10px; /*30 es el largo del text*/
+    margin: 30px 20px 10px; /*30 es el largo del text*/
     height: 50px;
 }
 
@@ -82,7 +80,7 @@
     width: 150px;
     height: 33px;
     position: fixed;
-    bottom: 50px;
+    bottom: 35px;
     transition: all 0.4s ease;
 }
 

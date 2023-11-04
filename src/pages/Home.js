@@ -15,7 +15,7 @@ import MUrsula from "../components/assets/ursula.jpg";
 export function OpenSeeProduct(){
   return(
       <div> 
-          <a href="/ProductScreen"><button className="buttonSee">Ver Producto</button></a>
+          <a href="/ProductScreen"><button className="buttonSeeHome">Ver Producto</button></a>
       </div>
   )
 }
@@ -23,7 +23,7 @@ export function OpenSeeProduct(){
 export function OpenSeePublication(){
     return(
         <div> 
-            <a href="/PublicationScreen"><button className="buttonSee">Ver Publicacion</button></a>
+            <a href="/PublicationScreen"><button className="buttonSeeHome">Ver Publicacion</button></a>
         </div>
     )
   }
@@ -47,6 +47,8 @@ function Home(){
           items: 1
       }
   };
+
+
   return (
     <div className="Home">
           <Navbar showIcons={true} />
@@ -55,57 +57,57 @@ function Home(){
               <div className="containerHome">
                   <Carousel responsive={responsive}>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={polvos} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Polvito mágico</div>
-                                  <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Polvito mágico</div>
+                                  <div className="descriptionHome">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea</div>
                                   <OpenSeeProduct />
                               </div>
                           </div>
                       </div>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={labiales} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Labial colorcito</div>
-                                  <div className="description">Decora tus labios con estos nuevos labiales</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Labial colorcito</div>
+                                  <div className="descriptionHome">Decora tus labios con estos nuevos labiales</div>
                                   <OpenSeeProduct/>
                               </div>
                           </div>
                       </div>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={delineador} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Delineador maravilla</div>
-                                  <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Delineador maravilla</div>
+                                  <div className="descriptionHome">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
                                   <OpenSeeProduct />
                               </div>
                           </div>
                       </div>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={delineador} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Delineador maravilla</div>
-                                  <div className="description">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Delineador maravilla</div>
+                                  <div className="descriptionHome">Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd</div>
                                   <OpenSeeProduct />
                               </div>
                           </div>
@@ -117,57 +119,57 @@ function Home(){
                 <h1>Nuevos Maquillajes</h1>
                   <Carousel responsive={responsive}>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={MMalefica} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Maquillaje Malefica</div>
-                                  <div className="description">Sorprende a tus amigos con villanos de Disney</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Maquillaje Malefica</div>
+                                  <div className="descriptionHome">Sorprende a tus amigos con villanos de Disney</div>
                                   <OpenSeePublication />
                               </div>
                           </div>
                       </div>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={MBruja} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Maquillaje Bruja</div>
-                                  <div className="description">Haz magia</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Maquillaje Bruja</div>
+                                  <div className="descriptionHome">Haz magia</div>
                                   <OpenSeePublication/>
                               </div>
                           </div>
                       </div>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={MUrsula} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Maquillaje Ursula</div>
-                                  <div className="description">Sorprende a tus amigos con villanos de Disney</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Maquillaje Ursula</div>
+                                  <div className="descriptionHome">Sorprende a tus amigos con villanos de Disney</div>
                                   <OpenSeePublication />
                               </div>
                           </div>
                       </div>
                       <div className="cardHome">
-                          <div className="content">
-                              <div className="imageContent">
-                                  <div className="cardImage">
+                          <div className="contentHome">
+                              <div className="imageContentHome">
+                                  <div className="cardImageHome">
                                       <img src={MUrsula} alt=""/>
                                   </div>
                               </div>
-                              <div className="cardContent">
-                                  <div className="names">Maquillaje Ursula</div>
-                                  <div className="description">Sorprende a tus amigos con villanos de Disney</div>
+                              <div className="cardContentHome">
+                                  <div className="namesHome">Maquillaje Ursula</div>
+                                  <div className="descriptionHome">Sorprende a tus amigos con villanos de Disney</div>
                                   <OpenSeePublication />
                               </div>
                           </div>
