@@ -1,16 +1,21 @@
 import { Category } from "../models/Category";
 import { SubCategory } from "../models/SubCategory";
 import { categoryDAOImpl  } from "../models/DAO/categoryDAOImpl";
+import e from "express";
 
 export class CategoryController{
     private static instance: CategoryController;
     private categoryDAO: categoryDAOImpl;
-    private subCategoryList: SubCategory[];
+    private categoryList: Category[] = [];
 
     //Constructor
     constructor(){
         this.categoryDAO = categoryDAOImpl.getInstanceCategory();
-        this.subCategoryList = []; 
+        this.initializeCategoryList();
+    }
+
+    async initializeCategoryList() {
+        this.categoryList = await this.getAllCategories();
     }
 
     //Getter
@@ -22,31 +27,48 @@ export class CategoryController{
     }
 
     //Methods
+
+    // addCategory to categoryList
+    public addCategory(pCategory: Category): void{
+        this.categoryList.push(pCategory);
+    }
+
+    //getCategoyList
+    public getCategoryList(): Category[]{
+        return this.categoryList;
+    }
+
     //--------------------------- CREATE ---------------------------------------------------------
-    async createCategory(pCategory: string, pSubCategory: string[]): Promise<void>{
+    async createCategory(pCategory: string, pSubCategory: string[]): Promise<boolean>{
         if(this.validateEmpty(pCategory)){
             console.log("Debe ingresar el nombre de la categoría.")
+            return false;
         }else{
             let repeatedSubCategories = await this.validateRepeatedSubCategories(pSubCategory);
-            if(repeatedSubCategories == true){
+            if(repeatedSubCategories){
                 console.log("El nombre de las subcategorías debe ser único.")
+                return false;
             }else{
                 let uniqueCategoryName = await this.validateUniqueCategoryName(pCategory)
             
-                if(uniqueCategoryName == true){
+                if(uniqueCategoryName){
+                    let subCategoryList: SubCategory[] = [];	
                     for(let name of pSubCategory){
-                        if(this.validateEmpty(name) == false){
-                            this.subCategoryList.push(new SubCategory(name));
+                        if(!this.validateEmpty(name)){
+                            subCategoryList.push(new SubCategory(name));
                         }  
                     }
     
-                    let category = new Category(this.subCategoryList, pCategory);
+                    let category = new Category(pCategory, subCategoryList);
                     this.categoryDAO.create(category);
+                    this.addCategory(category);
+                    return true;
                 }else{
                     console.log("Ese nombre ya existe. Ingrese otro nombre de categoría.")
+                    return false;
                 }  
             }
-        }      
+        }
     }
 
     //--------------------------- READ ---------------------------------------------------------
@@ -55,27 +77,45 @@ export class CategoryController{
     }
 
     //--------------------------- UPDATE ---------------------------------------------------------
-    async updateCategory(pCategory: string, pSubCategory: string[]): Promise<void>{
-        for(let name of pSubCategory){
-            if(this.validateEmpty(name) == false){
-                this.subCategoryList.push(new SubCategory(name));
-            }  
+    async updateCategory(pCategory: string, pSubCategory: string[]): Promise<boolean>{
+        if(this.validateEmpty(pCategory)){
+            console.log("Debe ingresar el nombre de la categoría.")
+            return false;
+        }else{
+            let repeatedSubCategories = await this.validateRepeatedSubCategories(pSubCategory);
+            if(repeatedSubCategories){
+                console.log("El nombre de las subcategorías debe ser único.")
+                return false;
+            }else{
+                let uniqueCategoryName = await this.validateUniqueCategoryName(pCategory)
+            
+                if(uniqueCategoryName){
+                    let subCategoryList: SubCategory[] = [];	
+                    for(let name of pSubCategory){
+                        if(!this.validateEmpty(name)){
+                            subCategoryList.push(new SubCategory(name));
+                        }  
+                    }
+    
+                    let category = new Category(pCategory, subCategoryList);
+                    this.categoryDAO.update(category);
+                    return true;
+                }else{
+                    console.log("Ese nombre ya existe. Ingrese otro nombre de categoría.")
+                    return false;
+                }  
+            }
         }
-
-        let category = new Category(this.subCategoryList, pCategory);
-        this.categoryDAO.update(category);
     }
 
     //--------------------------- DELETE ---------------------------------------------------------
-    async deleteCategory(pCategory: string, pSubCategory: string[]): Promise<void>{
-        for(let name of pSubCategory){
-            if(this.validateEmpty(name) == false){
-                this.subCategoryList.push(new SubCategory(name));
-            }  
-        }
-
-        let category = new Category(this.subCategoryList, pCategory);
+    async deleteCategory(pCategory: string): Promise<void>{
+        let category = await this.categoryDAO.get(pCategory);
         this.categoryDAO.delete(category);
+
+        let index = this.categoryList.indexOf(category);
+        this.categoryList.splice(index, 1);
+
     }
 
     //----------------------------- VALIDATIONS ---------------------------------------------------------
@@ -99,6 +139,19 @@ export class CategoryController{
     }
 
     private async validateRepeatedSubCategories(pSubCategory: string[]): Promise<boolean> { //returns true if repeated names are entered
-        return false;
+        // returns true if there are repeated names in the list pSubCategory
+        let repeatedSubCategories = false;
+        let subCategoryList: string[] = [];
+
+        for(let name of pSubCategory){
+            if(this.validateEmpty(name) == false){
+                if(subCategoryList.includes(name)){
+                    repeatedSubCategories = true;
+                }else{
+                    subCategoryList.push(name);
+                }
+            }  
+        }
+        return repeatedSubCategories;
     }
 }

@@ -5,9 +5,12 @@ export class Category{
   private subcategory: SubCategory[];
   
   //Constructor
-  constructor(name: string){
-    this.subcategory = [];
+  constructor(name: string, pSubcategory: SubCategory[]){
+    this.subcategory = pSubcategory;
     this.name = name;
+    for(let i = 0; i < this.subcategory.length; i++){
+      this.subcategory[i].setCategory(this);
+    }
   }
   
 
@@ -24,8 +27,10 @@ export class Category{
     return this.subcategory;
   }
 
-  public addSubcategory(pSubcategory: SubCategory): void{
-    this.subcategory.push(pSubcategory);
-    pSubcategory.setCategory(this);
+  public setSubcategory(subcategory: SubCategory[]): void{
+    this.subcategory = subcategory;
+    for(let i = 0; i < this.subcategory.length; i++){
+      this.subcategory[i].setCategory(this);
+    }
   }
 }
