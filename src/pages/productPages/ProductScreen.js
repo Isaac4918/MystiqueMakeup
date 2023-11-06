@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from "../../components/Navbar";
 import "../../styles/Product.css";
 import back from "../../components/assets/arrowBack.png";
+import { useNavigate } from 'react-router-dom'; 
 
 export function BackMain(){
     return(
@@ -19,7 +20,7 @@ function ProductScreen(){
     let username = localStorage.getItem('username');
     const [visible, setVisible] = useState(true);
     const [productList, setProductList] = useState({});
-    let productAdded = [];
+    const navigate = useNavigate();
 
     const getProduct = async () => {
         const response = await fetch( baseAPIurl + '/products/get/' + id , {
@@ -68,8 +69,12 @@ function ProductScreen(){
     }
 
     const addCart = () => {
-        getCart();
-        
+        console.log(username);
+        if(username !== '' || username !== null){
+            getCart();
+        }else{
+            navigate('/LoginRegister');
+        }   
     }
 
 
@@ -95,7 +100,10 @@ function ProductScreen(){
     }
 
     useEffect(() => {
-        getAccount();
+        console.log(username);
+        if(username !== '' || username !== null){
+            getAccount();
+        }
     }, []);
 
     getProduct();

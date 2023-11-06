@@ -68,7 +68,9 @@ function PublicationScreen(){
       }
 
     useEffect(() => {
-        getAccount();
+        if(username !== '' || username !== null){
+            getAccount();
+        }
     }, []);
 
 
