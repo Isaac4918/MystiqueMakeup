@@ -16,37 +16,9 @@ import 'primeicons/primeicons.css';
 function MyPurchases(){
     const [visible, setVisible] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
-    //const[purchases, setPurchases] = useState({})
+    const [purchases, setPurchases] = useState([]);
     let username = localStorage.getItem('username');
-
-
-    const purchases = [
-        {
-            orderedNumber: "45677",
-            date: "12/10/22",
-            status: "Pendiente",
-            total: "3500",
-            cart: ["Producto 1", "Producto 2", "Producto 3", "Producto 4", "Producto 5", "Producto 6", 
-                    "Producto 7", "Producto 8", "Producto 9", "Producto 10", "Producto 11", "Producto 12",
-                    "Producto 13", "Producto 14", "Producto 15", "Producto 16", "Producto 17", "Producto 18"]
-        },
-        {
-            orderedNumber: "12345",
-            date: "12/10/22",
-            status: "Pendiente",
-            total: "75000",
-            cart: ["Producto 2000", "Producto 2", "Producto 3", "Producto 4", "Producto 5"]
-        },
-        {
-            orderedNumber: "434334",
-            date: "12/10/22",
-            status: "Agendada",
-            total: "4500",
-            cart: ["Producto 1000", "Producto 2", "Producto 3", "Producto 4", "Producto 5"]
-        },
-    ]
-
-
+    
     const getPurchases = async() => {
         const response = await fetch('http://localhost:5000/purchases/get/all',{
           method: 'GET',
@@ -67,7 +39,8 @@ function MyPurchases(){
                 purchasesList.push(element);
             }
         });
-       
+
+        setPurchases(purchasesList);
     }
 
     useEffect(() => {
@@ -100,18 +73,18 @@ function MyPurchases(){
             <h1>Mis compras</h1>
             <div className="containerPurchase">
                 <Carousel responsive={responsive}>
-                    {purchases.map((purchase) => (
-                    <div className="cardPurchase" key={purchase.orderedNumber}>
+                    {purchases.map((purchase, index) => (
+                    <div className="cardPurchase" key={index}>
                         <div className="contentPurchase">
                             <div className="cardContentPurchase">
-                                <div className="numPurchase">No. {purchase.orderedNumber}</div>
+                                <div className="numPurchase">No. {purchase.orderNumber}</div>
                                 <div className="descriptionPurchase">
-                                    <span style={{ color: purchase.status === 'Agendada' ? '#6d961a' : '#23aec1', fontWeight: 'bold', letterSpacing: '2px'}}>
-                                        {purchase.status}
+                                    <span style={{ color: purchase.scheduled ? '#6d961a' : '#23aec1', fontWeight: 'bold', letterSpacing: '2px'}}>
+                                        {purchase.scheduled ? 'Agendada' : 'Pendiente'}
                                     </span>
                                 </div>
-                                <div className="descriptionPurchase">Fecha: {purchase.date}</div>
-                                <div className="descriptionPurchase">Precio total: {purchase.total}</div>
+                                <div className="descriptionPurchase">Fecha: {purchase.paymentDate}</div>
+                                <div className="descriptionPurchase">Precio total:  ₡{purchase.finalPrice}</div>
                                 <button className="buttonConsult" onClick={() => {setSelectedProduct(purchase); setVisible(true)}}>Ver productos</button>
                                 <Dialog 
                                     visible={visible} 
@@ -121,14 +94,14 @@ function MyPurchases(){
                                     draggable={false}
                                     resizable={false}
                                     dismissableMask>
-                                    {selectedProduct && selectedProduct.cart.map((product) => (
-                                        <div className="descriptionPurchase"><li>{product}</li></div>
+                                    {selectedProduct && selectedProduct.cart.map((product, {username}) => (
+                                        <div className="descriptionPurchase" key={username}><li>{product.name}</li></div>
                                     ))}
                                 </Dialog>
                             </div>
                         </div>
                     </div>
-                    ))}
+            ))}
                 </Carousel>
             </div>
         </div>
