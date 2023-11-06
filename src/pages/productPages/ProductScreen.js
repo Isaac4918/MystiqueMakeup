@@ -18,6 +18,7 @@ function ProductScreen(){
     const baseAPIurl = 'http://localhost:5000';
     let username = localStorage.getItem('username');
     const [visible, setVisible] = useState(true);
+    const [productList, setProductList] = useState({});
     let productAdded = [];
 
     const getProduct = async () => {
@@ -27,21 +28,26 @@ function ProductScreen(){
         setProduct(response);
     }
 
-    /*
-    username: pObj.username,
-    products: pObj.products
 
-    export interface ProductAddedToCart {
-    productId: number;
-    quantity: number;
-    price: number;
+    const getCart = async () => {
+        const response = await fetch('http://localhost:5000/shoppingCart/get', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': username
+          }
+        }).then(res => res.json());
+        setProductList(response.products)
+
+        if(Array.isArray(productList)){
+            console.log("ES UN ARRAY");
+            productList.push(product);
+            console.log("Nuevo", productList);
+            updateCart();
+        }
     }
 
-    export interface ShoppingCart {
-    username: string;
-    products: ProductAddedToCart[];
-    }
-    */
 
     const updateCart = async() =>{
         const response = await fetch('http://localhost:5000/shoppingCart/update', {
@@ -52,15 +58,18 @@ function ProductScreen(){
             },
             body: JSON.stringify({
                 username: username,
-                products: productAdded
+                products: productList
             })
         });
+
+        if(response.ok){
+            alert('Agregado con éxito');
+        }
     }
 
     const addCart = () => {
-        productAdded.push(product);
-        console.log(productAdded);
-        updateCart();
+        getCart();
+        
     }
 
 

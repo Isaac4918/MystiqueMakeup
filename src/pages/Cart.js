@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Cart.css';
 import Navbar from "../components/Navbar"
 import back from "../components/assets/arrowBack.png";
-import Brillo from "../components/assets/Gel brillo.png";
-import LabialM from "../components/assets/labial mate.jpg";
-import LabialP from "../components/assets/Labial morado.jpg";
 
 export function Back() {
-
   const handleGoBack = () => {
     window.history.back();
   };
@@ -28,21 +24,6 @@ export function OpenPayment() {
 
 
 
-const products = [
-  {
-    name: "Labial Ultra Mate", description: "El labial matecito", price: 2000, available: 1, category: "Labios", subcategory: "Labiales", image: LabialM
-
-  },
-  {
-
-    name: "Labial purple", description: "El labial mas morado", price: 1500, available: 5, category: "Labios", subcategory: "Labiales", image: LabialP
-
-  },
-
-  {
-    name: 'Gel brillo', description: "El labial mas morado", price: 3000, available: 5, category: "Body", subcategory: "Glitter", image: Brillo
-  }
-];
 
 const calculateTotal = (products) => {
   return products.reduce((total, product) => total + product.price * product.available, 0);
@@ -150,18 +131,18 @@ function Cart() {
                     <td>{product.price}</td>
                     <td>
                       <ModifyQuantity
-                        available={product.available}
+                        available={1}
                         onIncrement={() => onIncrement(index)}
                         onDecrement={() => onDecrement(index)}
                       />
                     </td>
-                  <td>{product.price * product.available}</td>
+                  <td>{product.price * (product.available-(product.available-1))}</td>
                 </tr>)
               })}
             </tbody>
           </table>
 
-          <h2>Total: ₡{4500}</h2>
+          <h2>Total: ₡{0}</h2>
           <div className="buttonPay">
             <OpenPayment />
           </div>
