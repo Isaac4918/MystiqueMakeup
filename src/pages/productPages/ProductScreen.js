@@ -70,10 +70,10 @@ function ProductScreen(){
 
     const addCart = () => {
         console.log(username);
-        if(username !== '' || username !== null){
-            getCart();
-        }else{
+        if(username === '' || username === null){
             navigate('/LoginRegister');
+        }else{
+            getCart();
         }   
     }
 
@@ -101,7 +101,9 @@ function ProductScreen(){
 
     useEffect(() => {
         console.log(username);
-        if(username !== '' || username !== null){
+        if(username === '' || username === null){
+            console.log("No hay usuario");
+        }else{
             getAccount();
         }
     }, []);
