@@ -1,23 +1,398 @@
 @font-face {
-    font-family: 'Pattaya';
-    src: url(./fonts/Pattaya-Regular.ttf) format('truetype');
+    font-family: 'Poppins';
+    src: url(./fonts/Poppins-Regular.ttf) format('truetype');
 }
 
+/* PUBLICATION MANAGEMENT ---------------------------------------------*/
+.pagePublicationManagement{
+    position: relative;
+    margin: 20px 88px;
+    padding: 0px 100px 0px 100px;
+}
 
+.pagePublicationManagement h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    text-align: center;
+    margin-left: 10px;
+}
 
-.create-layout {
-    width: 1920px;
-    height: 1080px;
-  
+.containerPublicationManagement{
+    padding: 20px 20px 20px 0px;
+    margin: 0 20px 0 20px;
+}
+
+.contentPublication{
+    margin: 0px 55px 0px 55px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardPublicationManagement{
+    background-color: rgb(242, 242, 242);
+    width: 350px;
+    height: 450px;
+    position: inherit;
+    transition: all 0.4s ease;
+    position: relative;
+    transform: translate(-50%, -50%);
+    display: flex;
+    margin: 0px 10px 0px 10px;
+    top: 50%;
+    left: 50%;
+    justify-content: space-between;
+}
+
+.cardPublicationManagement:hover{
+    box-shadow: 0 5px 10px rgb(0 0 0 / 0.2);
+}
+
+.imageContentPublication{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 14px 0px;
+}
+
+.cardImagePublication{
+    position: relative;
+    height: 200px;
+    width: 200px;
+    /*padding: 3px;*/
+}
+
+.cardContentPublication{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardImagePublication img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.namesPublication{
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    justify-content: center;
+    margin: 20px 15px 5px 15px;  /*15 es el largo del text*/
+    height: 40px;
+}
+
+.descriptionPublication{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: black;
+    text-align: justify;
+    margin: 0px 25px 20px 25px;
+    width: 200px;
+    height: 120px;
+    word-wrap: break-word;
+}
+
+.datePublication{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: black;
+    text-align: justify;
+    margin: 0px 25px 20px;
+}
+
+.tagsPublication{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: #5E8410;
+    text-align: justify;
+}
+
+.buttonModifyPublication{
+    font-family: 'Poppins';
+    font-size: 14px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 150px;
+    height: 33px;
+    position: absolute;
+    position: fixed;
+    bottom: 18px;
+    left: 30%;
+}
+
+.buttonDeletePublication{
+    border: none;
+    position:absolute;
+    cursor: pointer;
+    top: 5px; 
+    right: 5px; 
+}
+
+.buttonDeletePublication img{
+    height: 23px;
+    width: 23px;
+}
+
+.buttonCreatePublication{
+    font-family: 'Poppins';
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    color: black;
+    background-color: rgb(242, 242, 242);
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 10px;
+    width: 230px;
+    height: 33px;
+    position: absolute;
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.4s ease;
+}
+
+.buttonModifyPublication:hover{
+    background-color: #6d961a;
+}
+
+.buttonCreatePublication:hover{
+    background-color: rgb(234, 234, 234);
+}
+
+.buttonDeletePublication:hover{
+    background-color: rgb(234, 234, 234, 0.963);}
+
+/* Publication SCREEN -------------------------------------------------*/
+.pagePublicationScreen{
+    position: relative;
+    margin: 0px 150px;
+}
+
+.pagePublicationScreen h1{
+    font-family: 'Pattaya';
+    font-size: 35px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+}
+
+.pagePublicationScreen h2{
+    font-family: 'Poppins';
+    font-size: 20px;
+    font-weight: bold;
+    text-align: start;
+    padding-top: 10px;
+}
+
+.pagePublicationScreen .layout{
+    width: 1366px;
+    height: 500px;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.pagePublicationScreen .layout img{
+    width: 400px;
+    height: 350px;
+    display: block;
+    margin: auto;
+    border: 2px solid black;
+}
+
+.pagePublicationScreen .layout p{
+    font-family: 'Poppins';
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 500px;
+    height: 60px;
+    word-wrap: break-word;
+}
+
+.pagePublicationScreen .layout .infoContainerPublication{
+    padding-top: 110px;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagePublicationScreen button{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+
+    position: absolute;
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.4s ease;
+}
+
+.pagePublicationScreen button:hover{
+    background-color: #26b9cd;
+}
+
+/* MODIFY Publication -----------------------------------------------*/
+.layoutModifyCreatePublication{
+    width: 1200px;
+    height: 500px;
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: 1px;
+
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    margin-top: 70px;
 }
 
-.create-layout h1{
+.layoutModifyCreatePublication .gridPosition{
+    position: relative;
+    margin-bottom: 87px;
+}
+
+.ModifyCreatePublication h1{
     font-family: 'Pattaya';
+    font-size: 40px;
+    margin-left: 100px;
+    margin-top: -20px;
+}
+
+.layoutModifyCreatePublication img{
+    width: 460px;
+    height: 360px;
+    background-color: rgb(242, 242, 242);
+    margin-right: 10px;
+    margin-top: 30px;
+    margin-bottom: 2px;
+}
+
+.layoutModifyCreatePublication label{
+    font-family: 'Poppins';
+    font-size: 16px;
+    color: black;
     margin-left: 30px;
-    margin-top: 100px;
+}
+
+.layoutModifyCreatePublication input{
+    background-color: rgb(242, 242, 242);
+    width: 300px;
+    height: 35px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 40px;
+    margin-left: 30px;
+}
+
+.layoutModifyCreatePublication input:hover{
+    border: 1px solid rgb(36, 177, 248);
+}
+
+.layoutModifyCreatePublication textarea{
+    background-color: rgb(242, 242, 242);
+    resize: none;
+    height: 200px;
+    width: 300px;
+    border-radius: 8px;
+    border: none;
+    margin-left: 30px;
+}
+
+.layoutModifyCreatePublication textarea:hover{
+    border: 1px solid rgb(46, 184, 253);
+}
+
+.buttonModifyCreatePublication{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-left: 30px;
+    margin-top: 78px;
+    position: absolute;
+    transition: all 0.4s ease;
+}
+
+.buttonModifyCreatePublication:hover{
+    background-color: #26b9cd;
+}
+
+.buttonLoadImagePublication{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-left: 75px;
+    margin-top: 40px;
+    transition: all 0.4s ease;
+}
+
+.buttonLoadImagePublication:hover{
+    background-color: #6d961a;
+}
+
+.ModifyCreatePublication .options {
+    background-color: rgb(242, 242, 242);
+    color: #333;
+    font-size: 16px;
+    width: 300px;
+    height: 35px;
+    border-radius: 8px;
+    margin-left: 30px;
+    margin-bottom: 50px;
+    align-items: center;
+  }
+
+/* DELETE Publication --------------------------------------------------*/
+.buttonDeletePublications{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+}
+
+/* ALL ------------------------------------------------------------*/
+.backManagementPublication{
+    border: none;
+    cursor: pointer;
+    margin-top: 13px;
+    background-color: white;
+}
+
+.backManagementPublication img{
+    width: 45px;
+    height: 45px;
 }
 

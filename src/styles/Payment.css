@@ -1,0 +1,127 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url(./fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+.PaymentDetails h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    margin-left: 100px;
+    margin-top: -40px;
+}
+
+.layoutPayment{
+    width: 1300px;
+    height: 450px;
+  
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    margin-top: 70px;
+}
+
+.RightGridPayment{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.LeftGridPayment{
+    margin-left: 100px;
+}
+
+.layoutPayment label{
+    font-family: 'Poppins';
+    font-size: 16px;
+    color: black;
+    margin-bottom: 30px;
+    margin-right: 10px;
+}
+
+.layoutPayment textarea{
+    background-color: rgb(242, 242, 242);
+    resize: none;
+    height: 80px;
+    width: 620px;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 40px;
+}
+
+.layoutPayment textarea:hover{
+    border: 1px solid rgb(36, 177, 248);
+}
+
+.dropdows{
+    display: flex;
+}
+
+.PaymentDetails .optionsPayment{
+    background-color: rgb(242, 242, 242);
+    color: #333;
+    font-size: 16px;
+    width: 200px;
+    height: 35px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    margin-right: 10px;
+    align-items: center;
+}
+
+.layoutPayment img{
+    display: flex;
+    justify-content: center;
+
+    width: 460px;
+    height: 360px;
+    background-color: rgb(242, 242, 242);
+    margin-right: 10px;
+    margin-top: 30px;
+    margin-bottom: 2px;
+}
+
+.buttonEnd{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #23aec1;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-top: 20px;
+    margin-left: 160px;
+    transition: all 0.4s ease;
+}
+
+.buttonLoadPayment{
+    font-family: 'Poppins';
+    font-size: 16px;
+    cursor: pointer;    
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    height: 38px;
+    margin-top: 20px;
+    transition: all 0.4s ease;
+}
+
+.buttonLoadPayment:hover{
+    background-color: #6d961a;
+}
+
+.buttonEnd:hover{
+    background-color: #26b9cd;
+}
+

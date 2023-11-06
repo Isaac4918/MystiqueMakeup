@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'Pattaya';
+  src: url(./fonts/Pattaya-Regular.ttf) format('truetype');
+}
+
+
+@font-face {
+  font-family: 'Poppins';
+  src: url(./fonts/Poppins-Regular.ttf) format('truetype');
+}
+
+
+.Search h1{
+  font-family: 'Pattaya';
+  font-size: 40px;
+  text-align: center;
+  margin-left: 10px;
+  flex: 1;
+}
+
+.Search select{
+  font-family: 'Poppins';
+  font-size: 14px;
+  margin-left: 30px;
+}
+
+.Search input{
+  background-color: #EAEAEA;
+  width: 300px;
+  height: 25px;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 8px;
+  margin-left: 20px;
+  border: none;
+}
+
+.Search li{
+  font-family: 'Poppins';
+  list-style-type: none;
+  margin-left: 70px;
+  margin-top: 10px;
+}
+
+.Search  button{
+  font-family: 'Poppins';
+  font-size: 14px;
+  color: white;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: #5E8410;
+  border-radius: 8px;
+  border: none;
+  width: 140px;
+  height: 25px;
+  margin-left: 40px;
+}
+
+
+.Category {
+  font-family: 'Poppins';
+  font-size: 14px;
+  list-style-type: none;
+  margin-left: 70px;
+  margin-top: 10px;
+}
+
+.Category td{
+  font-family: 'Poppins';
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.Category h1{
+  font-family: 'Pattaya';
+  font-size: 14px;
+  margin-left: 10px;
+  flex: 1;
+}
+
+/* ALL ------------------------------------------------------------*/
+.backSearch {
+  display: flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  margin-left: 10px;
+}
+
+.backSearch img{
+  width: 45px;
+  height: 45px;
+}
+
+.cardImageSearch img{
+  height: 50%;
+  width: 50%;
+  object-fit: cover;
+}
+
+.imageContentSearch{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 14px 0px;
+}
+
+
