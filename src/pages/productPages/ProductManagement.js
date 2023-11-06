@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import "../../styles/Product.css";
 import Navbar from "../../components/Navbar";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import polvos from "../../components/assets/polvos.jpg";
 import trash from "../../components/assets/trash.png";
-import labiales from "../../components/assets/labiales.jpg";
-import delineador from "../../components/assets/delineador.jpg";
 import back from "../../components/assets/arrowBack.png";
 
 // BUTTONS -----------------------------------------------------------------
@@ -19,19 +16,28 @@ export function Back(){
     )
 }
 
-export function OpenModifyProduct(){
+export function OpenModifyProduct(pId){
     return(
         <div> 
-            <a href="/ModifyProduct"><button className="buttonModify">Modificar</button></a>
+            <a href={"/ModifyProduct/"+ pId.pId}><button className="buttonModify">Modificar</button></a>
         </div>
     )
 }
 
-export function OpenDeleteProduct(){
-    const handleConfirmation = () => {
-        if(window.confirm("¿De verdad desea eliminar?")){
+export function OpenDeleteProduct(pId){
+    const baseAPIurl = 'http://localhost:5000';
+    const handleConfirmation = async() => {
+        if (window.confirm("¿Está seguro que desea eliminar esta producto?")) {
             window.location.href = "/ProductManagement";
-            //aqui se elimina el producto
+            const response = await fetch(baseAPIurl + '/products/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: pId.pId
+                })
+            }).then(res => res.json());
         }
     }
     return(
@@ -70,32 +76,19 @@ function ProductManagement(){
         }
     };
 
-    const products = [ 
-        { 
-            id: 1,
-            name: "Polvito mágico", 
-            description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd cuanto ser el limite que ocupe esta cosa sea", 
-            imageURL: polvos 
-        },
-        { 
-            id: 2,
-            name: "Labial colorcito", 
-            description: "Decora tus labios con estos nuevos labiales", 
-            imageURL: labiales 
-        },
-        { 
-            id: 3,
-            name: "Delineador maravilla", 
-            description: "Cubre los poros y no afecta la piel, muy barato y dispensable para la vida xd", 
-            imageURL: delineador 
-        },
-        { 
-            id: 4,
-            name: "Gel brillo", 
-            description: "Otra descripcion loca para s", 
-            imageURL: labiales
-        }
-    ];
+    const baseAPIurl = 'http://localhost:5000';
+    const [products, setProducts] = useState([]);
+
+    const getProducts = async () => {
+        const response = await fetch(baseAPIurl + '/products/get/all', {
+            method: 'GET',
+        }).then(res => res.json());
+        setProducts(response);
+    }
+
+    useEffect(() => {
+        getProducts();
+    }, []);
 
     return (
         <div>
@@ -108,7 +101,7 @@ function ProductManagement(){
                     <Carousel responsive={responsive}>
                         {products.map((product) => (
                             <div className="cardProductManagement" key={product.id}>
-                                <OpenDeleteProduct />
+                                <OpenDeleteProduct pId = {product.id}/>
                                 <div className="content">
                                     <div className="imageContent">
                                         <div className="cardImage">
@@ -118,7 +111,7 @@ function ProductManagement(){
                                     <div className="cardContent">
                                         <div className="names">{product.name}</div>
                                         <div className="description">{product.description}</div>
-                                        <OpenModifyProduct />
+                                        <OpenModifyProduct pId = {product.id}/>
                                     </div>
                                 </div>
                             </div>
