@@ -189,7 +189,7 @@ function ModifyPublication() {
             <Navbar showIcons={true} />
             <Link to={"/PublicationManagement"}><button className="backManagementPublication"><img src={back} alt="" /></button>
             </Link>
-            <h1>Maquillaje Ursula</h1>
+            <h1>Modificar Publicación</h1>
 
             <section className="layoutModifyCreatePublication">
                 <div className="gridPosition">
