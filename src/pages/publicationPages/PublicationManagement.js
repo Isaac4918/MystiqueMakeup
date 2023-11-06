@@ -27,6 +27,7 @@ function OpenModifyPublication(pId) {
     )
 }
 
+
 function OpenDeletePublication(pId) {
     const baseAPIurl = 'http://localhost:5000';
     const handleConfirmation = async() => {
@@ -34,6 +35,9 @@ function OpenDeletePublication(pId) {
             window.location.href = "/PublicationManagement";
             const response = await fetch(baseAPIurl + '/publications/delete', {
                 method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     id: pId.pId
                 })

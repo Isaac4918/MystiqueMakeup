@@ -24,6 +24,7 @@ export function UpdateInfo(){
     const [inputValues, setInputValues] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [parsedCategories, setParsedCategories] = useState([]);
+    const [currentCategory, setCurrentCategory] = useState(false);
     const navigate = useNavigate();
 
     const OpenCloseDropdown = () =>{
@@ -33,11 +34,42 @@ export function UpdateInfo(){
     const handleSelect = (event) => {
         setSelectedItem(event.currentTarget.textContent);
         setSelectedKey(event.currentTarget.getAttribute('data-key'))
+        let id = event.currentTarget.getAttribute('data-key');
+        let currentCategoryVar = getCategoryById(id);
+        setCurrentCategory(currentCategoryVar);
+        console.log("Me actualicé")
+    }
+
+    const updateInputs = async() => {
+        if(currentCategory !== false){
+            setIsChecked(true)
+            setInputCount(currentCategory.subCategories.length);
+            generateInputs(currentCategory.subCategories.length);
+            setSelectedCategory(currentCategory.name);
+            setInputValues(await parseSubcategories(currentCategory.subCategories));
+            console.log(inputValues)
+        }
+    }
+
+    const parseSubcategories = (listOfSubCat) =>{
+        let subcategories = [];
+        for(let i = 0; i < listOfSubCat.length; i++){
+            subcategories.push(listOfSubCat[i].name);
+        }
+        return subcategories;
     }
 
     const Check = () => {
         setIsChecked(!isChecked);
     };
+
+    const getCategoryById = (pId) => {
+        for(let i = 0; i < parsedCategories.length; i++) {
+            if(parsedCategories[i].id.toString() === pId) {
+                return parsedCategories[i];
+            }
+        }
+    }
 
     const checkInputValues = () => {
         for(let i = 0; i < inputValues.length; i++) {
@@ -59,6 +91,7 @@ export function UpdateInfo(){
         }
         setParsedCategories(categorylist);
     }
+
     useEffect(() => {
         getCategories();
     }, []);
@@ -74,15 +107,20 @@ export function UpdateInfo(){
         }
 
         setInputCount(event.target.value);
+        generateInputs(event.target.value);
+    }
+
+    const generateInputs = (num) =>{
         const newInputs = [];
-        for(let i = 0; i < event.target.value; i++) {
+        for(let i = 0; i < num; i++) {
             newInputs.push(
                 <input 
                   key={i} 
                   type="text" 
                   name='generateInputs' 
+                  value = {inputValues[i]}
                   onChange={event => {
-                    const newValue = event.target.value;
+                    const newValue = num;
                     setInputValues(prevInputValues => {
                       const newInputValues = [...prevInputValues];
                       newInputValues[i] = { name: newValue };
@@ -154,6 +192,7 @@ export function UpdateInfo(){
                     ))}
                 </DropdownMenu>
             </Dropdown>
+            <button name='categoryOption' onClick={updateInputs}>Obtener Información</button>
             <div>
             <label name='categoryLabel'>Nombre</label>
             <br />

@@ -156,7 +156,7 @@ function CreatePublication(){
         let imageURL = uploadImage.imageUrl;
 
         //define the path of the image
-        let imagePath = 'publications/' + currentId.toString();
+        let imagePath = 'Publications/' + currentId.toString();
 
         // create the publication
         const newData = await fetch(baseAPIurl + '/publications/create',{
