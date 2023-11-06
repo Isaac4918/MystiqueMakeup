@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef , useState } from 'react';
+import { useRef , useState, useEffect } from 'react';
 import "../../styles/Product.css";
 import Navbar from "../../components/Navbar";
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,8 +14,10 @@ function CreateProduct() {
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
+    const baseAPIurl = 'http://localhost:5000';
 
     const [selectedName, setSelectedName] = useState('');
+    const [blobImage, setBlobImage] = useState('-');
     const [selectedDescription, setSelectedDescription] = useState('');
     const [selectedPrice, setSelectedPrice] = useState(0);
     const [selectedAvailable, setSelectedAvailable] = useState(0);
@@ -24,23 +26,52 @@ function CreateProduct() {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
 
-    const categories = ["Labios", "Piel"];
-    const subcategories = ["Terror", "Fantasia"];
+    const [categories, setCategories] = useState([]);
+    const [parsedCategories, setParsedCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
 
     // FUNCTIONS -----------------------------------------------------------------
+    const getCategories = async () => {
+        const response = await fetch(baseAPIurl + '/category/all', {
+            method: 'GET',
+        }).then(res => res.json());
+        setCategories(response);
+        let categorylist = [];
+        for (let i = 0; i < response.length; i++) {
+            categorylist.push(response[i].name);
+        }
+        setParsedCategories(categorylist);
+    }
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const getSubcategories = (pCategory) => {
+        let subcategorylist = [];
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].name === pCategory) {
+                for (let j = 0; j < categories[i].subCategories.length; j++) {
+                    subcategorylist.push(categories[i].subCategories[j].name);
+                }
+            }
+        }
+        setSubcategories(subcategorylist);
+    }
+    
     const handleClickImage = (event) => {
         hiddenFileInput.current.click();
     };
 
     const handleChangeImage = (event) => {
         const fileUploaded = event.target.files;
-
-        if (fileUploaded[0].name) {
+        if (fileUploaded[0]) {
             setImage(URL.createObjectURL(fileUploaded[0]));
+            setBlobImage(fileUploaded[0]);
         }
     };
 
-    const handleProduct = (event) => {
+    const handleProduct = async(event) => {
         event.preventDefault();
 
         if (!selectedName || !selectedDescription || !selectedPrice || !selectedAvailable || !selectedCategory || !selectedSubcategory || !selectedImage) {
@@ -83,31 +114,75 @@ function CreateProduct() {
             return;
         }
 
-        navigate('/ProductManagement');
+        let result = await createProduct(selectedName, selectedDescription, selectedCategory, selectedSubcategory, selectedPrice, selectedAvailable);
+        if (result.status === 200) {
+            alert("Producto creado con éxito");
+            navigate('/ProductManagement');
+        } else {
+            alert("ERROR: No se pudo crear el producto");
+        }
+
     }
 
-    const createProduct = async(pName, pDescription, pPrice, pAvailable, pCategory, pSubcategory, pImage) => {
-        const newData = await fetch('http://localhost:5000/createProduct',{
+    const createProduct = async(pName, pDescription, pCategory, pSubcategory, pPrice, pAvailable) => {
+        // get id
+        const currentId = await fetch(baseAPIurl + '/products/get/id', {
+            method: 'GET',
+        }).then(res => res.json());
+
+        // update the id
+        const nextId = await fetch(baseAPIurl + '/products/update/id', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }, body: JSON.stringify({
+                id: currentId + 1
+            })
+        });
+
+        // upload the image
+        let formData = new FormData();
+        formData.append('image', blobImage)
+
+        const uploadImage = await fetch(baseAPIurl + '/image/upload/products/' + currentId.toString(), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formData
+        }).then(res => res.json());
+
+        // save the url of the image
+        let imageURL = uploadImage.imageUrl;
+
+        //define the path of the image
+        let imagePath = 'Products/' + currentId.toString();
+        
+        // create the product
+        const newData = await fetch('http://localhost:5000/products/create',{
             method: 'POST',
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
+                id: currentId,
                 name: pName,
                 description: pDescription,
-                price: pPrice,
-                available: pAvailable,
+                imagePath: imagePath,
                 category: pCategory,
                 subcategory: pSubcategory,
-                image: pImage
+                price: pPrice,
+                available: pAvailable,
+                imageURL: imageURL
             })
-        }).then(res => res.json())
-        if(newData.response === 'Product created successfully'){
-            navigate('/ProductManagement');
-            console.log('Product created successfully');
-        }
+        })
+        
+        return newData;
     }
+
+    
 
     // RETURN -----------------------------------------------------------------
     return (
@@ -134,7 +209,7 @@ function CreateProduct() {
                     <input value={selectedAvailable} onChange={(e) => setSelectedAvailable(e.target.value)} type="number" min="0" id="availableProduct" name="available"/><br />
 
                     <label>Categoría</label><br />
-                    <Dropdown value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} options={categories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedCategory} onChange={(e) => {setSelectedCategory(e.target.value); getSubcategories(e.target.value)}} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
                     <br />
 
                     <label>Subcategoría</label><br />
