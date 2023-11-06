@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import backButton from '../../components/assets/back.png'
 import Navbar from "../../components/Navbar"  
 import '../../styles/Category.css'
+import { useNavigate } from 'react-router-dom';
 
 export function BackAccount(){
     return(
@@ -13,9 +14,17 @@ export function BackAccount(){
     )
 }
 
-export function SearchCategory(){
+export function UpdateInfo(){
     const [dropdown, setDropdown] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedKey, setSelectedKey] = useState(0);
+    const [isChecked, setIsChecked] = useState(false);
+    const [inputCount, setInputCount] = useState("0");
+    const [inputs, setInputs] = useState([]);
+    const [inputValues, setInputValues] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [parsedCategories, setParsedCategories] = useState([]);
+    const navigate = useNavigate();
 
     const OpenCloseDropdown = () =>{
         setDropdown(!dropdown);
@@ -23,8 +32,112 @@ export function SearchCategory(){
 
     const handleSelect = (event) => {
         setSelectedItem(event.currentTarget.textContent);
+        setSelectedKey(event.currentTarget.getAttribute('data-key'))
     }
 
+    const Check = () => {
+        setIsChecked(!isChecked);
+    };
+
+    const checkInputValues = () => {
+        for(let i = 0; i < inputValues.length; i++) {
+            if(inputValues[i] === '') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const getCategories = async () => {
+        const response = await fetch('http://localhost:5000/category/all', {
+            method: 'GET',
+        }).then(res => res.json());
+
+        let categorylist = [];
+        for (let i = 0; i < response.length; i++) {
+            categorylist.push(response[i]);
+        }
+        setParsedCategories(categorylist);
+    }
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const handleInputChange = (event) => {
+        const newInputCount = event.target.value;
+        setInputCount(newInputCount);
+
+        if (newInputCount < inputCount) {
+            setInputValues(inputValues.slice(0, newInputCount));
+        } else if (newInputCount > inputCount) {
+            setInputValues(prevInputValues => [...prevInputValues, ...new Array(newInputCount - inputCount).fill('')]);
+        }
+
+        setInputCount(event.target.value);
+        const newInputs = [];
+        for(let i = 0; i < event.target.value; i++) {
+            newInputs.push(
+                <input 
+                  key={i} 
+                  type="text" 
+                  name='generateInputs' 
+                  onChange={event => {
+                    const newValue = event.target.value;
+                    setInputValues(prevInputValues => {
+                      const newInputValues = [...prevInputValues];
+                      newInputValues[i] = { name: newValue };
+                      return newInputValues;
+                    });
+                  }}
+                />
+              );
+        }
+        setInputs(newInputs);
+    }
+
+    const handleConfirmation = async (event) => {
+        event.preventDefault();
+
+        if(!selectedCategory){
+            alert('Todos los campos son obligatorios');
+        }
+
+        else if(inputCount === "0" || !isChecked){
+            alert('Ingrese la cantidad de subcategorías');
+        }
+
+        else if(checkInputValues()){
+             alert('Todos los campos son obligatorios');
+        }
+
+        else{
+            let result = await updateCategory(selectedKey, selectedCategory, inputValues);
+            if (result.status === 200) {
+                alert("Categoría modificada con éxito");
+                navigate('/account/manageCategories');
+            } else {
+                alert("ERROR: No se pudo modificar la categoría");
+            }
+        }
+    }
+
+    const updateCategory = async (pId, pCategory, pSubcategories) => {
+        //aca solo actualiza las subcategorias de la categoria seleccionada
+        const response = await fetch('http://localhost:5000/category/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                id: pId,
+                name: pCategory,
+                subCategories: pSubcategories
+            })
+        });
+
+        return response;
+    }
 
     return(
         <div>
@@ -36,65 +149,38 @@ export function SearchCategory(){
                 </DropdownToggle>
 
                 <DropdownMenu>
-                    <DropdownItem onClick={handleSelect}>Terror</DropdownItem>
-                    <DropdownItem onClick={handleSelect}>Fantasía</DropdownItem>
+                    {parsedCategories.map((category) => (
+                        <DropdownItem key={category.id} data-key={category.id} onClick={handleSelect}>{category.name}</DropdownItem>
+                    ))}
                 </DropdownMenu>
             </Dropdown>
-        </div>
-    )
-}
-
-export function UpdateInfo(){
-    const [isChecked, setIsChecked] = useState(false);
-
-    const Check = () => {
-      setIsChecked(!isChecked);
-    };
-
-    return(
-        <div>
+            <div>
             <label name='categoryLabel'>Nombre</label>
             <br />
-            <input type='text' name='nameCategory'/>
+            <input type='text' name='nameCategory' value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}/>
             <br />
             <label name='categoryLabel'>
                 <input type="checkbox" name='subcategoryCheckBox' checked={isChecked} onChange={Check} />
                 &nbsp;Modificar subcategoría
             </label>
             <br /><br />
-            {isChecked && <UpdateSubcategories />}
+            {
+                isChecked && 
+                        <div>
+                            <label name='categoryLabel'>
+                                Cantidad de subcategorías: 
+                                &nbsp;<input type="number" min="0" name='numberInput' value={inputCount} onChange={handleInputChange} />
+                            </label>
+                            <br />
+                            {inputs}
+                        </div>
+            }
             <br />
-            <button name='categoryOption'>Modificar</button>
+            <button name='categoryOption' onClick={handleConfirmation}>Modificar</button>
+        </div>
         </div>
     )
 }
-
-
-export function UpdateSubcategories(){
-    const [inputCount, setInputCount] = useState(0);
-    const [inputs, setInputs] = useState([]);
-
-    const handleInputChange = (event) => {
-        setInputCount(event.target.value);
-        const newInputs = [];
-        for(let i = 0; i < event.target.value; i++) {
-          newInputs.push(<input key={i} type="text" name='generateInputs'/>);
-        }
-        setInputs(newInputs);
-    }
-
-    return(
-        <div>
-            <label name='categoryLabel'>
-                Cantidad de subcategorías: 
-                &nbsp;<input type="number" name='numberInput' value={inputCount} onChange={handleInputChange} />
-            </label>
-            <br />
-            {inputs}
-        </div>
-    )
-}
-
 
 
 function ModifyCategory(){
@@ -103,7 +189,6 @@ function ModifyCategory(){
             <Navbar showIcons={false}/>
             <div className='modifyCategory'>
                 <BackAccount />
-                <SearchCategory />
                 <UpdateInfo />
             </div>
         </div>
