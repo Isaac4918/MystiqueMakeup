@@ -31,7 +31,8 @@ function ProductScreen(){
 
 
     const getCart = async () => {
-        const response = await fetch('http://localhost:5000/shoppingCart/get', {
+        console.log("Me estan agregando")
+        const response = await fetch(baseAPIurl + '/shoppingCart/get', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -39,11 +40,25 @@ function ProductScreen(){
             'Authorization': username
           }
         }).then(res => res.json());
-        setProductList(response.products)
-
+        if(response.products === null || Object.keys(response.products).length === 0){
+            console.log("array vacio")
+            setProductList([])
+        }else{
+            console.log("array lleno")
+            setProductList(response.products)
+        }
+        console.log(response.products)
         if(Array.isArray(productList)){
             console.log("ES UN ARRAY");
-            productList.push(product);
+            let productAddedToCart = {
+                id: product.id,
+                quantity: 1,
+                price: product.price,
+                name: product.name,
+                available: product.available,
+                imageURL: product.imageURL
+            }
+            productList.push(productAddedToCart);
             console.log("Nuevo", productList);
             updateCart();
         }
@@ -51,7 +66,7 @@ function ProductScreen(){
 
 
     const updateCart = async() =>{
-        const response = await fetch('http://localhost:5000/shoppingCart/update', {
+        const response = await fetch(baseAPIurl + '/shoppingCart/update', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,7 +77,6 @@ function ProductScreen(){
                 products: productList
             })
         });
-
         if(response.ok){
             alert('Agregado con éxito');
         }
@@ -79,7 +93,7 @@ function ProductScreen(){
 
 
     const getAccount = async() => {
-        const response = await fetch('http://localhost:5000/getAccount',{
+        const response = await fetch(baseAPIurl + '/getAccount',{
           method: 'GET',
           headers : {
             'Content-Type': 'application/json',
