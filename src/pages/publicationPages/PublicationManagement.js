@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/Publications.css";
 import Navbar from "../../components/Navbar";
 import Carousel from 'react-multi-carousel';
@@ -11,46 +11,54 @@ import MMalefica from "../../components/assets/malefica.jpg";
 import MUrsula from "../../components/assets/ursula.jpg";
 
 // BUTTONS -----------------------------------------------------------------
-export function Back(){
-    return(
-        <div className="buttonBack"> 
-            <a href="/AccountAdmin"><img src={back} alt=""/></a>
+function Back() {
+    return (
+        <div className="buttonBack">
+            <a href="/AccountAdmin"><img src={back} alt="" /></a>
         </div>
     )
 }
 
-export function OpenModifyPublication(){
-    return(
-        <div> 
-            <a href="/ModifyPublication"><button className="buttonModifyPublication">Modificar</button></a>
+function OpenModifyPublication(pId) {
+    return (
+        <div>
+            <a href={"/ModifyPublication/"+ pId.pId}><button className="buttonModifyPublication">Modificar</button></a>
         </div>
     )
 }
 
-export function OpenDeletePublication(){
-    const handleConfirmation = () => {
+function OpenDeletePublication(pId) {
+    const baseAPIurl = 'http://localhost:5000';
+    const handleConfirmation = async() => {
         if (window.confirm("¿Está seguro que desea eliminar esta publicación?")) {
             window.location.href = "/PublicationManagement";
-            //aqui se elimina la publicacion
+            const response = await fetch(baseAPIurl + '/publications/delete', {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    id: pId.pId
+                })
+            }).then(res => res.json());
         }
     }
-    return(
-        <div> 
-            <button className="buttonDeletePublication" onClick={handleConfirmation}><img src={trash} alt=""/></button>
+    return (
+        <div>
+            <button className="buttonDeletePublication" onClick={handleConfirmation}><img src={trash} alt="" /></button>
         </div>
     )
 }
 
-export function OpenCreatePublication(){
-    return(
-        <div> 
+function OpenCreatePublication() {
+    return (
+        <div>
             <a href="/CreatePublication"><button className="buttonCreatePublication">Crear nueva publicación</button></a>
         </div>
     )
 }
 
 // FUNCTIONS -----------------------------------------------------------------
-function PublicationManagement(){
+function PublicationManagement() {
+    const baseAPIurl = 'http://localhost:5000';
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -69,6 +77,24 @@ function PublicationManagement(){
             items: 1
         }
     };
+
+    const [publications, setPublications] = useState([]);
+
+    const getPublications = async () => {
+        const response = await fetch(baseAPIurl + '/publications/get/all', {
+            method: 'GET',
+        }).then(res => res.json());
+        setPublications(response);
+    }
+
+    useEffect(() => {
+        getPublications();
+    }, []);
+
+    const test = () => {
+        console.log(publications);
+    }
+
     return (
         <div>
             <Navbar showIcons={true} />
@@ -78,66 +104,23 @@ function PublicationManagement(){
                 <OpenCreatePublication />
                 <div className="containerPublicationManagement">
                     <Carousel responsive={responsive}>
-                        <div className="cardPublicationManagement">
-                            <OpenDeletePublication />
-                            <div className="contentPublication">
-                                <div className="imageContentPublication">
-                                    <div className="cardImagePublication">
-                                        <img src={MBruja} alt=""/>
+                        {publications.map((publication) => (
+                            <div className="cardPublicationManagement">
+                                <OpenDeletePublication pId = {publication.id}/>
+                                <div className="contentPublication">
+                                    <div className="imageContentPublication">
+                                        <div className="cardImagePublication">
+                                            <img src={publication.imageURL} alt="" />
+                                        </div>
+                                    </div>
+                                    <div className="cardContentPublication">
+                                        <div className="namesPublication">{publication.name}</div>
+                                        <div className="descriptionPublication">{publication.description}</div>
+                                        <OpenModifyPublication pId = {publication.id}/>
                                     </div>
                                 </div>
-                                <div className="cardContentPublication">
-                                    <div className="namesPublication">Maquillaje Bruja</div>
-                                    <div className="descriptionPublication">Has Magia</div>
-                                    <OpenModifyPublication />
-                                </div>
                             </div>
-                        </div>
-                        <div className="cardPublicationManagement">
-                            <OpenDeletePublication />
-                            <div className="contentPublication">
-                                <div className="imageContentPublication">
-                                    <div className="cardImagePublication">
-                                        <img src={MMalefica} alt=""/>
-                                    </div>
-                                </div>
-                                <div className="cardContentPublication">
-                                    <div className="namesPublication">Maquillaje Malefica</div>
-                                    <div className="descriptionPublication">Sorprende a tus amigos con villanos de Disney</div>
-                                    <OpenModifyPublication />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="cardPublicationManagement">
-                            <OpenDeletePublication />
-                            <div className="contentPublication">
-                                <div className="imageContentPublication">
-                                    <div className="cardImagePublication">
-                                        <img src={MUrsula} alt=""/>
-                                    </div>
-                                </div>
-                                <div className="cardContentPublication">
-                                    <div className="namesPublication">Maquillaje Ursula</div>
-                                    <div className="descriptionPublication">Sorprende a tus amigos con villanos de Disney</div>
-                                    <OpenModifyPublication />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="cardPublicationManagement">
-                            <OpenDeletePublication />
-                            <div className="contentPublication">
-                                <div className="imageContentPublication">
-                                    <div className="cardImagePublication">
-                                        <img src={MUrsula} alt=""/>
-                                    </div>
-                                </div>
-                                <div className="cardContentPublication">
-                                    <div className="namesPublication">Maquillaje Ursula</div>
-                                    <div className="descriptionPublication">Sorprende a tus amigos con villanos de Disney</div>
-                                    <OpenModifyPublication />
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </Carousel>
                 </div>
             </div>
