@@ -24,6 +24,8 @@ function ModifyPublication() {
     const [categories, setCategories] = useState([]);
     const [parsedCategories, setParsedCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
+    const [currentPublication, setCurrentPublication] = useState({});
+    const [imageURL, setImageURL] = useState('');
 
     // FUNCTIONS -----------------------------------------------------------------
     const getCategories = async () => {
@@ -31,6 +33,7 @@ function ModifyPublication() {
             method: 'GET',
         }).then(res => res.json());
         setCategories(response);
+        console.log(response);
         let categorylist = [];
         for (let i = 0; i < response.length; i++) {
             categorylist.push(response[i].name);
@@ -44,6 +47,7 @@ function ModifyPublication() {
             if (categories[i].name === pCategory) {
                 for (let j = 0; j < categories[i].subCategories.length; j++) {
                     subcategorylist.push(categories[i].subCategories[j].name);
+                    console.log(categories[i].subCategories[j].name)
                 }
             }
         }
@@ -59,15 +63,13 @@ function ModifyPublication() {
 
     useEffect(() => {
         getCategories();
-        console.log(id);
-        getPublication().then(res => {
+        let publicationVar = getPublication().then(res => {
             setSelectedName(res.name);
             setSelectedDescription(res.description);
             setSelectedTags(res.tags);
-            setSelectedCategory(res.category);
-            setSelectedSubcategory(res.subcategory);
             setImage(res.imageURL);
         });
+        setCurrentPublication(publicationVar);
     }, []);
 
     const handleClickImage = (event) => {
@@ -81,7 +83,7 @@ function ModifyPublication() {
         }
     };
 
-    const handlePublication = (event) => {
+    const handlePublication = async(event) => {
         event.preventDefault();
 
         if (!selectedName || !selectedDescription|| !selectedTags|| !selectedCategory || !selectedSubcategory || !selectedImage) {
@@ -113,24 +115,44 @@ function ModifyPublication() {
             alert("ERROR: Debe seleccionar una imagen");
             return;
         }
-
-        navigate('/PublicationManagement');
+        let result = await modifyPublication(selectedName, selectedDescription, selectedTags, selectedCategory, selectedSubcategory);
+        if (result.status === 200) {
+            alert("Publicación modificada con éxito");
+            navigate('/PublicationManagement');
+        } else {
+            alert("ERROR: No se pudo modificar la publicación");
+        }
     };
 
-    const modifyPublication = async(pName, pDescription, pTags, pCategory, pSubcategory, pImage) => {
-        const newData = await fetch('http://localhost:5000/createPublication',{
+    const modifyPublication = async(pName, pDescription, pTags, pCategory, pSubcategory) => {
+        let formData = new FormData();
+        //formData.append('image', blobImage)
+
+        const uploadImage = await fetch(baseAPIurl + '/image/upload/publications/' + id.toString(), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formData
+        }).then(res => res.json());
+
+
+        const newData = await fetch('http://localhost:5000/publications/update',{
             method: 'PUT',
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
+                id: id,
                 name: pName,
                 description: pDescription,
-                tags: pTags,
+                imagePath: currentPublication.imagePath,
+                date: currentPublication.formattedDate,
+                tags: pTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1),
                 category: pCategory,
                 subcategory: pSubcategory,
-                image: pImage
+                imageURL: currentPublication.imageURL
             })
         }).then(res => res.json())
         if(newData.response === 'Publication created successfully'){
@@ -162,7 +184,7 @@ function ModifyPublication() {
                     <input value={selectedTags} onChange={(e) => setSelectedTags(e.target.value)} type="text" id="tagsPublication" name="tags" /><br />
 
                     <label>Categoría</label><br />
-                    <Dropdown value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); getSubcategories(e.target.value); }} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); getSubcategories(e.target.value);}} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
                     <br />
 
                     <label>Subcategoría</label><br />
