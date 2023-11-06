@@ -1,14 +1,14 @@
-import React, { useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import "../../styles/Publications.css";
 import Navbar from "../../components/Navbar";
 import back from "../../components/assets/arrowBack.png";
 import { Dropdown } from 'primereact/dropdown';
 import { Link } from 'react-router-dom';
-import { useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
 function ModifyPublication() {
-    let {id} = useParams();
+    let { id } = useParams();
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();
     const hiddenFileInput = useRef(null);
@@ -17,15 +17,16 @@ function ModifyPublication() {
     const [selectedName, setSelectedName] = useState('');
     const [selectedDescription, setSelectedDescription] = useState('');
     const [selectedTags, setSelectedTags] = useState('');
-
+    const [blobImage, setBlobImage] = useState('NotUploaded');
     const [selectedImage, setImage] = useState(imagePlaceholder);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
     const [categories, setCategories] = useState([]);
     const [parsedCategories, setParsedCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
-    const [currentPublication, setCurrentPublication] = useState({});
     const [imageURL, setImageURL] = useState('');
+    const [pDate, setPDate] = useState('');
+    const [pImagePath, setPImagePath] = useState('');
 
     // FUNCTIONS -----------------------------------------------------------------
     const getCategories = async () => {
@@ -33,12 +34,19 @@ function ModifyPublication() {
             method: 'GET',
         }).then(res => res.json());
         setCategories(response);
-        console.log(response);
         let categorylist = [];
         for (let i = 0; i < response.length; i++) {
             categorylist.push(response[i].name);
         }
         setParsedCategories(categorylist);
+    }
+
+    const parseTags = (pTags) => {
+        let parsedTags = '';
+        for (let i = 0; i < pTags.length; i++) {
+            parsedTags += '#' + pTags[i];
+        }
+        setSelectedTags(parsedTags);
     }
 
     const getSubcategories = (pCategory) => {
@@ -47,15 +55,14 @@ function ModifyPublication() {
             if (categories[i].name === pCategory) {
                 for (let j = 0; j < categories[i].subCategories.length; j++) {
                     subcategorylist.push(categories[i].subCategories[j].name);
-                    console.log(categories[i].subCategories[j].name)
                 }
             }
         }
         setSubcategories(subcategorylist);
     }
 
-    const getPublication = async() => {
-        const response = await fetch(baseAPIurl + '/publications/get/'+ id, {
+    const getPublication = async () => {
+        const response = await fetch(baseAPIurl + '/publications/get/' + id, {
             method: 'GET'
         }).then(res => res.json());
         return response;
@@ -66,10 +73,12 @@ function ModifyPublication() {
         let publicationVar = getPublication().then(res => {
             setSelectedName(res.name);
             setSelectedDescription(res.description);
-            setSelectedTags(res.tags);
+            parseTags(res.tags);
             setImage(res.imageURL);
+            setPDate(res.date);
+            setPImagePath(res.imagePath);
+            setImageURL(res.imageURL);
         });
-        setCurrentPublication(publicationVar);
     }, []);
 
     const handleClickImage = (event) => {
@@ -78,15 +87,16 @@ function ModifyPublication() {
 
     const handleChangeImage = (event) => {
         const fileUploaded = event.target.files;
-        if (fileUploaded[0].name) {
+        if (fileUploaded[0]) {
             setImage(URL.createObjectURL(fileUploaded[0]));
+            setBlobImage(fileUploaded[0]);
         }
     };
 
-    const handlePublication = async(event) => {
+    const handlePublication = async (event) => {
         event.preventDefault();
 
-        if (!selectedName || !selectedDescription|| !selectedTags|| !selectedCategory || !selectedSubcategory || !selectedImage) {
+        if (!selectedName || !selectedDescription || !selectedTags || !selectedCategory || !selectedSubcategory || !selectedImage) {
             alert("ERROR: Todos los campos son obligatorios");
             return;
         }
@@ -111,7 +121,7 @@ function ModifyPublication() {
             return;
         }
 
-        if(selectedImage === imagePlaceholder){
+        if (selectedImage === imagePlaceholder) {
             alert("ERROR: Debe seleccionar una imagen");
             return;
         }
@@ -124,22 +134,36 @@ function ModifyPublication() {
         }
     };
 
-    const modifyPublication = async(pName, pDescription, pTags, pCategory, pSubcategory) => {
-        let formData = new FormData();
-        //formData.append('image', blobImage)
+    const modifyPublication = async (pName, pDescription, pTags, pCategory, pSubcategory) => {
+        if (blobImage !== 'NotUploaded') {
+            console.log('entro');
+            let formData = new FormData();
+            formData.append('image', blobImage)
 
-        const uploadImage = await fetch(baseAPIurl + '/image/upload/publications/' + id.toString(), {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json'
-            },
-            body: formData
-        }).then(res => res.json());
+            const uploadImage = await fetch(baseAPIurl + '/image/upload/publications/' + id.toString(), {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            }).then(res => res.json());
+            setImageURL(uploadImage.imageURL);
+        }
+
+        console.log(id);
+        console.log(pName);
+        console.log(pDescription);
+        console.log(pImagePath);
+        console.log(pDate);
+        console.log(pTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1));
+        console.log(pCategory);
+        console.log(pSubcategory);
+        console.log(imageURL);
 
 
-        const newData = await fetch('http://localhost:5000/publications/update',{
+        const newData = await fetch('http://localhost:5000/publications/update', {
             method: 'PUT',
-            headers : {
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
@@ -147,18 +171,16 @@ function ModifyPublication() {
                 id: id,
                 name: pName,
                 description: pDescription,
-                imagePath: currentPublication.imagePath,
-                date: currentPublication.formattedDate,
+                imagePath: pImagePath,
+                date: pDate,
                 tags: pTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1),
                 category: pCategory,
-                subcategory: pSubcategory,
-                imageURL: currentPublication.imageURL
+                subCategory: pSubcategory,
+                imageURL: imageURL
             })
-        }).then(res => res.json())
-        if(newData.response === 'Publication created successfully'){
-            navigate('/PublicationManagement');
-            console.log('Publication created successfully');
-        }
+        });
+
+        return newData;
     }
 
     // RETURN -----------------------------------------------------------------
@@ -184,7 +206,7 @@ function ModifyPublication() {
                     <input value={selectedTags} onChange={(e) => setSelectedTags(e.target.value)} type="text" id="tagsPublication" name="tags" /><br />
 
                     <label>Categoría</label><br />
-                    <Dropdown value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); getSubcategories(e.target.value);}} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); getSubcategories(e.target.value); }} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
                     <br />
 
                     <label>Subcategoría</label><br />
