@@ -1,16 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect} from 'react';
 import "../../styles/Publications.css";
 import Navbar from "../../components/Navbar";
 import back from "../../components/assets/arrowBack.png";
 import { Dropdown } from 'primereact/dropdown';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
-const ModifyPublication = () => {
+function ModifyPublication() {
+    let {id} = useParams();
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();
     const hiddenFileInput = useRef(null);
+    const baseAPIurl = 'http://localhost:5000';
 
     const [selectedName, setSelectedName] = useState('');
     const [selectedDescription, setSelectedDescription] = useState('');
@@ -19,11 +21,55 @@ const ModifyPublication = () => {
     const [selectedImage, setImage] = useState(imagePlaceholder);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
-
-    const categories = ["Disney", "Spooky"];
-    const subcategories = ["Villanos", "Magia"];
+    const [categories, setCategories] = useState([]);
+    const [parsedCategories, setParsedCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
 
     // FUNCTIONS -----------------------------------------------------------------
+    const getCategories = async () => {
+        const response = await fetch(baseAPIurl + '/category/all', {
+            method: 'GET',
+        }).then(res => res.json());
+        setCategories(response);
+        let categorylist = [];
+        for (let i = 0; i < response.length; i++) {
+            categorylist.push(response[i].name);
+        }
+        setParsedCategories(categorylist);
+    }
+
+    const getSubcategories = (pCategory) => {
+        let subcategorylist = [];
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].name === pCategory) {
+                for (let j = 0; j < categories[i].subCategories.length; j++) {
+                    subcategorylist.push(categories[i].subCategories[j].name);
+                }
+            }
+        }
+        setSubcategories(subcategorylist);
+    }
+
+    const getPublication = async() => {
+        const response = await fetch(baseAPIurl + '/publications/get/'+ id, {
+            method: 'GET'
+        }).then(res => res.json());
+        return response;
+    }
+
+    useEffect(() => {
+        getCategories();
+        console.log(id);
+        getPublication().then(res => {
+            setSelectedName(res.name);
+            setSelectedDescription(res.description);
+            setSelectedTags(res.tags);
+            setSelectedCategory(res.category);
+            setSelectedSubcategory(res.subcategory);
+            setImage(res.imageURL);
+        });
+    }, []);
+
     const handleClickImage = (event) => {
         hiddenFileInput.current.click();
     };
@@ -73,7 +119,7 @@ const ModifyPublication = () => {
 
     const modifyPublication = async(pName, pDescription, pTags, pCategory, pSubcategory, pImage) => {
         const newData = await fetch('http://localhost:5000/createPublication',{
-            method: 'PATCH',
+            method: 'PUT',
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -116,7 +162,7 @@ const ModifyPublication = () => {
                     <input value={selectedTags} onChange={(e) => setSelectedTags(e.target.value)} type="text" id="tagsPublication" name="tags" /><br />
 
                     <label>Categoría</label><br />
-                    <Dropdown value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} options={categories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); getSubcategories(e.target.value); }} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
                     <br />
 
                     <label>Subcategoría</label><br />

@@ -52,7 +52,7 @@ function App() {
         <Route path="/CreateProduct" element={<CreateProduct />} />
         <Route path="/ModifyProduct" element={<ModifyProduct />} />
         <Route path="/PublicationManagement" element={<PublicationManagement />} />
-        <Route path="/ModifyPublication" element={<ModifyPublication/>}/>
+        <Route path="/ModifyPublication/:id" element={<ModifyPublication/>}/>
         <Route path="/CreatePublication" element={<CreatePublication/>}/>
         <Route path="/PublicationScreen" element={<PublicationScreen/>}/>
         <Route path="/PaymentDetails" element={<PaymentDetails />} />

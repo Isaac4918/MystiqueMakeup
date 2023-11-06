@@ -10,7 +10,7 @@ import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { UpdateSubcategories } from '../categoryPages/ModifyCategory';
 
-const CreatePublication = () => {
+function CreatePublication(){
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();
     const hiddenFileInput = useRef(null);
@@ -34,14 +34,13 @@ const CreatePublication = () => {
             method: 'GET',
         }).then(res => res.json());
         setCategories(response);
-        //console.log("****",response);
         let categorylist = [];
         for (let i = 0; i < response.length; i++) {
             categorylist.push(response[i].name);
         }
         setParsedCategories(categorylist);
-        //return;
     }
+
     useEffect(() => {
         getCategories();
     }, []);
@@ -55,7 +54,6 @@ const CreatePublication = () => {
         if (fileUploaded[0].name) {
             setImage(URL.createObjectURL(fileUploaded[0]));
             setBlobImage(fileUploaded[0]);
-            //console.log("====>", blobImage);
         }
     };
 
@@ -71,21 +69,6 @@ const CreatePublication = () => {
         setSubcategories(subcategorylist);
     }
 
-    const prueba = async (event) => {
-        //console.log("====>", blobImage);
-
-        // console.log("categories =====>", categories);
-        // console.log("parsedCategories =====>", parsedCategories);
-        // console.log("selectedTags =====>", selectedTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1));
-
-
-        // let pruebaArray = [1,2,3,4];
-        // pruebaArray = [...pruebaArray.slice(1)]
-        // console.log("pruebaArray =====>", pruebaArray);
-
-        //pTags.split("#").map((tag) => tag.trim())
-
-    }
 
     const handlePublication = async(event) => {
         event.preventDefault();
@@ -173,7 +156,7 @@ const CreatePublication = () => {
         let imageURL = uploadImage.imageUrl;
 
         //define the path of the image
-        let imagePath = 'publications/' + currentId.toString();
+        let imagePath = 'Publications/' + currentId.toString();
 
         // create the publication
         const newData = await fetch(baseAPIurl + '/publications/create',{

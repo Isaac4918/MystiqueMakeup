@@ -24,12 +24,16 @@ export function MenuAdmin(){
     navigate('/ProductManagement');
   };
 
+  const ManagePublicationsPage = () => {
+    navigate('/PublicationManagement');
+  };
+
   return(
     <div className='menuAdmin'>
       <h2>Bienvenido/a</h2>
       <button onClick={ManageAdminPage}>Gestionar Administradores</button><br />
       <br />
-      <button>Gestionar Publicaciones</button><br />
+      <button onClick={ManagePublicationsPage}>Gestionar Publicaciones</button><br />
       <br />
       <button onClick={ManageProductsPage}>Gestionar Productos</button><br />
       <br />
