@@ -66,6 +66,7 @@ const ModifyQuantity = ({ available, onIncrement, onDecrement }) => {
  };
 
 function Cart() {
+  // Se debe agregar updateShoppingCart
  const [productList, setProductList] = useState(products);
  const [total, setTotal] = useState(calculateTotal(products));
 
