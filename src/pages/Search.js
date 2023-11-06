@@ -18,67 +18,19 @@ export function Back(){
   )
 }
 
-// Define categories
-const categories = [
-  {
-    name: "Labios",
-    subcategories: [
-      { name: "Brillos"},
-      { name: "Labiales" }
-    ]
-  },
-  {
-    name: "Skincare",
-    subcategories: [
-      { name: "Día" },
-      { name: "Noche" }
-    ]
-  },
+const baseAPIurl = 'http://localhost:5000';
 
-  {
-    name: "Disney",
-    subcategories: [
-      { name: "Villanos" },
-      { name: "Heroes" }
-    ]
-  }
-];
+const categories = await fetch(baseAPIurl + '/category/all', {
+  method: 'GET',
+}).then(res => res.json());
 
-// Define publications
-const publications = [
-  {
-    name: "Maquillaje Malefica", createdAt: "01-01-2021", description: "Sorprende a tus amigos con villanos de Disney",tags: ["#malefica", "#Disney"]
-    , category: "Disney", subcategory: "Villanos", image: MMalefica      
-  },
-  {
-    
-    name: "Maquillaje Bruja", createdAt: "23-01-2021", description: "haz magia",tags: ["#bruja", "#magia"]
-    , category: "Halloween", subcategory: "Magic", image: MBruja
-      
-  },
+const publications = await fetch(baseAPIurl + '/publications/get/all', {
+  method: 'GET',
+}).then(res => res.json());
 
-  {
-    name: "Maquillaje Ursula", createdAt: "23-01-2021", description: "Sorprende a tus amigos con villanos de Disney",tags: ["#Disney", "#Ursula"]
-    , category: "Disney", subcategory: "Villanos", image: MUrsula
-  }
-
-];
-
-const products = [
-  {
-     name: "Labial Ultra Mate", description: "El labial matecito" , price: 2000, available: 1, category: "Labios", subcategory: "Labiales", image: LabialM
-       
-  },
-  {
-     
-     name: "Labial purple", description: "El labial mas morado" , price: 1500, available: 5 , category: "Labios", subcategory: "Labiales", image: LabialP
-       
-  },
- 
-  {
-     name: 'Gel brillo', description: "El labial mas morado" , price: 3000, available: 5 , category: "Body", subcategory: "Glitter",  image: Brillo
-  }
-];
+const products = await fetch(baseAPIurl + '/products/get/all', {
+  method: 'GET',
+}).then(res => res.json());
 
 const SearchTableProducts = ({ filteredData}) => {
   if (filteredData.length === 0) {
@@ -100,8 +52,8 @@ const SearchTableProducts = ({ filteredData}) => {
             <div className="imageContentCart">
               <div className="cardImageCart">
                 <td>
-                  <Link to={`/ProductScreen/`}>
-                    <img src={item.image} alt="" />
+                  <Link to={`/ProductScreen/` + item.id}>
+                    <img src={item.imageURL} alt="" />
                   </Link>
                 </td>
               </div>
@@ -138,8 +90,8 @@ const SearchTablePubli = ({ filteredData}) => {
             <div className="imageContentCart">
               <div className="cardImageCart">
                 <td>
-                  <Link to={`/PublicationScreen/`}>
-                    <img src={item.image} alt="" />
+                  <Link to={`/PublicationScreen/` + item.id}>
+                    <img src={item.imageURL} alt="" />
                   </Link>
                 </td>
               </div>
@@ -240,7 +192,7 @@ function Search() {
 
         <select value={selectedSubcategory} onChange={handleSubcategoryChange}>
           <option value="">Todas las subcategorías</option>
-          {categories.find((category) => category.name === selectedCategory)?.subcategories.map((subcategory) => (
+          {categories.find((category) => category.name === selectedCategory)?.subCategories.map((subcategory) => (
             <option key={subcategory.name} value={subcategory.name}>{subcategory.name}</option>
           ))}
         </select>
