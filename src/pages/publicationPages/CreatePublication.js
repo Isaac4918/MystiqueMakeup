@@ -121,7 +121,7 @@ function CreatePublication(){
         const year = date.getFullYear();
         const month = date.getMonth() + 1; // months are zero indexed
         const day = date.getDate();
-        const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+        const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year.toString().slice(-2)}`;
 
         // get id
         const currentId = await fetch(baseAPIurl + '/publications/get/id', {

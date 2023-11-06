@@ -7,8 +7,13 @@ import 'react-multi-carousel/lib/styles.css';
 
 import back from "../components/assets/arrowBack.png";
 import {Link} from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Dialog } from 'primereact/dialog';
 
 function DeliveryPending(){
+    const [visible, setVisible] = useState(false);
+    const [purchases, setPurchases] = useState([]);
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -27,6 +32,28 @@ function DeliveryPending(){
             items: 1
         }
     };
+
+    const getPurchases = async() => {
+        const response = await fetch('http://localhost:5000/purchases/get/all',{
+          method: 'GET',
+          headers : {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json' 
+          }
+        }).then(res => res.json());
+
+        let purchasesListAll = [];
+        for (let i = 0; i < response.length; i++) {
+            purchasesListAll.push(response[i]);
+        }
+
+        setPurchases(purchasesListAll);
+    }
+
+    useEffect(() => {
+        getPurchases();
+    }, []);
+
     return (
         <div className="MyPurchases">
             <Navbar showIcons={true} />
@@ -34,42 +61,33 @@ function DeliveryPending(){
             <h1>Entrega de Productos Pendientes</h1>
             <div className="containerPurchase">
                 <Carousel responsive={responsive}>
-                    <div className="cardPurchase">
-                        <div className="contentPurchase">
-                            <div className="cardContentPurchase">
-                                <div className="numPurchase">No. 45677</div>
-                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Agendar entrega</button>
+                    {purchases.map((purchase, index) => (
+                        <div className="cardPurchase" key={index}>
+                            <div className="contentPurchase">
+                                <div className="cardContentPurchase">
+                                    <div className="numPurchase">No. {purchase.orderNumber}</div>
+                                    <div className="descriptionPurchase">
+                                        <span style={{ color: purchase.scheduled ? '#6d961a' : '#23aec1', fontWeight: 'bold', letterSpacing: '2px'}}>
+                                            {purchase.scheduled ? 'Agendada' : 'Pendiente'}
+                                        </span>
+                                    </div>
+                                    <div className="descriptionPurchase">Usuario: {purchase.username}</div>
+                                    <div className="descriptionPurchase">Fecha de pago: {purchase.paymentDate}</div>
+                                    <button className="buttonConsult" onClick={() => {setVisible(true)}}>Ver comprobante</button>
+                                    <Dialog 
+                                        visible={visible} 
+                                        onHide={() => {setVisible(false)}}
+                                        style={{width: '50vw', height: '500px'}}
+                                        header='Comprobante de pago'
+                                        draggable={false}
+                                        resizable={false}
+                                        dismissableMask>
+                                            <div className="descriptionPurchase" key={purchase.username}><img src="https://files.readme.io/5906006-Ej._comprobante_imprimir_POS.jpg"/></div>
+                                    </Dialog>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="cardPurchase">
-                        <div className="contentPurchase">
-                            <div className="cardContentPurchase">
-                                <div className="numPurchase">No. 12345</div>
-                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Agendar entrega</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="cardPurchase">
-                        <div className="contentPurchase">
-                            <div className="cardContentPurchase">
-                                <div className="numPurchase">No. 434334</div>
-                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Agendar entrega</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="cardPurchase">
-                        <div className="contentPurchase">
-                            <div className="cardContentPurchase">
-                                <div className="numPurchase">No. 33333</div>
-                                <div className="descriptionPurchase">Fecha: 12/10/22</div>
-                                <button className="buttonConsult">Agendar entrega</button>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </Carousel>
             </div>
         </div>
