@@ -14,6 +14,7 @@ function CreateProduct() {
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
+    const baseAPIurl = 'http://localhost:5000';
 
     const [selectedName, setSelectedName] = useState('');
     const [selectedDescription, setSelectedDescription] = useState('');
@@ -40,7 +41,7 @@ function CreateProduct() {
         }
     };
 
-    const handleProduct = (event) => {
+    const handleProduct = async(event) => {
         event.preventDefault();
 
         if (!selectedName || !selectedDescription || !selectedPrice || !selectedAvailable || !selectedCategory || !selectedSubcategory || !selectedImage) {
@@ -83,30 +84,72 @@ function CreateProduct() {
             return;
         }
 
-        navigate('/ProductManagement');
+        let result = await createProduct(selectedName, selectedDescription, selectedCategory, selectedSubcategory, selectedPrice, selectedAvailable);
+        if (result.status === 200) {
+            alert("Producto creado con éxito");
+            navigate('/ProductManagement');
+        } else {
+            alert("ERROR: No se pudo crear el producto");
+        }
+
     }
 
-    const createProduct = async(pName, pDescription, pPrice, pAvailable, pCategory, pSubcategory, pImage) => {
-        const newData = await fetch('http://localhost:5000/createProduct',{
+    const createProduct = async(pName, pDescription, pCategory, pSubcategory, pPrice, pAvailable) => {
+        // get id
+        const currentId = await fetch(baseAPIurl + '/products/get/id', {
+            method: 'GET',
+        }).then(res => res.json());
+
+        // update the id
+        const nextId = await fetch(baseAPIurl + '/products/update/id', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }, body: JSON.stringify({
+                id: currentId + 1
+            })
+        });
+
+        // upload the image
+        let formData = new FormData();
+        formData.append('image', blobImage)
+
+        const uploadImage = await fetch(baseAPIurl + '/image/upload/products/' + currentId.toString(), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formData
+        }).then(res => res.json());
+
+        // save the url of the image
+        let imageURL = uploadImage.imageUrl;
+
+        //define the path of the image
+        let imagePath = 'publications/' + currentId.toString();
+        
+        // create the product
+        const newData = await fetch('http://localhost:5000/products/create',{
             method: 'POST',
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
+                id: currentId,
                 name: pName,
                 description: pDescription,
-                price: pPrice,
-                available: pAvailable,
+                imagePath: imagePath,
                 category: pCategory,
                 subcategory: pSubcategory,
-                image: pImage
+                price: pPrice,
+                available: pAvailable,
+                imageURL: imageURL
             })
-        }).then(res => res.json())
-        if(newData.response === 'Product created successfully'){
-            navigate('/ProductManagement');
-            console.log('Product created successfully');
-        }
+        })
+        
+        return newData;
     }
 
     // RETURN -----------------------------------------------------------------
