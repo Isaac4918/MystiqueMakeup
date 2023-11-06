@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
 import Navbar from "../../components/Navbar";
 import "../../styles/Product.css";
 import back from "../../components/assets/arrowBack.png";
-import polvos from "../../components/assets/polvos.jpg";
 
 export function BackMain(){
     return(
@@ -13,24 +13,36 @@ export function BackMain(){
 }
 
 function ProductScreen(){
+    let { id } = useParams();
+    const [product, setProduct] = useState({});
+    const baseAPIurl = 'http://localhost:5000';
+
+    const getProduct = async () => {
+        const response = await fetch( baseAPIurl + '/products/get/' + id , {
+            method: 'GET',
+        }).then(res => res.json());
+        setProduct(response);
+    }
+
+    getProduct();
+
     return(
         <div>
             <Navbar showIcons={true} />
             <BackMain />
             <div className="pageProductScreen">
-                
-                <section class="layout">
+                <section className="layout">
                     <div>
-                        <h1>Polvo magico</h1>
-                        <img src={polvos} alt=""/>
+                        <h1>{product.name}</h1>
+                        <img src={product.imageURL} alt=""/>
                     </div>
                     <div className="infoContainer">
                         <h2>Descripción: </h2>
-                        <p>Polvitos para la vida yeiiiiiiiiiii</p>
+                        <p>{product.description}</p>
                         <h2>Precio: </h2>
-                        <p>$1200</p>
+                        <p>{"₡ " + product.price}</p>
                         <h2>Cantidad disponible: </h2>
-                        <p>20</p>
+                        <p>{product.available}</p>
                         <button className="buttonAgregarCarrito">Agregar al carrito</button>
                     </div>
                 </section>

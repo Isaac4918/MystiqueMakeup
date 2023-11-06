@@ -48,13 +48,13 @@ function App() {
         <Route path="/account/manageCategories/modifyCategory" element={<ModifyCategory />} />
         <Route path="/account/manageAdmin" element={<ManageAdmin/>} />
         <Route path="/MyPurchases" element={<MyPurchases />} />
-        <Route path="/ProductScreen" element={<ProductScreen />} />
+        <Route path="/ProductScreen/:id" element={<ProductScreen />} />
         <Route path="/CreateProduct" element={<CreateProduct />} />
         <Route path="/ModifyProduct/:id" element={<ModifyProduct />} />
         <Route path="/PublicationManagement" element={<PublicationManagement />} />
         <Route path="/ModifyPublication/:id" element={<ModifyPublication/>}/>
         <Route path="/CreatePublication" element={<CreatePublication/>}/>
-        <Route path="/PublicationScreen" element={<PublicationScreen/>}/>
+        <Route path="/PublicationScreen/:id" element={<PublicationScreen/>}/>
         <Route path="/PaymentDetails" element={<PaymentDetails />} />
         <Route path="/deliveryPending" element={<DeliveryPending/>}/>
       </Routes>
