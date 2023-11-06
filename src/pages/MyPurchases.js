@@ -6,7 +6,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import back from "../components/assets/arrowBack.png";
 import { Link } from 'react-router-dom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog } from 'primereact/dialog';
 
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
@@ -16,6 +16,8 @@ import 'primeicons/primeicons.css';
 function MyPurchases(){
     const [visible, setVisible] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    //const[purchases, setPurchases] = useState({})
+    let username = localStorage.getItem('username');
 
 
     const purchases = [
@@ -43,6 +45,34 @@ function MyPurchases(){
             cart: ["Producto 1000", "Producto 2", "Producto 3", "Producto 4", "Producto 5"]
         },
     ]
+
+
+    const getPurchases = async() => {
+        const response = await fetch('http://localhost:5000/purchases/get/all',{
+          method: 'GET',
+          headers : {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json' 
+          }
+        }).then(res => res.json());
+
+        let purchasesListAll = [];
+        for (let i = 0; i < response.length; i++) {
+            purchasesListAll.push(response[i]);
+        }
+
+        let purchasesList = []; 
+        purchasesListAll.forEach(element => {
+            if(element.username === username){
+                purchasesList.push(element);
+            }
+        });
+       
+    }
+
+    useEffect(() => {
+        getPurchases();
+    }, []);
 
     const responsive = {
         superLargeDesktop: {

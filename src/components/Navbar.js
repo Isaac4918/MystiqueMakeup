@@ -35,9 +35,6 @@ const Navbar = ({ showIcons = true }) => {
           navigate('/Cart');
         }
       }
-
-
-
     }
     
   }

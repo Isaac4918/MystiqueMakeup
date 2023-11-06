@@ -46,7 +46,7 @@ export function MenuAdmin(){
 export function InfoAccount(){
   const [ account, setAccount] = useState({});
   const navigate = useNavigate();
-  let username = localStorage.getItem('username');
+  
 
   const ModifyAccountPage = () => {
     navigate('/account/modifyAccount');

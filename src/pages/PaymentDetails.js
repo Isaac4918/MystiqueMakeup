@@ -13,6 +13,7 @@ function PaymentDetails(){
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
+    let username = localStorage.getItem('username');
 
     const [selectedProvince, setSelectedProvince] = useState('');
     const [selectedCanton, setSelectedCanton] = useState('');
@@ -158,6 +159,82 @@ function PaymentDetails(){
         }
     };
 
+    /*
+
+    username: string;
+    address: string;
+    receiptImagePath: string;
+    receiptImageURL: string;
+    partialPrice: number;
+    finalPrice: number;
+    scheduled: boolean;
+    paymentDate: string;
+    deliveryDate: string;
+    cart: ShoppingCart;
+    */ 
+
+    const createPurchase = async() => {
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1; // months are zero indexed
+        const day = date.getDate();
+        const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+
+        // get id
+        const currentId = await fetch(baseAPIurl + '/purchases/get/id', {
+            method: 'GET',
+        }).then(res => res.json());
+
+        // update the id
+        const nextId = await fetch(baseAPIurl + '/publications/update/id', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }, body: JSON.stringify({
+                id: currentId + 1
+            })
+        });
+
+        // upload the image
+        let formData = new FormData();
+        formData.append('image', blobImage)
+        
+        const uploadImage = await fetch(baseAPIurl + '/image/upload/receipt/' + currentId.toString(), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json'
+            },
+            body: formData
+        }).then(res => res.json());
+        
+        // save the url of the image
+        let imageURL = uploadImage.imageUrl;
+        
+        //define the path of the image
+        let imagePath = 'Receipts/' + currentId.toString();
+
+        // create the publication
+        const newData = await fetch(baseAPIurl + '/publications/create',{
+        method: 'POST',
+        headers : {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            id: currentId,
+            username: username,
+            address: selectedDetails,
+            imagePath: imagePath,
+            paymentDate: formattedDate,
+            imageURL: imageURL
+        })
+    });
+                
+        return newData;
+    }
+
+
     const handlePayment = (event) => {
         event.preventDefault();
 
@@ -183,6 +260,8 @@ function PaymentDetails(){
 
         navigate('/ProcessedPurchase');
     }
+
+
 
     // RETURN -----------------------------------------------------------------
     return(
