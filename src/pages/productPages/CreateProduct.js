@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef , useState } from 'react';
+import { useRef , useState, useEffect } from 'react';
 import "../../styles/Product.css";
 import Navbar from "../../components/Navbar";
 import { Link, useNavigate } from 'react-router-dom';
@@ -17,6 +17,7 @@ function CreateProduct() {
     const baseAPIurl = 'http://localhost:5000';
 
     const [selectedName, setSelectedName] = useState('');
+    const [blobImage, setBlobImage] = useState('-');
     const [selectedDescription, setSelectedDescription] = useState('');
     const [selectedPrice, setSelectedPrice] = useState(0);
     const [selectedAvailable, setSelectedAvailable] = useState(0);
@@ -25,19 +26,48 @@ function CreateProduct() {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
 
-    const categories = ["Labios", "Piel"];
-    const subcategories = ["Terror", "Fantasia"];
+    const [categories, setCategories] = useState([]);
+    const [parsedCategories, setParsedCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
 
     // FUNCTIONS -----------------------------------------------------------------
+    const getCategories = async () => {
+        const response = await fetch(baseAPIurl + '/category/all', {
+            method: 'GET',
+        }).then(res => res.json());
+        setCategories(response);
+        let categorylist = [];
+        for (let i = 0; i < response.length; i++) {
+            categorylist.push(response[i].name);
+        }
+        setParsedCategories(categorylist);
+    }
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const getSubcategories = (pCategory) => {
+        let subcategorylist = [];
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].name === pCategory) {
+                for (let j = 0; j < categories[i].subCategories.length; j++) {
+                    subcategorylist.push(categories[i].subCategories[j].name);
+                }
+            }
+        }
+        setSubcategories(subcategorylist);
+    }
+    
     const handleClickImage = (event) => {
         hiddenFileInput.current.click();
     };
 
     const handleChangeImage = (event) => {
         const fileUploaded = event.target.files;
-
-        if (fileUploaded[0].name) {
+        if (fileUploaded[0]) {
             setImage(URL.createObjectURL(fileUploaded[0]));
+            setBlobImage(fileUploaded[0]);
         }
     };
 
@@ -127,7 +157,7 @@ function CreateProduct() {
         let imageURL = uploadImage.imageUrl;
 
         //define the path of the image
-        let imagePath = 'publications/' + currentId.toString();
+        let imagePath = 'products/' + currentId.toString();
         
         // create the product
         const newData = await fetch('http://localhost:5000/products/create',{
@@ -151,6 +181,8 @@ function CreateProduct() {
         
         return newData;
     }
+
+    
 
     // RETURN -----------------------------------------------------------------
     return (
@@ -177,7 +209,7 @@ function CreateProduct() {
                     <input value={selectedAvailable} onChange={(e) => setSelectedAvailable(e.target.value)} type="number" min="0" id="availableProduct" name="available"/><br />
 
                     <label>Categoría</label><br />
-                    <Dropdown value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} options={categories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedCategory} onChange={(e) => {setSelectedCategory(e.target.value); getSubcategories(e.target.value)}} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
                     <br />
 
                     <label>Subcategoría</label><br />
