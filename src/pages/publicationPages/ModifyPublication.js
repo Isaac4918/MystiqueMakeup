@@ -119,7 +119,7 @@ function ModifyPublication() {
 
     const modifyPublication = async(pName, pDescription, pTags, pCategory, pSubcategory, pImage) => {
         const newData = await fetch('http://localhost:5000/createPublication',{
-            method: 'PATCH',
+            method: 'PUT',
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
