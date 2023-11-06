@@ -1,46 +1,96 @@
 import React from "react";
-import { useRef , useState } from 'react';
+import { useRef , useState, useEffect } from 'react';
 import "../../styles/Product.css";
 import Navbar from "../../components/Navbar";
 import back from "../../components/assets/arrowBack.png";
 import {Link} from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Dropdown } from 'primereact/dropdown';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
-const ModifyProduct = () => {
+function ModifyProduct() {
+    let { id } = useParams();
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
+    const baseAPIurl = 'http://localhost:5000';
 
     const [selectedName, setSelectedName] = useState('');
     const [selectedDescription, setSelectedDescription] = useState('');
     const [selectedPrice, setSelectedPrice] = useState(0);
     const [selectedAvailable, setSelectedAvailable] = useState(0);
-
+    const [blobImage, setBlobImage] = useState('NotUploaded');
+    const [imageURL, setImageURL] = useState('');
+    const [pImagePath, setPImagePath] = useState('');
     const [selectedImage, setImage] = useState(imagePlaceholder);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
-
-    const categories = ["Labios", "Piel"];
-    const subcategories = ["Terror", "Fantasia"];
+    const [categories, setCategories] = useState([]);
+    const [parsedCategories, setParsedCategories] = useState([]);
+    const [subcategories, setSubcategories] = useState([]);
 
     // FUNCTIONS -----------------------------------------------------------------
+
+    const getCategories = async () => {
+        const response = await fetch(baseAPIurl + '/category/all', {
+            method: 'GET',
+        }).then(res => res.json());
+        setCategories(response);
+        let categorylist = [];
+        for (let i = 0; i < response.length; i++) {
+            categorylist.push(response[i].name);
+        }
+        setParsedCategories(categorylist);
+    }
+
+    const getSubcategories = (pCategory) => {
+        let subcategorylist = [];
+        for (let i = 0; i < categories.length; i++) {
+            if (categories[i].name === pCategory) {
+                for (let j = 0; j < categories[i].subCategories.length; j++) {
+                    subcategorylist.push(categories[i].subCategories[j].name);
+                }
+            }
+        }
+        setSubcategories(subcategorylist);
+    }
+
+    const getProduct = async () => {
+        const response = await fetch(baseAPIurl + '/products/get/' + id, {
+            method: 'GET'
+        }).then(res => res.json());
+        return response;
+    }
+
+    useEffect(() => {
+        getCategories();
+        let productVar = getProduct().then(res => {
+            setSelectedName(res.name);
+            console.log(res.name);
+            setSelectedDescription(res.description);
+            setImage(res.imageURL);
+            setPImagePath(res.imagePath);
+            setImageURL(res.imageURL);
+            setSelectedPrice(res.price);
+            setSelectedAvailable(res.available);
+        });
+    }, []);
+
     const handleClickImage = (event) => {
         hiddenFileInput.current.click();
     };
 
     const handleChangeImage = (event) => {
         const fileUploaded = event.target.files;
-
-        if (fileUploaded[0].name) {
+        if (fileUploaded[0]) {
             setImage(URL.createObjectURL(fileUploaded[0]));
+            setBlobImage(fileUploaded[0]);
         }
     };
 
-    const handleProduct = (event) => {
+    const handleProduct = async(event) => {
         event.preventDefault();
 
         if (!selectedName || !selectedDescription || !selectedPrice || !selectedAvailable || !selectedCategory || !selectedSubcategory || !selectedImage) {
@@ -82,31 +132,60 @@ const ModifyProduct = () => {
             alert("ERROR: Debe seleccionar una imagen");
             return;
         }
-
-        navigate('/ProductManagement');
+        let result = await modifyProduct();
+        if (result.status === 200) {
+            alert("Producto modificado con éxito");
+            navigate('/ProductManagement');
+        } else {
+            alert("ERROR: No se pudo modificar el producto");
+        }
     };
 
-    const modifyProduct = async(pName, pDescription, pPrice, pAvailable, pCategory, pSubcategory, pImage) => {
-        const newData = await fetch('http://localhost:5000/createProduct',{
-            method: 'POST',
+    const modifyProduct = async() => {
+        if (blobImage !== 'NotUploaded') {
+            console.log('entro');
+            let formData = new FormData();
+            formData.append('image', blobImage)
+
+            const uploadImage = await fetch(baseAPIurl + '/image/upload/products/' + id.toString(), {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            }).then(res => res.json());
+            setImageURL(uploadImage.imageURL);
+        }
+
+        console.log(id);
+        console.log(selectedName);
+        console.log(selectedDescription);
+        console.log(pImagePath);
+        console.log(selectedCategory);
+        console.log(selectedSubcategory);
+        console.log(selectedPrice);
+        console.log(selectedAvailable);
+        console.log(imageURL);
+
+        const newData = await fetch(baseAPIurl + '/products/update',{
+            method: 'PUT',
             headers : {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                name: pName,
-                description: pDescription,
-                price: pPrice,
-                available: pAvailable,
-                category: pCategory,
-                subcategory: pSubcategory,
-                image: pImage
+                id: id,
+                name: selectedName,
+                description: selectedDescription,
+                imagePath: pImagePath,
+                category: selectedCategory,
+                subCategory: selectedSubcategory,
+                price: selectedPrice,
+                available: selectedAvailable,
+                imageURL: imageURL
             })
-        }).then(res => res.json())
-        if(newData.response === 'Product created successfully'){
-            navigate('/ProductManagement');
-            console.log('Product created successfully');
-        }
+        });
+        return newData;
     }
 
     // RETURN -----------------------------------------------------------------
@@ -114,7 +193,7 @@ const ModifyProduct = () => {
         <div className="ModifyCreateProduct">
             <Navbar showIcons={true} />
             <Link to={"/ProductManagement"}><button className="backManagement"><img src={back} alt=""/></button></Link>
-            <h1>Polvo mágico</h1>
+            <h1>Modificar Producto</h1>
             
             <section className="layoutModifyCreateProduct">
                 <div className="gridPosition">
@@ -134,7 +213,7 @@ const ModifyProduct = () => {
                     <input value={selectedAvailable} onChange={(e) => setSelectedAvailable(e.target.value)} type="number" min="0" id="availableProduct" name="available"/><br />
 
                     <label>Categoría</label><br />
-                    <Dropdown value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} options={categories} placeholder="Seleccione una opción" className="options" />
+                    <Dropdown value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); getSubcategories(e.target.value); }} options={parsedCategories} placeholder="Seleccione una opción" className="options" />
                     <br />
 
                     <label>Subcategoría</label><br />

@@ -18,7 +18,6 @@ export function Back(){
  )
 }
 
-
 export function OpenPayment(){
   return(
       <div> 

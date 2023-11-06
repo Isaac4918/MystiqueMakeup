@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import backButton from '../../components/assets/back.png'
-import Navbar from "../../components/Navbar"  
+import Navbar from "../../components/Navbar"
 import '../../styles/Category.css'
 import { useNavigate } from 'react-router-dom';
 
-export function BackAccount(){
-    return(
-        <div className="back"> 
-            <a href="/account/manageCategories"><img src={backButton} alt=""/></a>
+
+export function BackAccount() {
+    return (
+        <div className="back">
+            <a href="/account/manageCategories"><img src={backButton} alt="" /></a>
         </div>
     )
 }
 
-export function UpdateInfo(){
+export function UpdateInfo() {
     const [dropdown, setDropdown] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [selectedKey, setSelectedKey] = useState(0);
@@ -25,9 +26,11 @@ export function UpdateInfo(){
     const [selectedCategory, setSelectedCategory] = useState('');
     const [parsedCategories, setParsedCategories] = useState([]);
     const [currentCategory, setCurrentCategory] = useState(false);
+    const [subcatSelected, setSubcatSelected] = useState('');
     const navigate = useNavigate();
 
-    const OpenCloseDropdown = () =>{
+
+    const OpenCloseDropdown = () => {
         setDropdown(!dropdown);
     }
 
@@ -40,23 +43,14 @@ export function UpdateInfo(){
         console.log("Me actualicé")
     }
 
-    const updateInputs = async() => {
-        if(currentCategory !== false){
-            setIsChecked(true)
+    const updateInputs = async () => {
+        if (currentCategory !== false) {
             setInputCount(currentCategory.subCategories.length);
             generateInputs(currentCategory.subCategories.length);
             setSelectedCategory(currentCategory.name);
-            setInputValues(await parseSubcategories(currentCategory.subCategories));
-            console.log(inputValues)
+            setInputValues(currentCategory.subCategories);
+            setIsChecked(true)
         }
-    }
-
-    const parseSubcategories = (listOfSubCat) =>{
-        let subcategories = [];
-        for(let i = 0; i < listOfSubCat.length; i++){
-            subcategories.push(listOfSubCat[i].name);
-        }
-        return subcategories;
     }
 
     const Check = () => {
@@ -64,16 +58,16 @@ export function UpdateInfo(){
     };
 
     const getCategoryById = (pId) => {
-        for(let i = 0; i < parsedCategories.length; i++) {
-            if(parsedCategories[i].id.toString() === pId) {
+        for (let i = 0; i < parsedCategories.length; i++) {
+            if (parsedCategories[i].id.toString() === pId) {
                 return parsedCategories[i];
             }
         }
     }
 
     const checkInputValues = () => {
-        for(let i = 0; i < inputValues.length; i++) {
-            if(inputValues[i] === '') {
+        for (let i = 0; i < inputValues.length; i++) {
+            if (inputValues[i] === '') {
                 return true;
             }
         }
@@ -110,25 +104,25 @@ export function UpdateInfo(){
         generateInputs(event.target.value);
     }
 
-    const generateInputs = (num) =>{
+
+    const generateInputs = (num) => {
         const newInputs = [];
-        for(let i = 0; i < num; i++) {
+        for (let i = 0; i < num; i++) {
             newInputs.push(
-                <input 
-                  key={i} 
-                  type="text" 
-                  name='generateInputs' 
-                  value = {inputValues[i]}
-                  onChange={event => {
-                    const newValue = num;
-                    setInputValues(prevInputValues => {
-                      const newInputValues = [...prevInputValues];
-                      newInputValues[i] = { name: newValue };
-                      return newInputValues;
-                    });
-                  }}
+                <input
+                    key={i}
+                    type="text"
+                    name='generateInputs'
+                    onChange={event => {
+                        const newValue = event.target.value;
+                        setInputValues(prevInputValues => {
+                          const newInputValues = [...prevInputValues];
+                          newInputValues[i] = { name: newValue };
+                          return newInputValues;
+                        });
+                      }}
                 />
-              );
+            );
         }
         setInputs(newInputs);
     }
@@ -136,19 +130,19 @@ export function UpdateInfo(){
     const handleConfirmation = async (event) => {
         event.preventDefault();
 
-        if(!selectedCategory){
+        if (!selectedCategory) {
             alert('Todos los campos son obligatorios');
         }
 
-        else if(inputCount === "0" || !isChecked){
+        else if (inputCount === "0" || !isChecked) {
             alert('Ingrese la cantidad de subcategorías');
         }
 
-        else if(checkInputValues()){
-             alert('Todos los campos son obligatorios');
+        else if (checkInputValues()) {
+            alert('Todos los campos son obligatorios');
         }
 
-        else{
+        else {
             let result = await updateCategory(selectedKey, selectedCategory, inputValues);
             if (result.status === 200) {
                 alert("Categoría modificada con éxito");
@@ -177,7 +171,7 @@ export function UpdateInfo(){
         return response;
     }
 
-    return(
+    return (
         <div>
             <h1 name='categoryTitle'>Modificar Categoría</h1>
             <label name='categoryLabel'>Seleccione una categoría: </label>
@@ -194,38 +188,39 @@ export function UpdateInfo(){
             </Dropdown>
             <button name='categoryOption' onClick={updateInputs}>Obtener Información</button>
             <div>
-            <label name='categoryLabel'>Nombre</label>
-            <br />
-            <input type='text' name='nameCategory' value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}/>
-            <br />
-            <label name='categoryLabel'>
-                <input type="checkbox" name='subcategoryCheckBox' checked={isChecked} onChange={Check} />
-                &nbsp;Modificar subcategoría
-            </label>
-            <br /><br />
-            {
-                isChecked && 
-                        <div>
-                            <label name='categoryLabel'>
-                                Cantidad de subcategorías: 
-                                &nbsp;<input type="number" min="0" name='numberInput' value={inputCount} onChange={handleInputChange} />
-                            </label>
-                            <br />
-                            {inputs}
-                        </div>
-            }
-            <br />
-            <button name='categoryOption' onClick={handleConfirmation}>Modificar</button>
-        </div>
+                <label name='categoryLabel'>Nombre</label>
+                <br />
+                <input type='text' name='nameCategory' value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} />
+                <br />
+                <label name='categoryLabel'>
+                    <input type="checkbox" name='subcategoryCheckBox' checked={isChecked} onChange={Check} />
+                    &nbsp;Modificar subcategoría
+                </label>
+                <br /><br />
+                {
+                    isChecked &&
+                    <div>
+                        <label name='categoryLabel'>
+                            Cantidad de subcategorías:
+                            &nbsp;<input type="number" min="0" name='numberInput' value={inputCount} onChange={handleInputChange} />
+                        </label>
+                        <br />
+                        {inputs}
+                    </div>
+                }
+                <br />
+                <button name='categoryOption' onClick={handleConfirmation}>Modificar</button>
+            </div>
         </div>
     )
 }
 
 
-function ModifyCategory(){
-    return(
+
+function ModifyCategory() {
+    return (
         <div>
-            <Navbar showIcons={false}/>
+            <Navbar showIcons={false} />
             <div className='modifyCategory'>
                 <BackAccount />
                 <UpdateInfo />

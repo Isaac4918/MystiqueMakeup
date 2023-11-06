@@ -157,7 +157,7 @@ function CreateProduct() {
         let imageURL = uploadImage.imageUrl;
 
         //define the path of the image
-        let imagePath = 'products/' + currentId.toString();
+        let imagePath = 'Products/' + currentId.toString();
         
         // create the product
         const newData = await fetch('http://localhost:5000/products/create',{

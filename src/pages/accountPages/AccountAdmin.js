@@ -77,7 +77,6 @@ export function InfoAccount(){
 
     if(response.ok){
       const data = await response.json();
-      console.log("Cuenta recibida", data);
       setAccount(data.account);
     }
     

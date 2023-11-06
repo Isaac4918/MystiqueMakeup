@@ -51,7 +51,7 @@ function CreatePublication(){
 
     const handleChangeImage = (event) => {
         const fileUploaded = event.target.files;
-        if (fileUploaded[0].name) {
+        if (fileUploaded[0]) {
             setImage(URL.createObjectURL(fileUploaded[0]));
             setBlobImage(fileUploaded[0]);
         }

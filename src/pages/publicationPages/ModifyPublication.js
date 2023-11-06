@@ -1,14 +1,14 @@
-import React, { useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import "../../styles/Publications.css";
 import Navbar from "../../components/Navbar";
 import back from "../../components/assets/arrowBack.png";
 import { Dropdown } from 'primereact/dropdown';
 import { Link } from 'react-router-dom';
-import { useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import imagePlaceholder from '../../components/assets/imagePlaceHolder.png';
 
 function ModifyPublication() {
-    let {id} = useParams();
+    let { id } = useParams();
     // VARIABLES -----------------------------------------------------------------
     const navigate = useNavigate();
     const hiddenFileInput = useRef(null);
@@ -17,13 +17,16 @@ function ModifyPublication() {
     const [selectedName, setSelectedName] = useState('');
     const [selectedDescription, setSelectedDescription] = useState('');
     const [selectedTags, setSelectedTags] = useState('');
-
+    const [blobImage, setBlobImage] = useState('NotUploaded');
     const [selectedImage, setImage] = useState(imagePlaceholder);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
     const [categories, setCategories] = useState([]);
     const [parsedCategories, setParsedCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
+    const [imageURL, setImageURL] = useState('');
+    const [pDate, setPDate] = useState('');
+    const [pImagePath, setPImagePath] = useState('');
 
     // FUNCTIONS -----------------------------------------------------------------
     const getCategories = async () => {
@@ -38,6 +41,14 @@ function ModifyPublication() {
         setParsedCategories(categorylist);
     }
 
+    const parseTags = (pTags) => {
+        let parsedTags = '';
+        for (let i = 0; i < pTags.length; i++) {
+            parsedTags += '#' + pTags[i];
+        }
+        setSelectedTags(parsedTags);
+    }
+
     const getSubcategories = (pCategory) => {
         let subcategorylist = [];
         for (let i = 0; i < categories.length; i++) {
@@ -50,8 +61,8 @@ function ModifyPublication() {
         setSubcategories(subcategorylist);
     }
 
-    const getPublication = async() => {
-        const response = await fetch(baseAPIurl + '/publications/get/'+ id, {
+    const getPublication = async () => {
+        const response = await fetch(baseAPIurl + '/publications/get/' + id, {
             method: 'GET'
         }).then(res => res.json());
         return response;
@@ -59,14 +70,14 @@ function ModifyPublication() {
 
     useEffect(() => {
         getCategories();
-        console.log(id);
-        getPublication().then(res => {
+        let publicationVar = getPublication().then(res => {
             setSelectedName(res.name);
             setSelectedDescription(res.description);
-            setSelectedTags(res.tags);
-            setSelectedCategory(res.category);
-            setSelectedSubcategory(res.subcategory);
+            parseTags(res.tags);
             setImage(res.imageURL);
+            setPDate(res.date);
+            setPImagePath(res.imagePath);
+            setImageURL(res.imageURL);
         });
     }, []);
 
@@ -76,15 +87,16 @@ function ModifyPublication() {
 
     const handleChangeImage = (event) => {
         const fileUploaded = event.target.files;
-        if (fileUploaded[0].name) {
+        if (fileUploaded[0]) {
             setImage(URL.createObjectURL(fileUploaded[0]));
+            setBlobImage(fileUploaded[0]);
         }
     };
 
-    const handlePublication = (event) => {
+    const handlePublication = async (event) => {
         event.preventDefault();
 
-        if (!selectedName || !selectedDescription|| !selectedTags|| !selectedCategory || !selectedSubcategory || !selectedImage) {
+        if (!selectedName || !selectedDescription || !selectedTags || !selectedCategory || !selectedSubcategory || !selectedImage) {
             alert("ERROR: Todos los campos son obligatorios");
             return;
         }
@@ -109,34 +121,66 @@ function ModifyPublication() {
             return;
         }
 
-        if(selectedImage === imagePlaceholder){
+        if (selectedImage === imagePlaceholder) {
             alert("ERROR: Debe seleccionar una imagen");
             return;
         }
-
-        navigate('/PublicationManagement');
+        let result = await modifyPublication(selectedName, selectedDescription, selectedTags, selectedCategory, selectedSubcategory);
+        if (result.status === 200) {
+            alert("Publicación modificada con éxito");
+            navigate('/PublicationManagement');
+        } else {
+            alert("ERROR: No se pudo modificar la publicación");
+        }
     };
 
-    const modifyPublication = async(pName, pDescription, pTags, pCategory, pSubcategory, pImage) => {
-        const newData = await fetch('http://localhost:5000/createPublication',{
+    const modifyPublication = async (pName, pDescription, pTags, pCategory, pSubcategory) => {
+        if (blobImage !== 'NotUploaded') {
+            console.log('entro');
+            let formData = new FormData();
+            formData.append('image', blobImage)
+
+            const uploadImage = await fetch(baseAPIurl + '/image/upload/publications/' + id.toString(), {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                body: formData
+            }).then(res => res.json());
+            setImageURL(uploadImage.imageURL);
+        }
+
+        console.log(id);
+        console.log(pName);
+        console.log(pDescription);
+        console.log(pImagePath);
+        console.log(pDate);
+        console.log(pTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1));
+        console.log(pCategory);
+        console.log(pSubcategory);
+        console.log(imageURL);
+
+
+        const newData = await fetch('http://localhost:5000/publications/update', {
             method: 'PUT',
-            headers : {
+            headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
+                id: id,
                 name: pName,
                 description: pDescription,
-                tags: pTags,
+                imagePath: pImagePath,
+                date: pDate,
+                tags: pTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1),
                 category: pCategory,
-                subcategory: pSubcategory,
-                image: pImage
+                subCategory: pSubcategory,
+                imageURL: imageURL
             })
-        }).then(res => res.json())
-        if(newData.response === 'Publication created successfully'){
-            navigate('/PublicationManagement');
-            console.log('Publication created successfully');
-        }
+        });
+
+        return newData;
     }
 
     // RETURN -----------------------------------------------------------------
@@ -145,7 +189,7 @@ function ModifyPublication() {
             <Navbar showIcons={true} />
             <Link to={"/PublicationManagement"}><button className="backManagementPublication"><img src={back} alt="" /></button>
             </Link>
-            <h1>Maquillaje Ursula</h1>
+            <h1>Modificar Publicación</h1>
 
             <section className="layoutModifyCreatePublication">
                 <div className="gridPosition">

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import Navbar from "../../components/Navbar";
 import "../../styles/Product.css";
 import back from "../../components/assets/arrowBack.png";
-import MMalefica from "../../components/assets/malefica.jpg";
 
 export function BackMainPubli(){
     return(
@@ -13,25 +13,54 @@ export function BackMainPubli(){
 }
 
 function PublicationScreen(){
+    let { id } = useParams();
+    const [publication, setPublication] = useState({});
+    const [parsedTags, setParsedTags] = useState('');
+    const baseAPIurl = 'http://localhost:5000';
+
+    const parseTags = () => {
+        let parsedTags = '';
+        let pTags = publication.tags;
+        for (let i = 0; i < pTags.length; i++) {
+            parsedTags += '#' + pTags[i] + ' ';
+        }
+        setParsedTags(parsedTags);
+    }
+
+    useEffect(() => {
+        const getPublication = async () => {
+            const response = await fetch(baseAPIurl + '/publications/get/' + id , {
+                method: 'GET',
+            }).then(res => res.json());
+            setPublication(response);
+        }
+        getPublication();
+    }, []);
+    
+    useEffect(() => {
+        if (publication.tags) {
+            parseTags();
+        }
+    }, [publication]);
+
     return(
         <div>
             <Navbar showIcons={true} />
             <BackMainPubli />
             <div className="pagePublicationScreen">
-                
-                <section class="layout">
+                <section className="layout">
                     <div>
-                        <h1>Maquillaje malefica</h1>
-                        <img src={MMalefica} alt=""/>
+                        <h1>{publication.name}</h1>
+                        <img src={publication.imageURL} alt=""/>
                     </div>
                     <div className="infoContainerPublication">
                         <h2>Descripción: </h2>
-                        <p>Soprende a tus amigos con los villanos de Disney</p>
+                        <p>{publication.description}</p>
                         <h2>Fecha: </h2>
-                        <p>02/02/2023</p>
+                        <p>{publication.date}</p>
                         <h2>Tags: </h2>
                         <div className="tagsPublication">
-                        <p>#Disney #Villanos</p>
+                            <p>{parsedTags}</p>
                         </div>
                         <button className="buttonAgendarCita">Solicitar Maquillaje</button>
                     </div>
