@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import Navbar from "../../components/Navbar";
 import "../../styles/Product.css";
@@ -16,6 +16,9 @@ function ProductScreen(){
     let { id } = useParams();
     const [product, setProduct] = useState({});
     const baseAPIurl = 'http://localhost:5000';
+    let username = localStorage.getItem('username');
+    const [visible, setVisible] = useState(true);
+    let productAdded = [];
 
     const getProduct = async () => {
         const response = await fetch( baseAPIurl + '/products/get/' + id , {
@@ -24,11 +27,74 @@ function ProductScreen(){
         setProduct(response);
     }
 
+    /*
+    username: pObj.username,
+    products: pObj.products
+
+    export interface ProductAddedToCart {
+    productId: number;
+    quantity: number;
+    price: number;
+    }
+
+    export interface ShoppingCart {
+    username: string;
+    products: ProductAddedToCart[];
+    }
+    */
+
+    const updateCart = async() =>{
+        const response = await fetch('http://localhost:5000/shoppingCart/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                products: productAdded
+            })
+        });
+    }
+
+    const addCart = () => {
+        productAdded.push(product);
+        console.log(productAdded);
+        updateCart();
+    }
+
+
+    const getAccount = async() => {
+        const response = await fetch('http://localhost:5000/getAccount',{
+          method: 'GET',
+          headers : {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': username 
+          }
+        });
+    
+        if(response.ok){
+          const data = await response.json();
+          if(data.account.admin === true){
+            setVisible(false);
+          }else{
+            setVisible(true);
+          }
+        }
+        
+    }
+
+    useEffect(() => {
+        getAccount();
+    }, []);
+
     getProduct();
+
 
     return(
         <div>
-            <Navbar showIcons={true} />
+            <Navbar showIcons={false} />
             <BackMain />
             <div className="pageProductScreen">
                 <section className="layout">
@@ -43,7 +109,10 @@ function ProductScreen(){
                         <p>{"₡ " + product.price}</p>
                         <h2>Cantidad disponible: </h2>
                         <p>{product.available}</p>
-                        <button className="buttonAgregarCarrito">Agregar al carrito</button>
+                        {visible && 
+                        <button className="buttonAgregarCarrito" onClick={addCart}>Agregar al carrito</button>
+                        }
+                        
                     </div>
                 </section>
             </div>
