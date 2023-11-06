@@ -14,6 +14,9 @@ function PaymentDetails(){
     const navigate = useNavigate();    
     const hiddenFileInput = useRef(null);
     let username = localStorage.getItem('username');
+    
+    const baseAPIurl = 'http://localhost:5000';
+    const [blobImage, setBlobImage] = useState('-');
 
     const [selectedProvince, setSelectedProvince] = useState('');
     const [selectedCanton, setSelectedCanton] = useState('');
@@ -156,6 +159,7 @@ function PaymentDetails(){
 
         if (fileUploaded[0].name) {
             setImage(URL.createObjectURL(fileUploaded[0]));
+            setBlobImage(fileUploaded[0]);
         }
     };
 
@@ -171,6 +175,12 @@ function PaymentDetails(){
     paymentDate: string;
     deliveryDate: string;
     cart: ShoppingCart;
+
+
+    
+    ---------------------------------
+
+
     */ 
 
     const createPurchase = async() => {
@@ -215,7 +225,7 @@ function PaymentDetails(){
         let imagePath = 'Receipts/' + currentId.toString();
 
         // create the publication
-        const newData = await fetch(baseAPIurl + '/publications/create',{
+        const newData = await fetch(baseAPIurl + '/purchases/create',{
         method: 'POST',
         headers : {
                     'Content-Type': 'application/json',
@@ -226,8 +236,10 @@ function PaymentDetails(){
             username: username,
             address: selectedDetails,
             imagePath: imagePath,
+            imageURL: imageURL,
             paymentDate: formattedDate,
-            imageURL: imageURL
+            deliveryDate: 'Pendiente'
+            
         })
     });
                 
