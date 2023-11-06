@@ -17,6 +17,8 @@ function PublicationScreen(){
     const [publication, setPublication] = useState({});
     const [parsedTags, setParsedTags] = useState('');
     const baseAPIurl = 'http://localhost:5000';
+    let username = localStorage.getItem('username');
+    const [visible, setVisible] = useState(true);
 
     const parseTags = () => {
         let parsedTags = '';
@@ -43,9 +45,39 @@ function PublicationScreen(){
         }
     }, [publication]);
 
+
+    const getAccount = async() => {
+        const response = await fetch('http://localhost:5000/getAccount',{
+          method: 'GET',
+          headers : {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': username 
+          }
+        });
+    
+        if(response.ok){
+          const data = await response.json();
+          if(data.account.admin === true){
+            setVisible(false);
+          }else{
+            setVisible(true);
+          }
+        }
+        
+      }
+
+    useEffect(() => {
+        if(username !== '' || username !== null){
+            getAccount();
+        }
+    }, []);
+
+
+
     return(
         <div>
-            <Navbar showIcons={true} />
+            <Navbar showIcons={false} />
             <BackMainPubli />
             <div className="pagePublicationScreen">
                 <section className="layout">
@@ -62,7 +94,10 @@ function PublicationScreen(){
                         <div className="tagsPublication">
                             <p>{parsedTags}</p>
                         </div>
+                        {visible &&
                         <button className="buttonAgendarCita">Solicitar Maquillaje</button>
+                        }
+                        
                     </div>
                 </section>
             </div>
