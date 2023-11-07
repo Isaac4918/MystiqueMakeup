@@ -82,7 +82,7 @@ function DeliveryPending(){
                                         draggable={false}
                                         resizable={false}
                                         dismissableMask>
-                                            <div className="descriptionPurchase" key={purchase.username}><img src="https://files.readme.io/5906006-Ej._comprobante_imprimir_POS.jpg"/></div>
+                                            <div className="descriptionPurchase" key={purchase.username}><img src={purchase.receiptImageURL}/></div>
                                     </Dialog>
                                 </div>
                             </div>
