@@ -6,9 +6,6 @@ import 'react-multi-carousel/lib/styles.css';
 
 import trash from "../../components/assets/trash.png";
 import back from "../../components/assets/arrowBack.png";
-import MBruja from "../../components/assets/bruja.jpg";
-import MMalefica from "../../components/assets/malefica.jpg";
-import MUrsula from "../../components/assets/ursula.jpg";
 
 // BUTTONS -----------------------------------------------------------------
 function Back() {

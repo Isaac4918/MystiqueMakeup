@@ -1,12 +1,6 @@
 import '../styles/Search.css';
 import Navbar from "../components/Navbar"
 import back from "../components/assets/arrowBack.png";
-import Brillo from "../components/assets/Gel brillo.png";
-import LabialM from "../components/assets/labial mate.jpg";
-import LabialP from "../components/assets/Labial morado.jpg";
-import MBruja from "../components/assets/bruja.jpg";
-import MMalefica from "../components/assets/malefica.jpg";
-import MUrsula from "../components/assets/ursula.jpg";
 import { Link } from 'react-router-dom';
 import React, { useState } from "react";
 
