@@ -172,7 +172,7 @@ function CreateProduct() {
                 description: pDescription,
                 imagePath: imagePath,
                 category: pCategory,
-                subcategory: pSubcategory,
+                subCategory: pSubcategory,
                 price: pPrice,
                 available: pAvailable,
                 imageURL: imageURL

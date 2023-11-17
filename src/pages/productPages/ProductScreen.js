@@ -86,9 +86,11 @@ function ProductScreen(){
         console.log(username);
         if(username === '' || username === null){
             navigate('/LoginRegister');
-        }else{
+        } else if (product.available === '0'){
+            alert("No hay más unidades disponibles");
+        } else{
             getCart();
-        }   
+        }
     }
 
 

@@ -13,6 +13,7 @@ import { Dialog } from 'primereact/dialog';
 function DeliveryPending(){
     const [visible, setVisible] = useState(false);
     const [purchases, setPurchases] = useState([]);
+    const baseAPIurl = 'http://localhost:5000';
 
     const responsive = {
         superLargeDesktop: {
@@ -34,7 +35,7 @@ function DeliveryPending(){
     };
 
     const getPurchases = async() => {
-        const response = await fetch('http://localhost:5000/purchases/get/all',{
+        const response = await fetch(baseAPIurl + '/purchases/get/all',{
           method: 'GET',
           headers : {
             'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ function DeliveryPending(){
                                         draggable={false}
                                         resizable={false}
                                         dismissableMask>
-                                            <div className="descriptionPurchase" key={purchase.username}><img src="https://files.readme.io/5906006-Ej._comprobante_imprimir_POS.jpg"/></div>
+                                            <div className="descriptionPurchase" key={purchase.username}><img src={purchase.receiptImageURL}/></div>
                                     </Dialog>
                                 </div>
                             </div>
