@@ -13,6 +13,7 @@ import { Dialog } from 'primereact/dialog';
 function DeliveryPending(){
     const [visible, setVisible] = useState(false);
     const [purchases, setPurchases] = useState([]);
+    const baseAPIurl = 'http://localhost:5000';
 
     const responsive = {
         superLargeDesktop: {
@@ -34,7 +35,7 @@ function DeliveryPending(){
     };
 
     const getPurchases = async() => {
-        const response = await fetch('http://localhost:5000/purchases/get/all',{
+        const response = await fetch(baseAPIurl + '/purchases/get/all',{
           method: 'GET',
           headers : {
             'Content-Type': 'application/json',

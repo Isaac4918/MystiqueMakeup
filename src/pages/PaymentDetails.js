@@ -220,17 +220,17 @@ function PaymentDetails() {
         }
         setProductQuantity(quantity);
         setPartialPrice(tempPrice);
-        if(deliveryPrice !== 0){
-            
+        if (deliveryPrice !== 0) {
+
             setTotalPrice(tempPrice + deliveryPrice);
-        }else{
+        } else {
             alert("ERROR: Debe seleccionar una dirección de entrega");
         }
-        
+
     }
 
 
-    const handlePayment = async(event) => {
+    const handlePayment = async (event) => {
         event.preventDefault();
 
         if (!selectedProvince || !selectedCanton || !selectedCanton || !selectedDetails || !selectedImage) {
@@ -253,30 +253,41 @@ function PaymentDetails() {
             return;
         }
 
+
+
         let result = await createPurchase();
         if (result.status === 200) {
+            // update the products in the cart so they reduce the available quantity
+            for (let i = 0; i < shoppingCart.products.length; i++) {
+                const product = shoppingCart.products[i];
+                console.log(product)
+                await fetch(baseAPIurl + '/products/reduce/availability', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }, body: JSON.stringify({
+                        id: product.id,
+                        quantity: product.quantity
+                    })
+                });
+            }
+
+            // empty the shopping cart in the database
+            await fetch(baseAPIurl + '/shoppingCart/empty', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }, body: JSON.stringify({
+                    username: username
+                })
+            });
             alert("Compra realizada con éxito");
             navigate('/');
         } else {
             alert("ERROR: No se pudo procesar la compra");
         }
-
-        // update the products in the cart so they reduce the available quantity
-        // for (let i = 0; i < shoppingCart.products.length; i++) {
-        //     const product = shoppingCart.products[i];
-        //     const updatedProduct = await fetch(baseAPIurl + '/products/update/quantity', {
-        //         method: 'PUT',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Accept': 'application/json'
-        //         }, body: JSON.stringify({
-        //             id: product._id,
-        //             quantity: product.quantity
-        //         })
-        //     });
-        // }
-
-        
     }
 
     const createPurchase = async () => {
