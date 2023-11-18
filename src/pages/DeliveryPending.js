@@ -13,6 +13,17 @@ import { Dialog } from 'primereact/dialog';
 function DeliveryPending(){
     const [visible, setVisible] = useState(false);
     const [purchases, setPurchases] = useState([]);
+    const [username, setUsername] = useState('');
+    const [address, setAddress] = useState('');
+    const [details, setDetails] = useState('');
+    const [finalPrice, setFinalPrice] = useState(0);
+    const [orderNumber, setOrderNumber] = useState(0);
+    const [partialPrice, setPartialPrice] = useState(0);
+    const [paymentDate, setPaymentDate] = useState('');
+    const [receiptImageURL, setReceiptImageURL] = useState('');
+    const [cart, setCart] = useState({});
+    const [receiptImagePath, setReceiptImagePath] = useState('');
+    const [status, setStatus] = useState(false);
     const baseAPIurl = 'http://localhost:5000';
 
     const responsive = {
@@ -51,6 +62,86 @@ function DeliveryPending(){
         setPurchases(purchasesListAll);
     }
 
+    const updateAcceptedDelivery = async() => {
+        if(status){
+            alert("La entrega ya está agendada");
+            return;
+        }
+        let date = new Date();
+
+        let dayNumber = date.getDay(); // 0d 1l 2k 3m 4j 5v 6s
+        console.log(dayNumber);
+        if(dayNumber === 1 || dayNumber === 3 || dayNumber === 5){
+            date.setDate(date.getDate() + 1); // add one day to the date
+        }
+        else if(dayNumber === 0){
+            date.setDate(date.getDate() + 2); // add two days to the date
+        }
+
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1; // months are zero indexed
+        let day = date.getDate();
+        let formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year.toString().slice(-2)}`;
+
+        const response = await fetch(baseAPIurl + '/purchases/update',{
+            method: 'PUT',
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json' 
+            },
+            body: JSON.stringify({
+                orderNumber: orderNumber,
+                username: username,
+                address: address,
+                receiptImagePath: receiptImagePath,
+                receiptImageURL: receiptImageURL,
+                partialPrice: partialPrice,
+                finalPrice: finalPrice,
+                scheduled: true,
+                paymentDate: paymentDate,
+                deliveryDate: formattedDate,
+                cart: cart,
+                details: details
+            })
+        })
+        if(response.status === 200){
+            alert("Entrega agendada para el " + formattedDate);
+            setStatus(true);
+            setVisible(false);
+            window.location.reload();
+        }
+    }
+
+    const updateDeclinedDelivery = async() => {
+        const response = await fetch(baseAPIurl + '/purchases/update',{
+            method: 'PUT',
+            headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json' 
+            },
+            body: JSON.stringify({
+                orderNumber: orderNumber,
+                username: username,
+                address: address,
+                receiptImagePath: receiptImagePath,
+                receiptImageURL: receiptImageURL,
+                partialPrice: partialPrice,
+                finalPrice: finalPrice,
+                scheduled: false,
+                paymentDate: paymentDate,
+                deliveryDate: '',
+                cart: cart,
+                details: details
+            })
+        })
+        if(response.status === 200){
+            alert("Entrega rechazada");
+            setStatus(false);
+            setVisible(false);
+            window.location.reload();
+        }
+    }
+
     useEffect(() => {
         getPurchases();
     }, []);
@@ -72,18 +163,42 @@ function DeliveryPending(){
                                             {purchase.scheduled ? 'Agendada' : 'Pendiente'}
                                         </span>
                                     </div>
-                                    <div className="descriptionPurchase">Usuario: {purchase.username}</div>
-                                    <div className="descriptionPurchase">Fecha de pago: {purchase.paymentDate}</div>
-                                    <button className="buttonConsult" onClick={() => {setVisible(true)}}>Ver comprobante</button>
+                                    <div className="descriptionPurchase">
+                                        Usuario: {purchase.username}<br/><br/>
+                                        Fecha de pago: {purchase.paymentDate}<br/>
+                                        Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : '-'}</div>
+                                    <button className="buttonConsult" 
+                                    onClick={() => {setVisible(true); setOrderNumber(purchase.orderNumber); setUsername(purchase.username);
+                                    setAddress(purchase.address); setReceiptImagePath(purchase.receiptImagePath); setReceiptImageURL(purchase.receiptImageURL);
+                                    setPartialPrice(purchase.partialPrice); setFinalPrice(purchase.finalPrice); setPaymentDate(purchase.paymentDate);
+                                    setCart(purchase.cart); setDetails(purchase.details); setStatus(purchase.scheduled);}}>Ver detalles</button>
                                     <Dialog 
                                         visible={visible} 
                                         onHide={() => {setVisible(false)}}
-                                        style={{width: '50vw', height: '500px'}}
+                                        style={{width: '45vw', height: '600px'}}
                                         header='Comprobante de pago'
                                         draggable={false}
                                         resizable={false}
                                         dismissableMask>
-                                            <div className="descriptionPurchase" key={purchase.username}><img src={purchase.receiptImageURL}/></div>
+                                            <div className="layoutDelievery" key={purchase.username}>
+                                                <div className="descriptionReceipt">
+                                                    <img src={purchase.receiptImageURL}/>
+                                                </div>
+
+                                                <div className="descriptionDelivery">
+                                                    <div className="userDelivery">Usuario: {purchase.username}</div>
+                                                    Dirección de entrega: {purchase.address} <br/>
+                                                    Detalles de la dirrección: {purchase.details} <br/><br/>
+                                                    Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : "sin fecha"} <br/>
+                                                    Estado: {purchase.scheduled ? 'Agendada' : 'Pendiente'} <br/><br/>
+                                                    Precio total (incluyendo envío):  ₡{purchase.finalPrice} <br/>
+                                                    <div className="layoutDeliveryButtons">
+                                                        <button className="buttonDelivery" onClick={updateAcceptedDelivery}>Aceptar</button>
+                                                        <button className="buttonDelivery" onClick={updateDeclinedDelivery}>Rechazar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                     </Dialog>
                                 </div>
                             </div>

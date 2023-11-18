@@ -89,13 +89,15 @@ function MyPurchases(){
                                 <Dialog 
                                     visible={visible} 
                                     onHide={() => {setSelectedProduct(null); setVisible(false)}}
-                                    style={{width: '50vw', height: '500px'}}
+                                    style={{width: '35vw', height: '500px'}}
                                     header='Productos comprados'
                                     draggable={false}
                                     resizable={false}
                                     dismissableMask>
-                                    {selectedProduct && selectedProduct.cart.map((product, {username}) => (
-                                        <div className="descriptionPurchase" key={username}><li>{product.name}</li></div>
+                                    {selectedProduct && selectedProduct.cart.products.map((product, {username}) => (
+                                        <div className="descriptionPurchase" key={username}>
+                                            <li>{product.name} x{product.quantity} = {product.quantity * product.price}</li>
+                                        </div>
                                     ))}
                                 </Dialog>
                             </div>
