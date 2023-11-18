@@ -31,6 +31,7 @@ function PaymentDetails() {
     const [partialPrice, setPartialPrice] = useState(0);
     const [addressText, setAddressText] = useState('');
     const [shoppingCart, setShoppingCart] = useState({});
+    const [calculated, setCalculated] = useState(false);
 
     const address = [
         {
@@ -212,6 +213,7 @@ function PaymentDetails() {
     };
 
     const calculateFinalPrice = () => {
+        setCalculated(true);
         let tempPrice = 0;
         let quantity = 0;
         for (let i = 0; i < shoppingCart.products.length; i++) {
@@ -253,7 +255,10 @@ function PaymentDetails() {
             return;
         }
 
-
+        if (!calculated) {
+            alert('ERROR: Se debe calcular precio final antes de finalizar el pago.');
+            return;
+        }
 
         let result = await createPurchase();
         if (result.status === 200) {
