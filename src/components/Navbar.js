@@ -3,6 +3,8 @@ import "../styles/Navbar.css";
 import searchIcon from "../components/assets/search.png";
 import shoppingIcon from "../components/assets/shoppingbag.png";
 import accountIcon from "../components/assets/user.png";
+import notificationOffIcon from "../components/assets/NotificationOff.png";
+import notificationOnIcon from "../components/assets/NotificationOn.png";
 import { useNavigate } from 'react-router-dom'; 
 
 const Navbar = ({ showIcons = true }) => {
@@ -58,6 +60,7 @@ const Navbar = ({ showIcons = true }) => {
         </div>
         {showIcons && (
           <div className="rightSide">
+            <li><a href="/"><img src={notificationOnIcon} alt=""/></a></li>
             <li><a><img src={shoppingIcon} alt=""onClick={shoppingPage}/></a></li>
             <li><a><img src={accountIcon} alt="" onClick={loginPage}/></a></li>
             <li><a href="/Search"><img src={searchIcon} alt=""/></a></li>
