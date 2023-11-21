@@ -38,7 +38,7 @@ const events = [ //Este es un ejemplo agregado a mano
 function CalendarView(){
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState(events);
-    const [setErrorMessage] = useState("");
+    
 
     const validateForm = () => {
         if (!newEvent.title || !newEvent.start || !newEvent.end) {
@@ -50,7 +50,7 @@ function CalendarView(){
             return false;
           }
           
-        setErrorMessage("");
+          alert("Evento agregado con exito.");
         return true;
       };
     
