@@ -31,7 +31,6 @@ function ProductScreen(){
 
 
     const getCart = async () => {
-        console.log("Me estan agregando")
         const response = await fetch(baseAPIurl + '/shoppingCart/get', {
           method: 'GET',
           headers: {
@@ -42,25 +41,10 @@ function ProductScreen(){
         }).then(res => res.json());
         if(response.products === null || Object.keys(response.products).length === 0){
             console.log("array vacio")
-            setProductList([])
+            setProductList([]);
         }else{
             console.log("array lleno")
-            setProductList(response.products)
-        }
-        console.log(response.products)
-        if(Array.isArray(productList)){
-            console.log("ES UN ARRAY");
-            let productAddedToCart = {
-                id: product.id,
-                quantity: 1,
-                price: product.price,
-                name: product.name,
-                available: product.available,
-                imageURL: product.imageURL
-            }
-            productList.push(productAddedToCart);
-            console.log("Nuevo", productList);
-            updateCart();
+            setProductList(response.products);
         }
     }
 
@@ -89,7 +73,28 @@ function ProductScreen(){
         } else if (product.available === '0'){
             alert("No hay más unidades disponibles");
         } else{
-            getCart();
+            if(Array.isArray(productList)){
+                let productAddedToCart = {
+                    id: product.id,
+                    quantity: 1,
+                    price: product.price,
+                    name: product.name,
+                    available: product.available,
+                    imageURL: product.imageURL
+                }
+            
+                // Busca en el array un producto con el mismo id
+                let existingProduct = productList.find(p => p.id === product.id);
+
+                if(existingProduct){
+                    alert("Ya agregaste este producto a tu carrito");
+                } else {
+                    // Si el producto no existe en el array, lo añades
+                    productList.push(productAddedToCart);
+                    console.log("Nuevo", productList);
+                    updateCart();
+                }
+            }
         }
     }
 
@@ -110,6 +115,7 @@ function ProductScreen(){
             setVisible(false);
           }else{
             setVisible(true);
+            getCart();
           }
         }
         

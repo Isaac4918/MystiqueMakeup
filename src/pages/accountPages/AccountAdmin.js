@@ -16,6 +16,7 @@ export function MenuAdmin(){
   };
 
   const HomePage = () => {
+    console.log("CIERRE SESION ADMIN");
     localStorage.removeItem('username');
     navigate('/');
   };

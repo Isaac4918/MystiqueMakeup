@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import "../styles/Navbar.css";
 import searchIcon from "../components/assets/search.png";
 import shoppingIcon from "../components/assets/shoppingbag.png";
@@ -6,11 +6,28 @@ import accountIcon from "../components/assets/user.png";
 import notificationOffIcon from "../components/assets/NotificationOff.png";
 import notificationOnIcon from "../components/assets/NotificationOn.png";
 import { useNavigate } from 'react-router-dom'; 
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+
 
 const Navbar = ({ showIcons = true }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isOn, setIsOn] = useState(false);
+  const icon = isOn ? notificationOnIcon : notificationOffIcon;
   let username = localStorage.getItem('username');
+  console.log(username);
   const navigate = useNavigate();
- 
+
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
+  const notificationPage = (event) => {
+    setAnchorEl(event.currentTarget);
+  }
+
   const getAccount = async(pIcon) => {
     const response = await fetch('http://localhost:5000/getAccount',{
       method: 'GET',
@@ -24,7 +41,7 @@ const Navbar = ({ showIcons = true }) => {
     if(response.ok){
       const data = await response.json();
 
-      if(pIcon == true){
+      if(pIcon === true){
         if(data.account.admin === true){
           navigate('/accountAdmin');
         }else{
@@ -60,8 +77,13 @@ const Navbar = ({ showIcons = true }) => {
         </div>
         {showIcons && (
           <div className="rightSide">
-            <li><a href="/"><img src={notificationOnIcon} alt=""/></a></li>
-            <li><a><img src={shoppingIcon} alt=""onClick={shoppingPage}/></a></li>
+            { username && <li><a href="/#"  onClick={notificationPage}><img src={icon} alt=""/></a></li>}
+            <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                <MenuItem onClick={handleClose}>Notificación 1</MenuItem>
+                <MenuItem onClick={handleClose}>Notificación 2</MenuItem>
+                <MenuItem onClick={handleClose}>Notificación 3</MenuItem>
+            </Menu>
+            {username && <li><a><img src={shoppingIcon} alt=""onClick={shoppingPage}/></a></li>}
             <li><a><img src={accountIcon} alt="" onClick={loginPage}/></a></li>
             <li><a href="/Search"><img src={searchIcon} alt=""/></a></li>
           </div>

@@ -95,7 +95,7 @@ function Cart() {
       // If the available is zero, remove the product from the cart
       if (updatedProduct.quantity === 0) {
         updatedProducts.splice(index, 1);
-        //borrar de la base
+        deleteCart();
       }
       return updatedProducts;
     });
@@ -113,7 +113,22 @@ function Cart() {
             products: productList
         })
     });
+  }
+
+  const deleteCart = async() =>{
+    const response = await fetch(baseAPIurl + '/shoppingCart/empty', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            products: productList
+        })
+    });
 }
+
 
 
   useEffect(() => {

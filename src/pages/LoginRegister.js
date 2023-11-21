@@ -139,6 +139,9 @@ export function Login() {
     }
 
     const signIn = async(pUser, pPassword) => {
+        console.log("ENTRO A SING IN");
+        console.log("USER", pUser, "PASSWORD", pPassword);
+        
         const response = await fetch('http://localhost:5000/loginAccount',{
             method: 'POST',
             headers : {

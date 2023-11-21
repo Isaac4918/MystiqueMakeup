@@ -64,6 +64,7 @@ export function RemoveAccount({ account, setAccount }) {
 
     if(response.ok) {
       const data = await response.text();
+      localStorage.removeItem('username');
       alert('Cuenta eliminada con éxito', data);
       navigate('/');
     }

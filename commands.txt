@@ -20,3 +20,5 @@ Si no sirve corranlo asi:
 npm install @types/express
 
 npm install primereact primeicons -D
+
+npm install @mui/material @emotion/react @emotion/styled

@@ -66,6 +66,7 @@ export function MenuUser(){
   const navigate = useNavigate();
   
   const HomePage = () => {
+    console.log("CIERRE SESION");
     localStorage.removeItem('username');
     navigate('/');
   };
