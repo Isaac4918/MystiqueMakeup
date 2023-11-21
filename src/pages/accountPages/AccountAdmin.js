@@ -29,6 +29,10 @@ export function MenuAdmin(){
     navigate('/PublicationManagement');
   };
 
+  const ManageCalendarPage = () => {
+    navigate('/Calendar');
+  };
+
   return(
     <div className='menuAdmin'>
       <h2>Bienvenido/a</h2>
@@ -40,7 +44,7 @@ export function MenuAdmin(){
       <br />
       <button onClick={ManageCategoriesPage}>Gestionar Categorías</button><br />
       <br />
-      <button>Gestionar Agenda</button><br />
+      <button onClick={ManageCalendarPage}>Gestionar Agenda</button><br />
       <br />
       <button name="LogOut" onClick={HomePage}>Cerrar Sesión</button>
     </div>

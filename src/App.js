@@ -24,8 +24,10 @@ import DeleteAccount from "./pages/accountPages/DeleteAccount";
 import ModifyPublication from "./pages/publicationPages/ModifyPublication";
 import CreatePublication from "./pages/publicationPages/CreatePublication"
 import CreateProduct from "./pages/productPages/CreateProduct";
-import DeliveryPending from "./pages/DeliveryPending";
 import PaymentDetails from "./pages/PaymentDetails";
+import Calendar from "./pages/Calendar";
+
+
 
 function App() {
   return (
@@ -56,7 +58,8 @@ function App() {
         <Route path="/CreatePublication" element={<CreatePublication/>}/>
         <Route path="/PublicationScreen/:id" element={<PublicationScreen/>}/>
         <Route path="/PaymentDetails" element={<PaymentDetails />} />
-        <Route path="/deliveryPending" element={<DeliveryPending/>}/>
+        <Route path="/Calendar" element={<Calendar/>}/>
+        
       </Routes>
     </Router>
   );

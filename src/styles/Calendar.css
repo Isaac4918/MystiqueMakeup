@@ -1,0 +1,39 @@
+
+@font-face {
+    font-family: 'Pattaya';
+    src: url(./fonts/Pattaya-Regular.ttf) format('truetype');
+  }
+  
+  
+  @font-face {
+    font-family: 'Poppins';
+    src: url(./fonts/Poppins-Regular.ttf) format('truetype');
+  }
+  
+.Calendar {
+	text-align: center;
+}
+  
+.Calendar h1{
+    font-family: 'Pattaya';
+    font-size: 40px;
+    text-align: center;
+    margin-left: 10px;
+    flex: 1;
+  }
+
+.Calendar h2{
+    font-family: 'Poppins';
+    font-size: 15px;
+}
+
+.CalendarButton  button{
+    font-family: 'Poppins';
+    font-size: 14px;
+    color: white;
+    background-color: #5E8410;
+    border-radius: 8px;
+    border: none;
+    width: 140px;
+    height: 25px;
+  }
