@@ -12,20 +12,19 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 const Navbar = ({ showIcons = true }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [notification, setNotification] = useState(null);
   const [isOn, setIsOn] = useState(false);
   const icon = isOn ? notificationOnIcon : notificationOffIcon;
   let username = localStorage.getItem('username');
   console.log(username);
   const navigate = useNavigate();
 
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const notificationClose = () => {
+    setNotification(null);
   };
   
-  const notificationPage = (event) => {
-    setAnchorEl(event.currentTarget);
+  const notificationOpen = (event) => {
+    setNotification(event.currentTarget);
   }
 
   const getAccount = async(pIcon) => {
@@ -55,7 +54,6 @@ const Navbar = ({ showIcons = true }) => {
         }
       }
     }
-    
   }
 
   const loginPage = () => {
@@ -77,11 +75,9 @@ const Navbar = ({ showIcons = true }) => {
         </div>
         {showIcons && (
           <div className="rightSide">
-            { username && <li><a href="/#"  onClick={notificationPage}><img src={icon} alt=""/></a></li>}
-            <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={handleClose}>Notificación 1</MenuItem>
-                <MenuItem onClick={handleClose}>Notificación 2</MenuItem>
-                <MenuItem onClick={handleClose}>Notificación 3</MenuItem>
+            { username && <li><a href="/#"  onClick={notificationOpen}><img src={icon} alt=""/></a></li>}
+            <Menu id="simple-menu" notification={notification} keepMounted open={Boolean(notification)} onClose={notificationClose}>
+              <MenuItem onClick={notificationClose}>Notificación 3</MenuItem>
             </Menu>
             {username && <li><a><img src={shoppingIcon} alt=""onClick={shoppingPage}/></a></li>}
             <li><a><img src={accountIcon} alt="" onClick={loginPage}/></a></li>
@@ -93,3 +89,21 @@ const Navbar = ({ showIcons = true }) => {
 };
  
 export default Navbar;
+
+/*
+import { useEffect } from 'react';
+import socketIOClient from 'socket.io-client';
+
+const ENDPOINT = 'http://localhost:4000';  // Cambia esto por la URL de tu servidor
+
+const User = ({ username }) => {
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on('notification', (message) => {
+      // Aquí puedes actualizar el estado de tu aplicación para mostrar la notificación
+    });
+  }, []);
+
+  // ...
+};
+ */

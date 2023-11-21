@@ -142,6 +142,8 @@ function DeliveryPending(){
         }
     }
 
+
+
     useEffect(() => {
         getPurchases();
     }, []);
@@ -167,11 +169,27 @@ function DeliveryPending(){
                                         Usuario: {purchase.username}<br/><br/>
                                         Fecha de pago: {purchase.paymentDate}<br/>
                                         Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : '-'}</div>
+                        
                                     <button className="buttonConsult" 
-                                    onClick={() => {setVisible(true); setOrderNumber(purchase.orderNumber); setUsername(purchase.username);
-                                    setAddress(purchase.address); setReceiptImagePath(purchase.receiptImagePath); setReceiptImageURL(purchase.receiptImageURL);
-                                    setPartialPrice(purchase.partialPrice); setFinalPrice(purchase.finalPrice); setPaymentDate(purchase.paymentDate);
-                                    setCart(purchase.cart); setDetails(purchase.details); setStatus(purchase.scheduled);}}>Ver detalles</button>
+                                    onClick={() => {
+                                        if (purchase.scheduled) {
+                                          alert('Esta compra ya está agendada');
+                                        } else {
+                                          setVisible(true);
+                                          setOrderNumber(purchase.orderNumber);
+                                          setUsername(purchase.username);
+                                          setAddress(purchase.address);
+                                          setReceiptImagePath(purchase.receiptImagePath);
+                                          setReceiptImageURL(purchase.receiptImageURL);
+                                          setPartialPrice(purchase.partialPrice);
+                                          setFinalPrice(purchase.finalPrice);
+                                          setPaymentDate(purchase.paymentDate);
+                                          setCart(purchase.cart);
+                                          setDetails(purchase.details);
+                                          setStatus(purchase.scheduled);
+                                        }
+                                      }}>Ver detalles</button>
+                                    
                                     <Dialog 
                                         visible={visible} 
                                         onHide={() => {setVisible(false)}}
