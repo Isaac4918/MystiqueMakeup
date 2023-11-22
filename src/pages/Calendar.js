@@ -7,18 +7,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import back from "../components/assets/arrowBack.png";
 import moment from 'moment';
+import Delivers from "../pages/Delivers";
 import 'moment/locale/es';
 const localizer = momentLocalizer(moment);
-
-
-export function Back() {
-    return (
-      <div className="backSearch">
-        <a href="/"><img src={back} alt="" /></a>
-      </div>
-    )
-  }
-
 
 const events = [ //Este es un ejemplo agregado a mano
                 //Hay un error con los meses por ejemplo el 11 deberia ser noviembre pero es diciembre
@@ -33,11 +24,18 @@ const events = [ //Este es un ejemplo agregado a mano
 
 ];
 
-
+export function Back() {
+  return (
+    <div className="backSearch">
+      <a href="/"><img src={back} alt="" /></a>
+    </div>
+  )
+}
 
 function CalendarView(){
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState(events);
+    const [view, setView] = useState('month'); // state to manage the current view
     
 
     const validateForm = () => {
@@ -61,6 +59,7 @@ function CalendarView(){
 
         const eventStart = new Date(event.start).getTime();
         const eventEnd = event.end ? new Date(event.end).getTime() : null;
+        
       
       
         return (
@@ -116,27 +115,15 @@ function CalendarView(){
         setNewEvent({ title: '', start: null, end: null }); // Reset the form
     }
 
-    function MyCustomView({ events }) {
-        
-        return (
-          <div>
-            {events.map(event => (
-              <div key={event.id}>
-                <h2>{event.title}</h2>
-                <p>{event.start.toString()} - {event.end.toString()}</p>
-              </div>
-            ))}
-          </div>
-        );
-      }
-
   return (
-    
     <div>
           <Navbar showIcons={true} />
           <Back />
           <div className="Calendar">
           <h1>Calendario</h1>
+            <h2>Pedidos pendientes</h2>
+            <Delivers /> 
+            <br /><br />
             <h2>Agregar un nuevo evento</h2>
             <form onSubmit={handleAddEvent}>
             <div>
@@ -174,10 +161,8 @@ function CalendarView(){
             <br /><br /><br />
             </form>
             <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} eventPropGetter={event => ({ style: { backgroundColor: event.color } })}  
-               views={['month', 'week', 'day', 'agenda', 'Pedidos']}
-               components={{
-                 Pedidos: MyCustomView
-               }}
+               views={['month', 'week', 'day', 'agenda']}
+               onView={setView} 
                messages={{
                 date: 'Fecha',
                 time: 'Hora',

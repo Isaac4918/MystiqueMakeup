@@ -26,3 +26,4 @@ npm install @mui/material @emotion/react @emotion/styled
 npm install --save react-big-calendar
 npm install --save react-datepicker
 npm install --save date-fns
+npm install --save mdbreact
