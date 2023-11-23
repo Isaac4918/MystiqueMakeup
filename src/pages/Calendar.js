@@ -3,11 +3,11 @@ import "../styles/Calendar.css";
 import Navbar from "../components/Navbar" 
 import {Calendar,momentLocalizer} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import back from "../components/assets/arrowBack.png";
 import moment from 'moment';
 import Delivers from "../pages/Delivers";
+import EventForm from "../pages/EventForm";
 import 'moment/locale/es';
 const localizer = momentLocalizer(moment);
 
@@ -33,87 +33,29 @@ export function Back() {
 }
 
 function CalendarView(){
-    const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
-    const [allEvents, setAllEvents] = useState(events);
-    const [view, setView] = useState('month'); // state to manage the current view
-    
+  const [allEvents, setAllEvents] = useState(events); // state to manage all events
+  const [view, setView] = useState('month'); // state to manage the current view
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
-    const validateForm = () => {
-        if (!newEvent.title || !newEvent.start || !newEvent.end) {
-            alert("Debe llenar todos los campos.");
-          return false;
-        }
-        if (new Date(newEvent.end).getTime() < new Date(newEvent.start).getTime()) {
-            alert("La fecha de finalización no puede ser anterior a la fecha de inicio.");
-            return false;
-          }
-          
-          alert("Evento agregado con exito.");
-        return true;
-      };
-    
-      // Check if there's already an event at the same time
-        const existingEvent = allEvents.find(event => {
-        const newEventStart = new Date(newEvent.start).getTime();
-        const newEventEnd = new Date(newEvent.end).getTime();
+  const handleEventSelect = (event) => {
+    setSelectedEvent(event);
+  };
 
-        const eventStart = new Date(event.start).getTime();
-        const eventEnd = event.end ? new Date(event.end).getTime() : null;
-        
-      
-      
-        return (
-            eventStart === newEventStart &&
-            eventEnd === newEventEnd
-          );
-        });
+  const handleAddEvent = (event) => {
+    const eventWithId = { ...event, id: Date.now() };
+    setAllEvents([...allEvents, eventWithId]);
+    setSelectedEvent(null); // Clear the selected event after adding a new one
+  };
 
-    function handleAddEvent(e) {
+  const handleUpdateEvent = (updatedEvent) => {
+    setAllEvents(allEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
+    setSelectedEvent(null);
+  };
 
-        e.preventDefault();
-        if (!validateForm()) {
-          return; // return early if validation fails
-        }
-
-        let color;
-        switch (newEvent.type) {
-            case 'Pedido':
-              color = '#1abc9c';
-              break;
-            case 'Cita':
-              color = '#8e44ad';
-              break;
-            case 'Taller':
-              color = '#f1c40f';
-              break;
-            default:
-              color = '#e74c3c';
-        }
-        
-        for (let i=0; i<allEvents.length; i++){
-
-            const d1 = new Date (allEvents[i].start);
-            const d2 = new Date(newEvent.start);
-            const d3 = new Date(allEvents[i].end);
-            const d4 = new Date(newEvent.end);
-
-             if (
-              ( (d1  <= d2) && (d2 <= d3) ) || ( (d1  <= d4) &&
-                (d4 <= d3) )
-              )
-            {   
-                if (existingEvent) {
-                alert("Existe un evento en ese horario"); 
-                return;
-                }
-             }
-    
-        }
-
-        const eventWithColor = { ...newEvent, color };
-        setAllEvents([...allEvents, eventWithColor]);
-        setNewEvent({ title: '', start: null, end: null }); // Reset the form
-    }
+  const handleDeleteEvent = (eventToDelete) => {
+    setAllEvents(allEvents.filter(event => event.id !== eventToDelete.id));
+    setSelectedEvent(null); // Clear the selected event after deleting
+  };
 
   return (
     <div>
@@ -124,45 +66,20 @@ function CalendarView(){
             <h2>Pedidos pendientes</h2>
             <Delivers /> 
             <br /><br />
-            <h2>Agregar un nuevo evento</h2>
-            <form onSubmit={handleAddEvent}>
-            <div>
-                <input type="text" placeholder="Nombre" style={{ width: "20%", marginRight: "10px" }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-                <DatePicker placeholderText="Inicio" style={{ marginRight: "10px" }} selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })}  
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={60}
-                dateFormat="MMMM d, yyyy h:mm aa" />
-
-                <DatePicker placeholderText="Fin" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={60}
-                dateFormat="MMMM d, yyyy h:mm aa" />
-                
-                <select 
-                style={{ width: "20%", marginRight: "10px" }} 
-                value={newEvent.type} 
-                onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })}
-                >
-                <option value="">Seleccione el tipo</option>
-                <option value="Taller">Taller</option>
-                <option value="Pedido">Pedido</option>
-                <option value="Cita">Cita</option>
-                </select>
-                
-                
-                <div className="CalendarButton">
-                <button type="submit" stlye={{ marginTop: "10px" }} onClick={handleAddEvent}>
-                    Agregar evento
-                </button>
-                </div>  
-            </div>
+            <h2>Administrar Evento</h2>
+            <br /><br />
+            <EventForm  onDeleteEvent={handleDeleteEvent} allEvents={allEvents} event={selectedEvent} onAddEvent={handleAddEvent} onUpdateEvent={handleUpdateEvent} />
             <br /><br /><br />
-            </form>
-            <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} eventPropGetter={event => ({ style: { backgroundColor: event.color } })}  
-               views={['month', 'week', 'day', 'agenda']}
-               onView={setView} 
+            <Calendar 
+              localizer={localizer} 
+              events={allEvents} 
+              startAccessor="start" 
+              endAccessor="end" 
+              style={{ height: 500, margin: "50px" }} 
+              eventPropGetter={event => ({ style: { backgroundColor: event.color } })}
+              views={['month', 'week', 'day', 'agenda']}
+              onView={setView} 
+              onSelectEvent={handleEventSelect}
                messages={{
                 date: 'Fecha',
                 time: 'Hora',
