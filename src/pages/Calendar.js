@@ -57,6 +57,10 @@ function CalendarView(){
     setSelectedEvent(null); // Clear the selected event after deleting
   };
 
+  const handleDefaultEvent = (defaultevent) => {
+    setSelectedEvent(null); // Clear the selected event after deleting
+  };
+
   return (
     <div>
           <Navbar showIcons={true} />
@@ -68,7 +72,7 @@ function CalendarView(){
             <br /><br />
             <h2>Administrar Evento</h2>
             <br /><br />
-            <EventForm  onDeleteEvent={handleDeleteEvent} allEvents={allEvents} event={selectedEvent} onAddEvent={handleAddEvent} onUpdateEvent={handleUpdateEvent} />
+            <EventForm onDefaultEvent={handleDefaultEvent} onDeleteEvent={handleDeleteEvent} allEvents={allEvents} event={selectedEvent} onAddEvent={handleAddEvent} onUpdateEvent={handleUpdateEvent} />
             <br /><br /><br />
             <Calendar 
               localizer={localizer} 

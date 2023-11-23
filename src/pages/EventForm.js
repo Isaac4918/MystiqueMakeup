@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/Calendar.css";
 
-const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent }) => {
+const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent, onDefaultEvent}) => {
   const initialEvent = event || { title: '', start: '', end: '', type: '', details: '', makeup: '', clientData: '', duration: '' };
   const [newEvent, setNewEvent] = useState({ name: '', start: '', end: '',  details: ''});
 
@@ -67,6 +67,11 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent 
     setNewEvent(initialEvent); // Reset the form
   };
   
+  const handleDefault = (e) => { // To handle default form
+    e.preventDefault();
+    onDefaultEvent(newEvent);
+    setNewEvent(initialEvent); // Reset the form
+  };
 
 const validateForm = () => { // To validate the form
     // Check that all fields are filled
@@ -189,6 +194,7 @@ const validateForm = () => { // To validate the form
             <>
             <button type="submit" onClick={handleUpdate}>Modificar Evento</button>
             <button type="button" onClick={handleDelete}>Eliminar Evento</button>
+            <button type="button" onClick={handleDefault}>Volver</button>
         </>
         ) : (
             <button type="submit" onClick={handleSubmit}>Agregar Evento</button>
