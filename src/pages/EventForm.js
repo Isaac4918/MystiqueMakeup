@@ -10,8 +10,6 @@ import { set } from 'date-fns';
 const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent, onDefaultEvent }) => {
   const initialEvent = event || { title: '', start: '', end: '', type: '', details: '', makeup: '', clientData: '', duration: '' };
   const [newEvent, setNewEvent] = useState({ name: '', start: '', end: '', details: '' });
-  const [selectedTypeEvent, setSelectedTypeEvent] = useState('');
-  const [selectedMakeup, setSelectedMakeup] = useState('');
   const [makeups, setMakeups] = useState([]);
 
   useEffect(() => {
@@ -25,7 +23,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
       return; // return early if validation fails
     }
 
-    console.log(newEvent)
+    console.log(newEvent.type)
 
     // Assign color to newEvent based on its type
     let color;
@@ -45,7 +43,6 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
     const eventWithColor = { ...newEvent, color };
     onAddEvent(eventWithColor);
     setNewEvent(initialEvent); // Reset the form
-    setSelectedTypeEvent('');
   };
 
   const handleUpdate = (e) => { // To update an existing event
@@ -75,7 +72,6 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
     onDeleteEvent(newEvent);
     alert('Evento eliminado con exito!'); // Set the success message
     setNewEvent(initialEvent); // Reset the form
-    setSelectedTypeEvent('');
   };
 
   const handleDefault = (e) => { // To handle default form
@@ -128,20 +124,20 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
       />
 
-
       <DatePicker
         className='inputEvent'
         placeholderText="Inicio"
         style={{ marginRight: "10px" }}
         selected={newEvent.start}
         onChange={(start) => setNewEvent({ ...newEvent, start })}
-        showTimeSelect
         timeFormat="HH:mm"
         timeIntervals={60}
-        dateFormat="MMMM d, yyyy h:mm aa"
+        dateFormat="dd/M/yy"
       />
 
       <br />
+
+      <Dropdown className='inputEvent' value={newEvent.type} onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })} placeholder="Seleccione el tipo" options={["Taller", "Cita"]} />
 
       <input
         className='inputEvent'
@@ -151,27 +147,9 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
       />
 
-      <DatePicker
-        className='inputEvent'
-        placeholderText="Fin"
-        style={{ marginRight: "10px" }}
-        selected={newEvent.end}
-        onChange={(end) => setNewEvent({ ...newEvent, end })}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={60}
-        dateFormat="MMMM d, yyyy h:mm aa"
-      />
-
-      <br />
-
-      <Dropdown className='inputEvent' value={selectedTypeEvent} onChange={(e) => { setSelectedTypeEvent(e.target.value); setNewEvent({ ...newEvent, type: e.target.value })}} placeholder="Seleccione el tipo" options={["Taller", "Cita"]}/>
-
-
-
       {newEvent.type === 'Cita' && (
         <>
-          <Dropdown className='inputEvent' value={selectedMakeup} onChange={(e) => { setSelectedMakeup(e.target.value); setNewEvent({ ...newEvent, makeup: e.target.value })}} placeholder="Seleccione el maquillaje" options={makeups}/>
+          <Dropdown className='inputEvent' value={newEvent.makeup} onChange={(e) => setNewEvent({ ...newEvent, makeup: e.target.value })} placeholder="Seleccione el maquillaje" options={makeups} />
 
           <input
             className='inputEvent'
