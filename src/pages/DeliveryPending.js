@@ -64,14 +64,17 @@ function DeliveryPending(){
 
     const updateAcceptedDelivery = async() => {
         let date = new Date();
+        console.log("DATE", date);
 
         let dayNumber = date.getDay(); // 0d 1l 2k 3m 4j 5v 6s
         console.log(dayNumber);
         if(dayNumber === 1 || dayNumber === 3 || dayNumber === 5){
             date.setDate(date.getDate() + 1); // add one day to the date
         }
-        else if(dayNumber === 0){
+        else if(dayNumber === 0 || dayNumber === 2 || dayNumber === 4){
             date.setDate(date.getDate() + 2); // add two days to the date
+        }else{
+            date.setDate(date.getDate() + 3) //add three days to the date
         }
 
         let year = date.getFullYear();
