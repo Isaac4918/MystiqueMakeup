@@ -10,8 +10,8 @@ const Delivers = props => {
 const data = { //Este es un ejemplo agregado a mano para mostrar los pedidos pendientes
   columns: [ // las columnas se mantienen ya que es la info que queremos mostrar
     {
-      label: 'Numero de orden',
-      field: 'orderNumber',
+      label: 'No. Solicitud',
+      field: 'requestedNumber',
       sort: 'asc'
     },
     {
@@ -20,50 +20,43 @@ const data = { //Este es un ejemplo agregado a mano para mostrar los pedidos pen
       sort: 'asc'
     },
     {
-      label: 'Dirección',
-      field: 'adress',
+      label: 'Maquillaje',
+      field: 'makeup',
       sort: 'asc'
     },
     {
-      label: 'Día de pago',
-      field: 'paymentDate',
+      label: 'Día solicitado',
+      field: 'requestedDate',
       sort: 'asc'
       }
   ],
   rows: [
     { // Y estos son los datos de los purchases que se van a mostrar
-        orderNumber: 1,
+        requestedNumber: 1,
         username: "mari0502",
-        address: "San José, Tibás, Colima",
-        paymentDate: "06/11/23",
+        makeup: "Mariposa",
+        requestedDate: "06/11/23",
  
     },
     { 
-        orderNumber: 2,
+        requestedNumber: 2,
         username: "Marilau123",
-        address: "Cartago, Oreamuno, San Rafael",
-        paymentDate: "07/11/23",
+        makeup: "Boda",
+        requestedDate: "07/11/23",
  
     },
     { 
-        orderNumber: 3,
+        requestedNumber: 3,
         username: "Marilau123",
-        address: "Cartago, Oreamuno, San Rafael",
-        paymentDate: "08/11/23",
+        makeup: "Bruja",
+        requestedDate: "08/11/23",
  
     },
     { 
-        orderNumber: 4,
+        requestedNumber: 4,
         username: "Aleeee",
-        address: "San José, Tibás, Colima",
-        paymentDate: "08/11/23",
- 
-    },
-    { 
-        orderNumber: 5,
-        username: "Isaac",
-        address: "San José, Tibás, Colima",
-        paymentDate: "11/11/23",
+        makeup: "Mariposa",
+        requestedDate: "08/11/23",
  
     }
   ]
