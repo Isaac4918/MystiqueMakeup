@@ -26,8 +26,7 @@ import CreatePublication from "./pages/publicationPages/CreatePublication"
 import CreateProduct from "./pages/productPages/CreateProduct";
 import PaymentDetails from "./pages/PaymentDetails";
 import Calendar from "./pages/Calendar";
-
-
+import DeliveryPending from "./pages/DeliveryPending"
 
 function App() {
   return (
@@ -59,7 +58,7 @@ function App() {
         <Route path="/PublicationScreen/:id" element={<PublicationScreen/>}/>
         <Route path="/PaymentDetails" element={<PaymentDetails />} />
         <Route path="/Calendar" element={<Calendar/>}/>
-        
+        <Route path="/deliveryPending" element={<DeliveryPending/>}/>
       </Routes>
     </Router>
   );
