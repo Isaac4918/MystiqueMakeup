@@ -66,7 +66,7 @@ const Navbar = ({ showIcons = true }) => {
         }
       }else{
         if(data.account.admin === true){
-          navigate('/deliveryPending');
+          navigate('/DeliveryPending');
         }else{
           navigate('/Cart');
         }

@@ -25,8 +25,9 @@ import ModifyPublication from "./pages/publicationPages/ModifyPublication";
 import CreatePublication from "./pages/publicationPages/CreatePublication"
 import CreateProduct from "./pages/productPages/CreateProduct";
 import PaymentDetails from "./pages/PaymentDetails";
+import DeliveryPending from "./pages/DeliveryPending";
 import Calendar from "./pages/Calendar";
-import DeliveryPending from "./pages/DeliveryPending"
+
 
 function App() {
   return (
@@ -58,7 +59,8 @@ function App() {
         <Route path="/PublicationScreen/:id" element={<PublicationScreen/>}/>
         <Route path="/PaymentDetails" element={<PaymentDetails />} />
         <Route path="/Calendar" element={<Calendar/>}/>
-        <Route path="/deliveryPending" element={<DeliveryPending/>}/>
+        <Route path="/DeliveryPending" element={<DeliveryPending/>}/>
+        
       </Routes>
     </Router>
   );
