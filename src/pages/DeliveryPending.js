@@ -23,7 +23,7 @@ function DeliveryPending(){
     const [receiptImageURL, setReceiptImageURL] = useState('');
     const [cart, setCart] = useState({});
     const [receiptImagePath, setReceiptImagePath] = useState('');
-    const [status, setStatus] = useState(false);
+    //const [status, setStatus] = useState(false);
     const baseAPIurl = 'http://localhost:5000';
 
     const responsive = {
@@ -63,10 +63,6 @@ function DeliveryPending(){
     }
 
     const updateAcceptedDelivery = async() => {
-        if(status){
-            alert("La entrega ya está agendada");
-            return;
-        }
         let date = new Date();
 
         let dayNumber = date.getDay(); // 0d 1l 2k 3m 4j 5v 6s
@@ -97,7 +93,7 @@ function DeliveryPending(){
                 receiptImageURL: receiptImageURL,
                 partialPrice: partialPrice,
                 finalPrice: finalPrice,
-                scheduled: true,
+                scheduled: "aceptada",
                 paymentDate: paymentDate,
                 deliveryDate: formattedDate,
                 cart: cart,
@@ -106,7 +102,6 @@ function DeliveryPending(){
         })
         if(response.status === 200){
             alert("Entrega agendada para el " + formattedDate);
-            setStatus(true);
             setVisible(false);
             window.location.reload();
         }
@@ -127,7 +122,7 @@ function DeliveryPending(){
                 receiptImageURL: receiptImageURL,
                 partialPrice: partialPrice,
                 finalPrice: finalPrice,
-                scheduled: false,
+                scheduled: "rechazada",
                 paymentDate: paymentDate,
                 deliveryDate: '',
                 cart: cart,
@@ -136,7 +131,6 @@ function DeliveryPending(){
         })
         if(response.status === 200){
             alert("Entrega rechazada");
-            setStatus(false);
             setVisible(false);
             window.location.reload();
         }
@@ -159,8 +153,11 @@ function DeliveryPending(){
                                 <div className="cardContentPurchase">
                                     <div className="numPurchase">No. {purchase.orderNumber}</div>
                                     <div className="descriptionPurchase">
-                                        <span style={{ color: purchase.scheduled ? '#6d961a' : '#23aec1', fontWeight: 'bold', letterSpacing: '2px'}}>
-                                            {purchase.scheduled ? 'Agendada' : 'Pendiente'}
+                                        <span style={{ color: purchase.scheduled === "Pendiente" ? '#6d961a' : 
+                                                    purchase.scheduled == "aceptada" ? '#23aec1' : '#fd7b7b', fontWeight: 'bold', letterSpacing: '2px'}}>
+                                            {purchase.scheduled === "Pendiente" ? 'Pendiente':
+                                            purchase.scheduled === 'aceptada' ? 'Agendada' : 
+                                            purchase.scheduled === 'rechazada' ? 'Rechazada' : 'Rechazada'}
                                         </span>
                                     </div>
                                     <div className="descriptionPurchase">
@@ -168,10 +165,23 @@ function DeliveryPending(){
                                         Fecha de pago: {purchase.paymentDate}<br/>
                                         Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : '-'}</div>
                                     <button className="buttonConsult" 
-                                    onClick={() => {setVisible(true); setOrderNumber(purchase.orderNumber); setUsername(purchase.username);
-                                    setAddress(purchase.address); setReceiptImagePath(purchase.receiptImagePath); setReceiptImageURL(purchase.receiptImageURL);
-                                    setPartialPrice(purchase.partialPrice); setFinalPrice(purchase.finalPrice); setPaymentDate(purchase.paymentDate);
-                                    setCart(purchase.cart); setDetails(purchase.details); setStatus(purchase.scheduled);}}>Ver detalles</button>
+                                    onClick={() => {
+                                        if(purchase.scheduled == "Pendiente"){
+                                            setVisible(true); setOrderNumber(purchase.orderNumber); 
+                                            setUsername(purchase.username);
+                                            setAddress(purchase.address); setReceiptImagePath(purchase.receiptImagePath); 
+                                            setReceiptImageURL(purchase.receiptImageURL);
+                                            setPartialPrice(purchase.partialPrice); setFinalPrice(purchase.finalPrice); 
+                                            setPaymentDate(purchase.paymentDate);
+                                            setCart(purchase.cart); setDetails(purchase.details); 
+                                        }else{
+                                            if(purchase.scheduled == "aceptada"){
+                                                alert("Ya has agendado esta compra.");
+                                            }else{
+                                                alert("Ya has rechazado esta compra.");
+                                            }
+                                        }
+                                        }}>Ver detalles</button>
                                     <Dialog 
                                         visible={visible} 
                                         onHide={() => {setVisible(false)}}
@@ -189,8 +199,10 @@ function DeliveryPending(){
                                                     <div className="userDelivery">Usuario: {purchase.username}</div>
                                                     Dirección de entrega: {purchase.address} <br/>
                                                     Detalles de la dirrección: {purchase.details} <br/><br/>
-                                                    Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : "sin fecha"} <br/>
-                                                    Estado: {purchase.scheduled ? 'Agendada' : 'Pendiente'} <br/><br/>
+                                                    Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : "Sin fecha"} <br/>
+                                                    Estado: {purchase.scheduled === "Pendiente" ? 'Pendiente':
+                                                            purchase.scheduled === 'Aceptada' ? 'Agendada' : 
+                                                            purchase.scheduled === 'Rechazada' ? 'Rechazada' : 'Rechazada'}<br/><br/>
                                                     Precio total (incluyendo envío):  ₡{purchase.finalPrice} <br/>
                                                     <div className="layoutDeliveryButtons">
                                                         <button className="buttonDelivery" onClick={updateAcceptedDelivery}>Aceptar</button>

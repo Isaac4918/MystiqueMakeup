@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../styles/Navbar.css";
 import searchIcon from "../components/assets/search.png";
 import shoppingIcon from "../components/assets/shoppingbag.png";
@@ -10,13 +10,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 
-
 const Navbar = ({ showIcons = true }) => {
+  const baseAPIurl = 'http://localhost:5000';
+  const [notifications, setNotifications] = useState([]);
   const [notification, setNotification] = useState(null);
   const [isOn, setIsOn] = useState(false);
   const icon = isOn ? notificationOnIcon : notificationOffIcon;
   let username = localStorage.getItem('username');
-  console.log(username);
   const navigate = useNavigate();
 
   const notificationClose = () => {
@@ -27,8 +27,26 @@ const Navbar = ({ showIcons = true }) => {
     setNotification(event.currentTarget);
   }
 
+  const markNotificationAsRead = async (notification) =>{
+    const response = await fetch(baseAPIurl + '/notification/update',{
+      method: 'PUT',
+      headers : {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json' 
+      },
+      body: JSON.stringify({
+        id: notification.id,
+        read: notification.read
+      })
+    });
+    
+    if(response.status === 200){
+      getNotifications();
+    }
+  }
+
   const getAccount = async(pIcon) => {
-    const response = await fetch('http://localhost:5000/getAccount',{
+    const response = await fetch(baseAPIurl + '/getAccount',{
       method: 'GET',
       headers : {
         'Content-Type': 'application/json',
@@ -56,6 +74,26 @@ const Navbar = ({ showIcons = true }) => {
     }
   }
 
+  const getNotifications = async() =>{
+    const response = await fetch(baseAPIurl + '/get/notifications',{
+      method: 'GET',
+      headers:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': username 
+      }
+    }).then(res => res.json());
+
+    let notificationsListAll = [];
+    console.log("RECIBO", response);
+    for (let i = 0; i < response.length; i++) {
+      notificationsListAll.push(response[i]);
+    }
+
+    console.log(notificationsListAll);
+    setNotifications(notificationsListAll);
+  }
+
   const loginPage = () => {
     if(username === null || username === ''){
       navigate('/LoginRegister');
@@ -68,6 +106,27 @@ const Navbar = ({ showIcons = true }) => {
     getAccount(false);
   }
 
+  useEffect(() => {
+    getNotifications();
+  }, []);
+
+  useEffect(() => {
+    let hasUnreadNotification = false;
+    for(let i = 0; i < notifications.length; i++) {
+        if(notifications[i].read == false) {
+            hasUnreadNotification = true;
+            break;
+        }
+    }
+
+    if(hasUnreadNotification) {
+        setIsOn(true);
+    } else {
+        setIsOn(false);
+    }
+  }, [notifications]);
+
+
   return ( 
   	<div className="navbar">
         <div className="leftSide">
@@ -76,8 +135,35 @@ const Navbar = ({ showIcons = true }) => {
         {showIcons && (
           <div className="rightSide">
             { username && <li><a href="/#"  onClick={notificationOpen}><img src={icon} alt=""/></a></li>}
-            <Menu id="simple-menu" notification={notification} keepMounted open={Boolean(notification)} onClose={notificationClose}>
-              <MenuItem onClick={notificationClose}>Notificación 3</MenuItem>
+            <Menu id="simple-menu" 
+            anchorEl={notification} keepMounted open={Boolean(notification)} onClose={notificationClose}
+            sx={{ 
+              '& .MuiPaper-root': {
+                width: '300px', 
+                height: '400px', 
+              },
+            }}>
+                {notifications.map((notification, index) => (
+                    <MenuItem key={index} 
+                    onClick={() => {
+                      notificationClose();
+                      markNotificationAsRead(notification);
+                    }}
+                    sx={{
+                      display: 'flex',
+                      background: notification.read ? '#FFFFFF' : '#9ADE7B',
+                      flexDirection: 'column',
+                      alignItems: 'start',
+                      justifyContent: 'center',
+                      borderBottom: '2px solid gray', 
+                      wordWrap: 'break-word', // Ajusta las palabras largas
+                      whiteSpace: 'normal', // Permite que el texto se ajuste a nuevas líneas
+                      '&:last-child': {
+                        borderBottom: 'none', // Remueve la línea de la última notificación
+                      }
+                    }}
+                    ><strong>Nueva notificación: </strong><p>{notification.message}</p></MenuItem>
+                ))}
             </Menu>
             {username && <li><a><img src={shoppingIcon} alt=""onClick={shoppingPage}/></a></li>}
             <li><a><img src={accountIcon} alt="" onClick={loginPage}/></a></li>
