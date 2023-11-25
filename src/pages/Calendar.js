@@ -11,18 +11,7 @@ import EventForm from "../pages/EventForm";
 import 'moment/locale/es';
 const localizer = momentLocalizer(moment);
 
-const events = [ //Este es un ejemplo agregado a mano
-  //Hay un error con los meses por ejemplo el 11 deberia ser noviembre pero es diciembre
-  //Es porque en la libreria los meses empiezan en 0
-  //Asi que el mes se debe escribir restando un 1
-  {
-    title: "Reunión",
-    allDay: true,
-    start: new Date(2023, 11 - 1, 20),
-    end: new Date(2023, 11 - 1, 20),
-  }
 
-];
 
 export function Back() {
   return (
@@ -36,7 +25,6 @@ function CalendarView() {
   const [allEvents, setAllEvents] = useState([]); // state to manage all events
   const [view, setView] = useState('month'); // state to manage the current view
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [purchases, setPurchases] = useState([]);
   const baseAPIurl = 'http://localhost:5000';
 
   const getPurchases = async() => {
@@ -59,12 +47,16 @@ function CalendarView() {
           let cart = purchase.cart;
           let products = cart.products;
 
+          deliveryDate.setHours(6);
+          deliveryDate.setMinutes(0);
+
           let purchasePending ={
             title: "Pedido número "+purchase.orderNumber,
             start: deliveryDate,
             end: deliveryDate,
+            hour: deliveryDate,
             type: 'Pedido',
-            duration: 24,
+            duration: 12,
             clientData: purchase.username,
             orderNumber: "Número de compra "+purchase.orderNumber,
             detailsAddress: purchase.address + "." + purchase.details,

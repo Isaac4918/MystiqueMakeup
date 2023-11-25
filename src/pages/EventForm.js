@@ -10,7 +10,7 @@ import "../styles/Purchase.css";
 import { set } from 'date-fns';
 
 const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent, onDefaultEvent }) => {
-  const initialEvent = event || { title: '', start: '', end: '', type: '', details: '', makeup: '', clientData: '', duration: '', detailsAddress: '', shippingCost: '', products: [], orderNumber: ''};
+  const initialEvent = event || { title: '', start: '', end: '', hour: '',type: '', details: '', makeup: '', clientData: '', duration: '', detailsAddress: '', shippingCost: '', products: [], orderNumber: ''};
   const [newEvent, setNewEvent] = useState({ name: '', start: '', end: '', details: '' });
   const [makeups, setMakeups] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -116,7 +116,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
   };
   
 
-  const handleProducts = () =>{
+  const handleProducts = () =>{ //To show products
     setVisible(true);
   }
 
@@ -149,21 +149,52 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
           dateFormat="dd/M/yy"
         />
 
-        <Dropdown className='inputEvent' 
-          value={newEvent.type} 
-          onChange={(e) => {
-            if (newEvent.type !== 'Pedido') {
-              setNewEvent({ ...newEvent, type: e.target.value });
-            }
-          }} 
-          placeholder="Seleccione el tipo" 
-          options={["Pedido","Taller", "Cita"]} 
+        <DatePicker
+          className='inputEvent'
+          placeholderText="Hora"
+          selected={newEvent.hour}
+          onChange={(hour) => setNewEvent({ ...newEvent, hour })}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={30}
+          timeCaption="Time"
+          dateFormat="h:mm aa"
         />
 
-      
+        {newEvent.type !== 'Pedido' && (
+          <Dropdown className='inputEvent' 
+            value={newEvent.type} 
+            onChange={(e) => {
+              setNewEvent({ ...newEvent, type: e.target.value });
+            }} 
+            placeholder="Seleccione el tipo" 
+            options={["Taller", "Cita"]} 
+          />
+        )}
+
+        {newEvent.type === 'Pedido' && (
+          <input
+            className='inputEvent'
+            type="text"
+            placeholder="Tipo"
+            value={newEvent.type}
+            onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })}
+            readOnly
+          />
+        )}
+
       </div>
       
       <div style={{ flex: '50%', padding: '5px' }}>
+        <input
+          className='inputEvent'
+          type="number"
+          placeholder="Duración(en horas)"
+          value={newEvent.duration}
+          onChange={(e) => setNewEvent({ ...newEvent, duration: e.target.value })}
+        />
+
+
         {newEvent.type === 'Cita' && (
           <>
             <Dropdown className='inputEvent' value={newEvent.makeup} onChange={(e) => setNewEvent({ ...newEvent, makeup: e.target.value })} placeholder="Seleccione el maquillaje" options={makeups} />
@@ -183,27 +214,18 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
               value={newEvent.details}
               onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
             />
+
           </>
         )}
 
         {newEvent.type === 'Taller' && (
-          <>
-            <input
-              className='inputEvent'
-              type="number"
-              placeholder="Duración"
-              value={newEvent.duration}
-              onChange={(e) => setNewEvent({ ...newEvent, duration: e.target.value })}
-            />
-        
-            <input
-              className='inputEvent'
-              type="text"
-              placeholder="Detalles"
-              value={newEvent.details}
-              onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
-            />
-          </>
+          <input
+            className='inputEvent'
+            type="text"
+            placeholder="Detalles"
+            value={newEvent.details}
+            onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
+          />
         )}
 
         {newEvent.type === 'Pedido' && (
@@ -225,15 +247,6 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
             onChange={(e) => setNewEvent({ ...newEvent, orderNumber: e.target.value })}
             readOnly
           />
-
-          <input
-            className='inputEvent'
-            type="number"
-            placeholder="Duración"
-            value={newEvent.duration}
-            onChange={(e) => setNewEvent({ ...newEvent, duration: e.target.value })}
-          />
-
         
           <textarea
             className='inputEvent'
