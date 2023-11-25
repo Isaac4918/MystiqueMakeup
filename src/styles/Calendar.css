@@ -83,3 +83,16 @@
   width: 140px;
   height: 25px; 
 }
+
+.coloredHeader th{
+  background-color: #f0f0f0; 
+  border: 1px solid #ddd;
+  border-right: none;
+  border-left: none;
+}
+
+.rowCustomize{
+  text-align: center;
+  font-weight: bold;
+  padding-left: 15px;
+}
