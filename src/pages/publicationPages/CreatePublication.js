@@ -173,7 +173,7 @@ function CreatePublication(){
                 date: formattedDate,
                 tags: pTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1),
                 category: pCategory,
-                subcategory: pSubcategory,
+                subCategory: pSubcategory,
                 imageURL: imageURL
             })
         });

@@ -15,6 +15,7 @@ function ModifyPublication() {
     const baseAPIurl = 'http://localhost:5000';
 
     const [selectedName, setSelectedName] = useState('');
+    const [selectedOldName, setSelectedOldName] = useState('');
     const [selectedDescription, setSelectedDescription] = useState('');
     const [selectedTags, setSelectedTags] = useState('');
     const [blobImage, setBlobImage] = useState('NotUploaded');
@@ -72,6 +73,7 @@ function ModifyPublication() {
         getCategories();
         let publicationVar = getPublication().then(res => {
             setSelectedName(res.name);
+            setSelectedOldName(res.name);
             setSelectedDescription(res.description);
             parseTags(res.tags);
             setImage(res.imageURL);
@@ -150,17 +152,6 @@ function ModifyPublication() {
             setImageURL(uploadImage.imageURL);
         }
 
-        console.log(id);
-        console.log(pName);
-        console.log(pDescription);
-        console.log(pImagePath);
-        console.log(pDate);
-        console.log(pTags.split(/[# ,]+/).map((tag) => tag.trim()).slice(1));
-        console.log(pCategory);
-        console.log(pSubcategory);
-        console.log(imageURL);
-
-
         const newData = await fetch('http://localhost:5000/publications/update', {
             method: 'PUT',
             headers: {
@@ -179,6 +170,32 @@ function ModifyPublication() {
                 imageURL: imageURL
             })
         });
+
+        if (selectedOldName !== pName) {
+            const requests = await fetch(baseAPIurl + '/publications/request/get/all', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json());
+
+            const requestsToModify = requests.filter(request => request.makeup === selectedOldName);
+            for (let i = 0; i < requestsToModify.length; i++) {
+                    await fetch(baseAPIurl + '/publications/request/update', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            orderNumber: requestsToModify[i].orderNumber,
+                            username: requestsToModify[i].username,
+                            makeup: pName,
+                            requestedDate: requestsToModify[i].requestedDate,
+                            scheduled: requestsToModify[i].scheduled
+                        })
+                    }).then(res => res.json());
+            }
+        }
 
         return newData;
     }
