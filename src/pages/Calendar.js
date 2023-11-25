@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Calendar.css";
 import Navbar from "../components/Navbar"
 import { Calendar, momentLocalizer } from "react-big-calendar";
+import { format, parseISO } from 'date-fns';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 import back from "../components/assets/arrowBack.png";
@@ -26,6 +27,7 @@ function CalendarView() {
   const [view, setView] = useState('month'); // state to manage the current view
   const [selectedEvent, setSelectedEvent] = useState(null);
   const baseAPIurl = 'http://localhost:5000';
+  const listAll = [];
 
   const getPurchases = async() => {
     const response = await fetch(baseAPIurl + '/purchases/get/all',{
@@ -36,7 +38,7 @@ function CalendarView() {
       }
     }).then(res => res.json());
 
-    let purchasesListAll = [];
+
     for (let i = 0; i < response.length; i++) {      
         if(response[i].scheduled === "aceptada"){
           let purchase = response[i];
@@ -46,7 +48,6 @@ function CalendarView() {
           let cost = purchase.finalPrice-purchase.partialPrice;
           let cart = purchase.cart;
           let products = cart.products;
-
           deliveryDate.setHours(6);
           deliveryDate.setMinutes(0);
 
@@ -64,12 +65,94 @@ function CalendarView() {
             products: products
           }
 
-          purchasesListAll.push(purchasePending);
+          // Verifica si listAll ya contiene un objeto con el mismo número de pedido
+          let isDuplicate = listAll.some(obj => obj.orderNumber === purchasePending.orderNumber);
+
+          // Si no es un duplicado, agrega el objeto a listAll
+          if (!isDuplicate) {
+            listAll.push(purchasePending);
+          }
         }
     }
+    getAgenda();
+  }
 
-    setAllEvents(purchasesListAll);
-}
+  const getAgenda = async () =>{
+    const response = await fetch(baseAPIurl + '/agenda/get/all',{
+      method: 'GET',
+      headers : {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json' 
+      }
+    }).then(res => res.json());
+
+    let newEntry = {};
+    for (let i = 0; i < response.length; i++) {  
+      let entry = response[i];     
+      let dateStart = new Date(parseISO(entry.start));
+      let dateEnd = new Date(parseISO(entry.end));
+      let dateHour = new Date(parseISO(entry.hour));
+
+      if(entry.type ==='Taller'){
+        newEntry ={
+          title: entry.title,
+          start: dateStart,
+          end: dateEnd,
+          hour: dateHour,
+          type: entry.type,
+          duration: entry.duration,
+          details: entry.details
+        }
+      }else{
+        
+      }
+
+      // Verifica si listAll ya contiene un objeto con el mismo título
+      let isDuplicate = listAll.some(obj => obj.title === newEntry.title);
+
+      // Si newEntry no está vacío y no es un duplicado, agrega el objeto a listAll
+      if(Object.keys(newEntry).length !== 0 && !isDuplicate){
+          listAll.push(newEntry);
+      }
+    }
+    
+    setAllEvents(listAll);
+    console.log("LISTA", listAll);
+  }
+
+
+  const addAgenda = async (event) =>{
+    const response = await fetch(baseAPIurl + '/agenda/create', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        hour: event.hour,
+        duration: event.duration,
+        type: event.type,
+        details: event.details,
+        makeup: event.makeup,
+        clientData: event.clientData
+      })
+    });
+
+  }
+
+
+
+  const modifyAgenda = (event) =>{
+
+  }
+
+  const deleteAgenda = (event) =>{
+
+  }
+
 
 
   const handleEventSelect = (event) => {
@@ -77,19 +160,22 @@ function CalendarView() {
   };
 
   const handleAddEvent = (event) => {
-    const eventWithId = { ...event, id: Date.now() };
-    setAllEvents([...allEvents, eventWithId]);
+    //const eventWithId = { ...event, id: Date.now() };
+    setAllEvents([...allEvents, event]);
     setSelectedEvent(null); // Clear the selected event after adding a new one
+    addAgenda(event);
   };
 
   const handleUpdateEvent = (updatedEvent) => {
     setAllEvents(allEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
     setSelectedEvent(null);
+    modifyAgenda(updatedEvent);
   };
 
   const handleDeleteEvent = (eventToDelete) => {
     setAllEvents(allEvents.filter(event => event.id !== eventToDelete.id));
     setSelectedEvent(null); // Clear the selected event after deleting
+    deleteAgenda(eventToDelete);
   };
 
   const handleDefaultEvent = (defaultevent) => {
