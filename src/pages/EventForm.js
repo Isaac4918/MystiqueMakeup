@@ -10,7 +10,9 @@ import "../styles/Purchase.css";
 import { set } from 'date-fns';
 
 const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent, onDefaultEvent }) => {
-  const initialEvent = event || { title: '', start: '', end: '', hour: '',type: '', details: '', makeup: '', clientData: '', duration: '', detailsAddress: '', shippingCost: '', products: [], orderNumber: ''};
+  const initialEvent = event || { id: '', title: '', start: '', end: '', hour: '',type: '', details: '', 
+  makeup: '', clientData: '', duration: '', detailsAddress: '', shippingCost: '', 
+  products: [], orderNumber: '', color: ''};
   const [newEvent, setNewEvent] = useState({ name: '', start: '', end: '', details: '' });
   const [makeups, setMakeups] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -18,6 +20,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
   useEffect(() => {
     setNewEvent(event || initialEvent);
   }, [event]);
+
 
   const handleSubmit = (e) => { // To add a new event
     e.preventDefault();
@@ -32,16 +35,16 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
     let color;
     switch (newEvent.type) {
       case 'Pedido':
-        color = '#1abc9c';
+        color = '#1abc9c'; //turquesa
         break;
       case 'Cita':
-        color = '#8e44ad';
+        color = '#8e44ad'; //morado
         break;
       case 'Taller':
-        color = '#f1c40f';
+        color = '#f1c40f'; //amarillo
         break;
       default:
-        color = '#e74c3c';
+        color = '#e74c3c'; //rojo
     }
     const eventWithColor = { ...newEvent, color };
     onAddEvent(eventWithColor);
@@ -207,7 +210,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
               onChange={(e) => setNewEvent({ ...newEvent, clientData: e.target.value })}
             />
 
-            <input
+            <textarea
               className='inputEvent'
               type="text"
               placeholder="Detalles"
@@ -219,7 +222,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         )}
 
         {newEvent.type === 'Taller' && (
-          <input
+          <textarea
             className='inputEvent'
             type="text"
             placeholder="Detalles"

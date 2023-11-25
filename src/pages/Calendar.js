@@ -52,11 +52,13 @@ function CalendarView() {
           deliveryDate.setMinutes(0);
 
           let purchasePending ={
+            id: purchase.orderNumber,
             title: "Pedido número "+purchase.orderNumber,
             start: deliveryDate,
             end: deliveryDate,
             hour: deliveryDate,
             type: 'Pedido',
+            color: '#1abc9c',
             duration: 12,
             clientData: purchase.username,
             orderNumber: "Número de compra "+purchase.orderNumber,
@@ -95,16 +97,29 @@ function CalendarView() {
 
       if(entry.type ==='Taller'){
         newEntry ={
+          id: entry.id,
           title: entry.title,
           start: dateStart,
           end: dateEnd,
           hour: dateHour,
           type: entry.type,
+          color: '#f1c40f',
           duration: entry.duration,
           details: entry.details
         }
       }else{
-        
+        newEntry = {
+          title: entry.title,
+          start: dateStart,
+          end: dateEnd,
+          hour: dateHour,
+          type: entry.type,
+          color: '#8e44ad',
+          duration: entry.duration,
+          details: entry.details,
+          makeup: entry.makeup,
+          clientData: entry.clientData
+        }
       }
 
       // Verifica si listAll ya contiene un objeto con el mismo título
@@ -141,16 +156,79 @@ function CalendarView() {
       })
     });
 
+    if (response.ok) {
+      const data = await response.json();
+      const id = data.id;
+      console.log("ID del documento creado: ", id);
+      return id;
+    } else {
+        console.error("Error al crear la entrada en la agenda");
+    }
+
   }
 
+  const modifyAgenda = async (event) =>{
+    if(event.type === 'Pedido'){
+      //Modificar en Purchases
+    }else if(event.type === 'Taller' ){
+      const response = await fetch(baseAPIurl + '/agenda/update', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          id: event.id,
+          title: event.title,
+          start: event.start,
+          end: event.end,
+          hour: event.hour,
+          duration: event.duration,
+          type: event.type,
+          details: event.details,
+          makeup: "",
+          clientData: ""
+        })
+      });
 
-
-  const modifyAgenda = (event) =>{
-
+    }else{
+      const response = await fetch(baseAPIurl + '/agenda/update', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          id: event.id,
+          title: event.title,
+          start: event.start,
+          end: event.end,
+          hour: event.hour,
+          duration: event.duration,
+          type: event.type,
+          details: event.details,
+          makeup: event.makeup,
+          clientData: event.clientData
+        })
+      });
+    }    
   }
 
-  const deleteAgenda = (event) =>{
-
+  const deleteAgenda = async (event) =>{
+    if(event.type === 'Pedido'){
+      //Hacer update, cambiar el schelued a 'cancelada'
+    }else{
+      const response = await fetch(baseAPIurl + '/agenda/delete', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            id: event.id
+        })
+      });
+    }
   }
 
 
@@ -159,23 +237,28 @@ function CalendarView() {
     setSelectedEvent(event);
   };
 
-  const handleAddEvent = (event) => {
-    //const eventWithId = { ...event, id: Date.now() };
-    setAllEvents([...allEvents, event]);
+  const handleAddEvent = async (event) => {
+    var idEvent = await addAgenda(event);
+    console.log("ID EVENT", idEvent);
+    const eventWithId = { ...event, id: idEvent };
+    console.log("EVENT WITH ID", eventWithId);
+    setAllEvents([...allEvents, eventWithId]);
     setSelectedEvent(null); // Clear the selected event after adding a new one
-    addAgenda(event);
   };
 
   const handleUpdateEvent = (updatedEvent) => {
+    console.log("ID MOD", updatedEvent.id)
+    console.log("TITLE", updatedEvent.title)
+    modifyAgenda(updatedEvent);
     setAllEvents(allEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
     setSelectedEvent(null);
-    modifyAgenda(updatedEvent);
   };
 
   const handleDeleteEvent = (eventToDelete) => {
+    console.log("ID ELIMINAR", eventToDelete.id);
+    deleteAgenda(eventToDelete);
     setAllEvents(allEvents.filter(event => event.id !== eventToDelete.id));
     setSelectedEvent(null); // Clear the selected event after deleting
-    deleteAgenda(eventToDelete);
   };
 
   const handleDefaultEvent = (defaultevent) => {
