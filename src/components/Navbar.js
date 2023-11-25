@@ -85,12 +85,11 @@ const Navbar = ({ showIcons = true }) => {
     }).then(res => res.json());
 
     let notificationsListAll = [];
-    console.log("RECIBO", response);
+
     for (let i = 0; i < response.length; i++) {
       notificationsListAll.push(response[i]);
     }
 
-    console.log(notificationsListAll);
     setNotifications(notificationsListAll);
   }
 
@@ -175,21 +174,3 @@ const Navbar = ({ showIcons = true }) => {
 };
  
 export default Navbar;
-
-/*
-import { useEffect } from 'react';
-import socketIOClient from 'socket.io-client';
-
-const ENDPOINT = 'http://localhost:4000';  // Cambia esto por la URL de tu servidor
-
-const User = ({ username }) => {
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on('notification', (message) => {
-      // Aquí puedes actualizar el estado de tu aplicación para mostrar la notificación
-    });
-  }, []);
-
-  // ...
-};
- */

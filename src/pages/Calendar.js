@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Calendar.css";
 import Navbar from "../components/Navbar"
 import { Calendar, momentLocalizer } from "react-big-calendar";
@@ -33,9 +33,52 @@ export function Back() {
 }
 
 function CalendarView() {
-  const [allEvents, setAllEvents] = useState(events); // state to manage all events
+  const [allEvents, setAllEvents] = useState([]); // state to manage all events
   const [view, setView] = useState('month'); // state to manage the current view
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [purchases, setPurchases] = useState([]);
+  const baseAPIurl = 'http://localhost:5000';
+
+  const getPurchases = async() => {
+    const response = await fetch(baseAPIurl + '/purchases/get/all',{
+      method: 'GET',
+      headers : {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json' 
+      }
+    }).then(res => res.json());
+
+    let purchasesListAll = [];
+    for (let i = 0; i < response.length; i++) {      
+        if(response[i].scheduled === "aceptada"){
+          let purchase = response[i];
+          let dateStr = purchase.deliveryDate;
+          let parts = dateStr.split("/");
+          let deliveryDate = new Date(`20${parts[2]}`, parts[1] - 1, parts[0]);
+          let cost = purchase.finalPrice-purchase.partialPrice;
+          let cart = purchase.cart;
+          let products = cart.products;
+
+          let purchasePending ={
+            title: "Pedido número "+purchase.orderNumber,
+            start: deliveryDate,
+            end: deliveryDate,
+            type: 'Pedido',
+            duration: 24,
+            clientData: purchase.username,
+            orderNumber: "Número de compra "+purchase.orderNumber,
+            detailsAddress: purchase.address + "." + purchase.details,
+            shippingCost: "₡"+cost,
+            products: products
+          }
+
+          purchasesListAll.push(purchasePending);
+        }
+    }
+
+    setAllEvents(purchasesListAll);
+}
+
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
@@ -60,6 +103,10 @@ function CalendarView() {
   const handleDefaultEvent = (defaultevent) => {
     setSelectedEvent(null); // Clear the selected event after deleting
   };
+
+  useEffect(() => {
+    getPurchases();
+  }, []);
 
   return (
     <div>

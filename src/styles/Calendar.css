@@ -54,6 +54,8 @@
     border: none;
     width: 140px;
     height: 25px;
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
 
 .inputEvent{
@@ -69,4 +71,15 @@
 
 .inputEvent:hover {
   border-color: #5E8410; /* Cambia esto al color que desees cuando se pasa el cursor sobre el input */
+}
+
+.productsButton{
+  font-family: 'Poppins';
+  font-size: 14px;
+  color: white;
+  background-color: #5E8410;
+  border-radius: 8px;
+  border: none;
+  width: 140px;
+  height: 25px; 
 }

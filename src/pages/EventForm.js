@@ -5,12 +5,15 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/Calendar.css";
+import { Dialog } from 'primereact/dialog';
+import "../styles/Purchase.css";
 import { set } from 'date-fns';
 
 const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent, onDefaultEvent }) => {
-  const initialEvent = event || { title: '', start: '', end: '', type: '', details: '', makeup: '', clientData: '', duration: '' };
+  const initialEvent = event || { title: '', start: '', end: '', type: '', details: '', makeup: '', clientData: '', duration: '', detailsAddress: '', shippingCost: '', products: [], orderNumber: ''};
   const [newEvent, setNewEvent] = useState({ name: '', start: '', end: '', details: '' });
   const [makeups, setMakeups] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     setNewEvent(event || initialEvent);
@@ -88,13 +91,13 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
     }
 
     // Check that end time is not before start time
-    if (new Date(newEvent.end).getTime() < new Date(newEvent.start).getTime()) {
+    /*if (new Date(newEvent.end).getTime() < new Date(newEvent.start).getTime()) {
       alert("La fecha de finalización no puede ser anterior a la fecha de inicio.");
       return false;
-    }
+    }*/
 
     // Check that there isn't already an event at the chosen time
-    const newEventStart = new Date(newEvent.start).getTime();
+    /*const newEventStart = new Date(newEvent.start).getTime();
     const newEventEnd = new Date(newEvent.end).getTime();
 
     for (let event of allEvents) {
@@ -107,70 +110,170 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         alert("Existe un evento en ese horario");
         return false;
       }
-    }
+    }*/
     alert('Evento Creado con exito');
     return true;
   };
+  
+
+  const handleProducts = () =>{
+    setVisible(true);
+  }
+
 
   return (
 
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}  style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div style={{ flex: '50%', padding: '5px' }}>
+        <input
+          className='inputEvent'
+          type="text"
+          placeholder="Nombre"
+          value={newEvent.title}
+          onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+        />
 
-      <input
-        className='inputEvent'
-        type="text"
-        placeholder="Nombre"
-        value={newEvent.title}
-        onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-      />
+        <DatePicker
+          className='inputEvent'
+          placeholderText="Inicio"
+          selected={newEvent.start}
+          onChange={(start) => setNewEvent({ ...newEvent, start })}
+          dateFormat="dd/M/yy"
+        />
 
-      <DatePicker
-        className='inputEvent'
-        placeholderText="Inicio"
-        style={{ marginRight: "10px" }}
-        selected={newEvent.start}
-        onChange={(start) => setNewEvent({ ...newEvent, start })}
-        timeFormat="HH:mm"
-        timeIntervals={60}
-        dateFormat="dd/M/yy"
-      />
+        <DatePicker
+          className='inputEvent'
+          placeholderText="Fin"
+          selected={newEvent.end}
+          onChange={(end) => setNewEvent({ ...newEvent, end })}
+          dateFormat="dd/M/yy"
+        />
 
-      <br />
+        <Dropdown className='inputEvent' 
+          value={newEvent.type} 
+          onChange={(e) => {
+            if (newEvent.type !== 'Pedido') {
+              setNewEvent({ ...newEvent, type: e.target.value });
+            }
+          }} 
+          placeholder="Seleccione el tipo" 
+          options={["Pedido","Taller", "Cita"]} 
+        />
 
-      <Dropdown className='inputEvent' value={newEvent.type} onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })} placeholder="Seleccione el tipo" options={["Taller", "Cita"]} />
+      
+      </div>
+      
+      <div style={{ flex: '50%', padding: '5px' }}>
+        {newEvent.type === 'Cita' && (
+          <>
+            <Dropdown className='inputEvent' value={newEvent.makeup} onChange={(e) => setNewEvent({ ...newEvent, makeup: e.target.value })} placeholder="Seleccione el maquillaje" options={makeups} />
 
-      <input
-        className='inputEvent'
-        type="text"
-        placeholder="Detalles"
-        value={newEvent.details}
-        onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
-      />
+            <input
+              className='inputEvent'
+              type="text"
+              placeholder="Cliente"
+              value={newEvent.clientData}
+              onChange={(e) => setNewEvent({ ...newEvent, clientData: e.target.value })}
+            />
 
-      {newEvent.type === 'Cita' && (
+            <input
+              className='inputEvent'
+              type="text"
+              placeholder="Detalles"
+              value={newEvent.details}
+              onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
+            />
+          </>
+        )}
+
+        {newEvent.type === 'Taller' && (
+          <>
+            <input
+              className='inputEvent'
+              type="number"
+              placeholder="Duración"
+              value={newEvent.duration}
+              onChange={(e) => setNewEvent({ ...newEvent, duration: e.target.value })}
+            />
+        
+            <input
+              className='inputEvent'
+              type="text"
+              placeholder="Detalles"
+              value={newEvent.details}
+              onChange={(e) => setNewEvent({ ...newEvent, details: e.target.value })}
+            />
+          </>
+        )}
+
+        {newEvent.type === 'Pedido' && (
         <>
-          <Dropdown className='inputEvent' value={newEvent.makeup} onChange={(e) => setNewEvent({ ...newEvent, makeup: e.target.value })} placeholder="Seleccione el maquillaje" options={makeups} />
+          <input
+            className='inputEvent'
+            type="text"
+            placeholder="Cliente"
+            value={newEvent.clientData}
+            onChange={(e) => setNewEvent({ ...newEvent, clientData: e.target.value })}
+            readOnly
+          />
 
           <input
             className='inputEvent'
             type="text"
-            placeholder="Datos del cliente"
-            value={newEvent.clientData}
-            onChange={(e) => setNewEvent({ ...newEvent, clientData: e.target.value })}
+            placeholder="Número de compra"
+            value={newEvent.orderNumber}
+            onChange={(e) => setNewEvent({ ...newEvent, orderNumber: e.target.value })}
+            readOnly
           />
+
+          <input
+            className='inputEvent'
+            type="number"
+            placeholder="Duración"
+            value={newEvent.duration}
+            onChange={(e) => setNewEvent({ ...newEvent, duration: e.target.value })}
+          />
+
+        
+          <textarea
+            className='inputEvent'
+            type="text"
+            placeholder="Detalle dirección"
+            value={newEvent.detailsAddress}
+            onChange={(e) => setNewEvent({ ...newEvent, detailsAddress: e.target.value })}
+            readOnly
+          />
+
+          <input
+            className='inputEvent'
+            type="text"
+            placeholder="Costo de envío"
+            value={newEvent.shippingCost}
+            onChange={(e) => setNewEvent({ ...newEvent, shippingCost: e.target.value })}
+            readOnly
+          />
+
+          <button type="button" className='productsButton' onClick={handleProducts}>Ver Productos</button>
+          <Dialog visible={visible} 
+          onHide={() => {setVisible(false)}}
+          style={{width: '35vw', height: '500px'}}
+          header='Productos comprados'
+          draggable={false}
+          resizable={false}
+          dismissableMask
+          >
+            {newEvent.products != [] && newEvent.products.map((product, {index}) => (
+                <div className="descriptionPurchase"  key={index}>
+                    <li>Nombre del producto: {product.name} y la cantidad comprada: {product.quantity}</li>
+                </div>
+            ))}
+          </Dialog>
+        
         </>
-      )}
-      {newEvent.type === 'Taller' && (
+        )}
 
-        <input
-          className='inputEvent'
-          type="number"
-          placeholder="Duración"
-          value={newEvent.duration}
-          onChange={(e) => setNewEvent({ ...newEvent, duration: e.target.value })}
-        />
+      </div>
 
-      )}
 
       <div className="CalendarButton">
         <br />
