@@ -10,17 +10,39 @@ import "../styles/Purchase.css";
 import { set } from 'date-fns';
 
 const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent, onDefaultEvent }) => {
-  const initialEvent = event || { id: '', title: '', start: '', end: '', hour: '',type: '', details: '', 
-  makeup: '', clientData: '', duration: '', detailsAddress: '', shippingCost: '', 
-  products: [], orderNumber: '', color: ''};
+  const initialEvent = event || {
+    id: '', title: '', start: '', end: '', hour: '', type: '', details: '',
+    makeup: '', clientData: '', duration: '', detailsAddress: '', shippingCost: '',
+    products: [], orderNumber: '', color: ''
+  };
   const [newEvent, setNewEvent] = useState({ name: '', start: '', end: '', details: '' });
   const [makeups, setMakeups] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [makeupTypes, setMakeupTypes] = useState(["Taller", "Cita"]);
+  const baseAPIurl = 'http://localhost:5000';
 
   useEffect(() => {
     setNewEvent(event || initialEvent);
   }, [event]);
 
+  useEffect(() => {
+    if (newEvent.type === 'Cita') {
+      parseMakeups();
+    }
+  }, [newEvent]);
+
+  const parseMakeups = async () => {
+    const tmpMakeups = [];
+
+    const response = await fetch(baseAPIurl + '/publications/get/all', {
+      method: 'GET',
+    }).then(res => res.json());
+
+    for (let makeup of response) {
+      tmpMakeups.push(makeup.name);
+    }
+    setMakeups(tmpMakeups);
+  }
 
   const handleSubmit = (e) => { // To add a new event
     e.preventDefault();
@@ -68,7 +90,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         color = '#e74c3c';
     }
     const eventWithColor = { ...newEvent, color };
-    onUpdateEvent(eventWithColor);
+    onUpdateEvent(event, eventWithColor);
     alert('Evento modificado con exito!'); // Set the success message
     setNewEvent(initialEvent); // Reset the form
   };
@@ -117,16 +139,16 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
     alert('Evento Creado con exito');
     return true;
   };
-  
 
-  const handleProducts = () =>{ //To show products
+
+  const handleProducts = () => { //To show products
     setVisible(true);
   }
 
 
   return (
 
-    <form onSubmit={handleSubmit}  style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexWrap: 'wrap' }}>
       <div style={{ flex: '50%', padding: '5px' }}>
         <input
           className='inputEvent'
@@ -140,7 +162,13 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
           className='inputEvent'
           placeholderText="Inicio"
           selected={newEvent.start}
-          onChange={(start) => setNewEvent({ ...newEvent, start })}
+          onChange={(start) => {
+            if (newEvent.type === "Pedido") {
+              setNewEvent({ ...newEvent, start: start, end: start });
+            } else {
+              setNewEvent({ ...newEvent, start: start });
+            }
+          }}
           dateFormat="dd/M/yy"
         />
 
@@ -148,6 +176,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
           className='inputEvent'
           placeholderText="Fin"
           selected={newEvent.end}
+          disabled={newEvent.type === "Pedido" ? true : false}
           onChange={(end) => setNewEvent({ ...newEvent, end })}
           dateFormat="dd/M/yy"
         />
@@ -165,13 +194,13 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         />
 
         {newEvent.type !== 'Pedido' && (
-          <Dropdown className='inputEvent' 
-            value={newEvent.type} 
+          <Dropdown className='inputEvent'
+            value={newEvent.type}
             onChange={(e) => {
               setNewEvent({ ...newEvent, type: e.target.value });
-            }} 
-            placeholder="Seleccione el tipo" 
-            options={["Taller", "Cita"]} 
+            }}
+            placeholder="Seleccione el tipo"
+            options={makeupTypes}
           />
         )}
 
@@ -187,7 +216,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         )}
 
       </div>
-      
+
       <div style={{ flex: '50%', padding: '5px' }}>
         <input
           className='inputEvent'
@@ -232,60 +261,60 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         )}
 
         {newEvent.type === 'Pedido' && (
-        <>
-          <input
-            className='inputEvent'
-            type="text"
-            placeholder="Cliente"
-            value={newEvent.clientData}
-            onChange={(e) => setNewEvent({ ...newEvent, clientData: e.target.value })}
-            readOnly
-          />
+          <>
+            <input
+              className='inputEvent'
+              type="text"
+              placeholder="Cliente"
+              value={newEvent.clientData}
+              onChange={(e) => setNewEvent({ ...newEvent, clientData: e.target.value })}
+              readOnly
+            />
 
-          <input
-            className='inputEvent'
-            type="text"
-            placeholder="Número de compra"
-            value={newEvent.orderNumber}
-            onChange={(e) => setNewEvent({ ...newEvent, orderNumber: e.target.value })}
-            readOnly
-          />
-        
-          <textarea
-            className='inputEvent'
-            type="text"
-            placeholder="Detalle dirección"
-            value={newEvent.detailsAddress}
-            onChange={(e) => setNewEvent({ ...newEvent, detailsAddress: e.target.value })}
-            readOnly
-          />
+            <input
+              className='inputEvent'
+              type="text"
+              placeholder="Número de compra"
+              value={newEvent.orderNumber}
+              onChange={(e) => setNewEvent({ ...newEvent, orderNumber: e.target.value })}
+              readOnly
+            />
 
-          <input
-            className='inputEvent'
-            type="text"
-            placeholder="Costo de envío"
-            value={newEvent.shippingCost}
-            onChange={(e) => setNewEvent({ ...newEvent, shippingCost: e.target.value })}
-            readOnly
-          />
+            <textarea
+              className='inputEvent'
+              type="text"
+              placeholder="Detalle dirección"
+              value={newEvent.detailsAddress}
+              onChange={(e) => setNewEvent({ ...newEvent, detailsAddress: e.target.value })}
+              readOnly
+            />
 
-          <button type="button" className='productsButton' onClick={handleProducts}>Ver Productos</button>
-          <Dialog visible={visible} 
-          onHide={() => {setVisible(false)}}
-          style={{width: '35vw', height: '500px'}}
-          header='Productos comprados'
-          draggable={false}
-          resizable={false}
-          dismissableMask
-          >
-            {newEvent.products != [] && newEvent.products.map((product, {index}) => (
-                <div className="descriptionPurchase"  key={index}>
-                    <li>Nombre del producto: {product.name} y la cantidad comprada: {product.quantity}</li>
+            <input
+              className='inputEvent'
+              type="text"
+              placeholder="Costo de envío"
+              value={newEvent.shippingCost}
+              onChange={(e) => setNewEvent({ ...newEvent, shippingCost: e.target.value })}
+              readOnly
+            />
+
+            <button type="button" className='productsButton' onClick={handleProducts}>Ver Productos</button>
+            <Dialog visible={visible}
+              onHide={() => { setVisible(false) }}
+              style={{ width: '35vw', height: '500px' }}
+              header='Productos comprados'
+              draggable={false}
+              resizable={false}
+              dismissableMask
+            >
+              {newEvent.products != [] && newEvent.products.map((product, { index }) => (
+                <div className="descriptionPurchase" key={index}>
+                  <li>Nombre del producto: {product.name} y la cantidad comprada: {product.quantity}</li>
                 </div>
-            ))}
-          </Dialog>
-        
-        </>
+              ))}
+            </Dialog>
+
+          </>
         )}
 
       </div>

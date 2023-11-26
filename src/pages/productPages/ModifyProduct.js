@@ -157,15 +157,15 @@ function ModifyProduct() {
             setImageURL(uploadImage.imageURL);
         }
 
-        console.log(id);
-        console.log(selectedName);
-        console.log(selectedDescription);
-        console.log(pImagePath);
-        console.log(selectedCategory);
-        console.log(selectedSubcategory);
-        console.log(selectedPrice);
-        console.log(selectedAvailable);
-        console.log(imageURL);
+        // console.log(id);
+        // console.log(selectedName);
+        // console.log(selectedDescription);
+        // console.log(pImagePath);
+        // console.log(selectedCategory);
+        // console.log(selectedSubcategory);
+        // console.log(selectedPrice);
+        // console.log(selectedAvailable);
+        // console.log(imageURL);
 
         const newData = await fetch(baseAPIurl + '/products/update',{
             method: 'PUT',
