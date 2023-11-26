@@ -79,8 +79,17 @@ function MyPurchases(){
                             <div className="cardContentPurchase">
                                 <div className="numPurchase">No. {purchase.orderNumber}</div>
                                 <div className="descriptionPurchase">
-                                    <span style={{ color: purchase.scheduled ? '#6d961a' : '#23aec1', fontWeight: 'bold', letterSpacing: '2px'}}>
-                                        {purchase.scheduled ? 'Agendada' : 'Pendiente'}
+                                    <span style={{ color: 
+                                                    purchase.scheduled === "Pendiente" ? '#6d961a' :
+                                                    purchase.scheduled === "cancelada" ?  '#6d961a' :
+                                                    purchase.scheduled === "aceptada" ? '#23aec1' : 
+                                                    purchase.scheduled === "rechazada" ? '#fd7b7b': '#23aec1', 
+                                                fontWeight: 'bold', 
+                                                letterSpacing: '2px'}}>
+                                        {purchase.scheduled === 'Pendiente' ? 'Pendiente':
+                                        purchase.scheduled === 'aceptada' ? 'Agendada' : 
+                                        purchase.scheduled === 'rechazada' ? 'Rechazada' :
+                                        purchase.scheduled === 'cancelada' ? 'Pendiente' : 'Agendada'}
                                     </span>
                                 </div>
                                 <div className="descriptionPurchase">Fecha: {purchase.paymentDate}</div>

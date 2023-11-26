@@ -42,9 +42,6 @@ function CalendarView() {
     for (let i = 0; i < response.length; i++) {
       if (response[i].scheduled === "aceptada" || response[i].scheduled === "modificada") {
         let purchase = response[i];
-        //let dateStr = purchase.deliveryDate;
-        //let parts = dateStr.split("/");
-        let deliveryDate = new Date(parseISO(purchase.deliveryDate));
         let cost = purchase.finalPrice - purchase.partialPrice;
         let cart = purchase.cart;
         let products = cart.products;
@@ -54,6 +51,21 @@ function CalendarView() {
         let partialPrice = purchase.partialPrice;
         let finalPrice = purchase.finalPrice;
         let paymentDate = purchase.paymentDate;
+
+        let dateStr = purchase.deliveryDate;
+        let parts = dateStr.split("/");
+
+        // Asegura que el año tenga cuatro dígitos
+        let year = parts[2];
+        if (year.length === 2) {
+            year = '20' + year;  // Asume que el año está en el siglo 21
+        }
+
+        // Crea un nuevo objeto Date
+        let deliveryDate = new Date(year, parts[1] - 1, parts[0]);  // Los meses empiezan desde 0, por eso se resta 1
+
+        console.log(deliveryDate);  // Imprime la fecha en formato de objeto Date
+
         deliveryDate.setHours(6);
         deliveryDate.setMinutes(0);
 
@@ -144,7 +156,6 @@ function CalendarView() {
     }
 
     setAllEvents(listAll);
-    console.log("LISTA", listAll);
   }
 
 
@@ -181,12 +192,24 @@ function CalendarView() {
 
   const modifyAgenda = async (event, oldEvent) => {
     if (event.type === 'Pedido') {
-
+      let deliveryDate = event.start;
       let tmpStatus = oldEvent.scheduled;
-
-      if (oldEvent.start !== event.start) {
+  
+      if (oldEvent.start !== deliveryDate) {
+        console.log("CAMBIA EL ESTADO");
         tmpStatus = "modificada";
       }
+
+      
+      let day = deliveryDate.getDate();  // Obtiene el día
+      let month = deliveryDate.getMonth() + 1;  // Obtiene el mes (los meses empiezan desde 0, por eso se suma 1)
+      let year = deliveryDate.getFullYear().toString().substr(-2);  // Obtiene los últimos dos dígitos del año
+
+      // Asegura que el día y el mes siempre tengan dos dígitos
+      if (day < 10) day = '0' + day;
+      if (month < 10) month = '0' + month;
+
+      let formattedDate = day + '/' + month + '/' + year;
 
       const response = await fetch(baseAPIurl + '/purchases/update', {
         method: 'PUT',
@@ -204,7 +227,7 @@ function CalendarView() {
           finalPrice: event.finalPrice,
           scheduled: tmpStatus,
           paymentDate: event.paymentDate,
-          deliveryDate: event.start,
+          deliveryDate: formattedDate,
           cart: { products: event.products },
           details: (event.detailsAddress).split(".")[1]
         })
@@ -256,7 +279,6 @@ function CalendarView() {
 
   const deleteAgenda = async (event) => {
     if (event.type === 'Pedido') {
-      //Hacer update, cambiar el schelued a 'cancelada'
       const response = await fetch(baseAPIurl + '/purchases/update', {
         method: 'PUT',
         headers: {
@@ -273,7 +295,7 @@ function CalendarView() {
           finalPrice: event.finalPrice,
           scheduled: "cancelada",
           paymentDate: event.paymentDate,
-          deliveryDate: event.start,
+          deliveryDate: "",
           cart: { products: event.products },
           details: (event.detailsAddress).split(".")[1]
         })
