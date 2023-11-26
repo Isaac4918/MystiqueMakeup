@@ -9,6 +9,7 @@ import back from "../components/assets/arrowBack.png";
 import {Link} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { Dialog } from 'primereact/dialog';
+import { ca } from "date-fns/locale";
 
 function DeliveryPending(){
     const [visible, setVisible] = useState(false);
@@ -60,6 +61,21 @@ function DeliveryPending(){
         }
 
         setPurchases(purchasesListAll);
+    }
+
+    const parseDate = (date) => {
+        //2023-11-25T12:00:00.000Z
+        let finalDate = '';
+        try{
+            let tmpDate = date.split('T')[0];
+            let dateArray = tmpDate.split('-');
+            finalDate = dateArray[2] + '/' + dateArray[1] + '/' + dateArray[0].slice(-2);
+        }catch(e){
+            finalDate = date;
+        }
+
+        return finalDate;
+
     }
 
     const updateAcceptedDelivery = async() => {
@@ -157,16 +173,19 @@ function DeliveryPending(){
                                     <div className="numPurchase">No. {purchase.orderNumber}</div>
                                     <div className="descriptionPurchase">
                                         <span style={{ color: purchase.scheduled === "Pendiente" ? '#6d961a' : 
-                                                    purchase.scheduled == "aceptada" ? '#23aec1' : '#fd7b7b', fontWeight: 'bold', letterSpacing: '2px'}}>
+                                                    purchase.scheduled == "aceptada" ? '#23aec1' :
+                                                    purchase.scheduled === 'modificada' ? '#6d961a' : '#fd7b7b', fontWeight: 'bold', letterSpacing: '2px'}}>
                                             {purchase.scheduled === "Pendiente" ? 'Pendiente':
                                             purchase.scheduled === 'aceptada' ? 'Agendada' : 
-                                            purchase.scheduled === 'rechazada' ? 'Rechazada' : 'Rechazada'}
+                                            purchase.scheduled === 'rechazada' ? 'Rechazada':
+                                            purchase.scheduled === 'modificada' ? 'Agendada':
+                                            purchase.scheduled === 'cancelada' ? 'Cancelada': 'Rechazada'}
                                         </span>
                                     </div>
                                     <div className="descriptionPurchase">
                                         Usuario: {purchase.username}<br/><br/>
                                         Fecha de pago: {purchase.paymentDate}<br/>
-                                        Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : '-'}</div>
+                                        Fecha de entrega: {purchase.deliveryDate ? parseDate(purchase.deliveryDate) : '-'}</div>
                                     <button className="buttonConsult" 
                                     onClick={() => {
                                         if(purchase.scheduled == "Pendiente"){
