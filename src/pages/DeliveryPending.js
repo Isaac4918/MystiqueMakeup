@@ -23,7 +23,6 @@ function DeliveryPending(){
     const [receiptImageURL, setReceiptImageURL] = useState('');
     const [cart, setCart] = useState({});
     const [receiptImagePath, setReceiptImagePath] = useState('');
-    //const [status, setStatus] = useState(false);
     const baseAPIurl = 'http://localhost:5000';
 
     const responsive = {
@@ -156,11 +155,16 @@ function DeliveryPending(){
                                 <div className="cardContentPurchase">
                                     <div className="numPurchase">No. {purchase.orderNumber}</div>
                                     <div className="descriptionPurchase">
-                                        <span style={{ color: purchase.scheduled === "Pendiente" ? '#6d961a' : 
-                                                    purchase.scheduled == "aceptada" ? '#23aec1' : '#fd7b7b', fontWeight: 'bold', letterSpacing: '2px'}}>
-                                            {purchase.scheduled === "Pendiente" ? 'Pendiente':
+                                        <span style={{ color: 
+                                                    purchase.scheduled === "Pendiente" ? '#6d961a' :
+                                                    purchase.scheduled === "cancelada" ?  '#6d961a' :
+                                                    purchase.scheduled === "aceptada" ? '#23aec1' : 
+                                                    purchase.scheduled === "rechazada" ? '#fd7b7b': '#23aec1', 
+                                                    fontWeight: 'bold', letterSpacing: '2px'}}>
+                                            {purchase.scheduled === 'Pendiente' ? 'Pendiente':
                                             purchase.scheduled === 'aceptada' ? 'Agendada' : 
-                                            purchase.scheduled === 'rechazada' ? 'Rechazada' : 'Rechazada'}
+                                            purchase.scheduled === 'rechazada' ? 'Rechazada' :
+                                            purchase.scheduled === 'cancelada' ? 'Pendiente' : 'Agendada'}
                                         </span>
                                     </div>
                                     <div className="descriptionPurchase">
@@ -169,7 +173,7 @@ function DeliveryPending(){
                                         Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : '-'}</div>
                                     <button className="buttonConsult" 
                                     onClick={() => {
-                                        if(purchase.scheduled == "Pendiente"){
+                                        if(purchase.scheduled == "Pendiente" || purchase.scheduled == "cancelada"){
                                             setVisible(true); setOrderNumber(purchase.orderNumber); 
                                             setUsername(purchase.username);
                                             setAddress(purchase.address); setReceiptImagePath(purchase.receiptImagePath); 
@@ -178,7 +182,7 @@ function DeliveryPending(){
                                             setPaymentDate(purchase.paymentDate);
                                             setCart(purchase.cart); setDetails(purchase.details); 
                                         }else{
-                                            if(purchase.scheduled == "aceptada"){
+                                            if(purchase.scheduled == "aceptada" || purchase.scheduled == "modificada"){
                                                 alert("Ya has agendado esta compra.");
                                             }else{
                                                 alert("Ya has rechazado esta compra.");
@@ -205,7 +209,8 @@ function DeliveryPending(){
                                                     Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : "Sin fecha"} <br/>
                                                     Estado: {purchase.scheduled === "Pendiente" ? 'Pendiente':
                                                             purchase.scheduled === 'Aceptada' ? 'Agendada' : 
-                                                            purchase.scheduled === 'Rechazada' ? 'Rechazada' : 'Rechazada'}<br/><br/>
+                                                            purchase.scheduled === 'Rechazada' ? 'Rechazada' : 
+                                                            purchase.scheduled === 'Cancelada' ? 'Pendiente': 'Agendada'}<br/><br/>
                                                     Precio total (incluyendo envío):  ₡{purchase.finalPrice} <br/>
                                                     <div className="layoutDeliveryButtons">
                                                         <button className="buttonDelivery" onClick={updateAcceptedDelivery}>Aceptar</button>
