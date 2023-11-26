@@ -265,7 +265,6 @@ function PaymentDetails() {
             // update the products in the cart so they reduce the available quantity
             for (let i = 0; i < shoppingCart.products.length; i++) {
                 const product = shoppingCart.products[i];
-                console.log(product)
                 await fetch(baseAPIurl + '/products/reduce/availability', {
                     method: 'PUT',
                     headers: {
@@ -352,7 +351,7 @@ function PaymentDetails() {
                 receiptImageURL: imageURL,
                 partialPrice: partialPrice,
                 finalPrice: totalPrice,
-                scheduled: false,
+                scheduled: 'Pendiente',
                 paymentDate: formattedDate,
                 deliveryDate: "",
                 cart: shoppingCart
