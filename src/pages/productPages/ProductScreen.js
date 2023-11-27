@@ -122,7 +122,6 @@ function ProductScreen(){
     }
 
     useEffect(() => {
-        console.log(username);
         if(username === '' || username === null){
             console.log("No hay usuario");
         }else{

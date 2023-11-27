@@ -20,7 +20,15 @@ function Delivers() {
           'Accept': 'application/json'
         }
       }).then(res => res.json());
-      setRequestedMakeups(response);
+      
+      let tmpRequestedMakeups = [];
+      response.forEach(requestedMakeup => {
+        if(requestedMakeup.scheduled === "Pendiente") {
+          tmpRequestedMakeups.push(requestedMakeup);
+        }
+      });
+
+      setRequestedMakeups(tmpRequestedMakeups);
     }
   
     getRequestedMakeups();

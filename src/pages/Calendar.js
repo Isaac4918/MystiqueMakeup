@@ -58,13 +58,11 @@ function CalendarView() {
         // Asegura que el año tenga cuatro dígitos
         let year = parts[2];
         if (year.length === 2) {
-            year = '20' + year;  // Asume que el año está en el siglo 21
+          year = '20' + year;  // Asume que el año está en el siglo 21
         }
 
         // Crea un nuevo objeto Date
-        let deliveryDate = new Date(year, parts[1] - 1, parts[0]);  // Los meses empiezan desde 0, por eso se resta 1
-
-        console.log(deliveryDate);  // Imprime la fecha en formato de objeto Date
+        let deliveryDate = new Date(year, parts[1] - 1, parts[0]);  // Los meses empiezan desde 0, por eso se resta 1 // Imprime la fecha en formato de objeto Date
 
         deliveryDate.setHours(6);
         deliveryDate.setMinutes(0);
@@ -133,6 +131,7 @@ function CalendarView() {
         }
       } else {
         newEntry = {
+          id: entry.id,
           title: entry.title,
           start: dateStart,
           end: dateEnd,
@@ -160,6 +159,50 @@ function CalendarView() {
 
 
   const addAgenda = async (event) => {
+
+    if (event.type === 'Cita') {
+      // /publications/request/get/all
+      //console.log("citaaaaaaaaaaaaaaaaa");
+      const allRequests = await fetch(baseAPIurl + '/publications/request/get/all', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }).then(res => res.json());
+
+      console.log("allRequests", allRequests);
+
+      let selectedRequest = false;
+
+      for (let i = 0; i < allRequests.length; i++) {
+        let request = allRequests[i];
+        console.log("request", request);
+        if (request.username === event.clientData && request.makeup === event.makeup) {
+          selectedRequest = request;
+        }
+      }
+
+
+      if (selectedRequest !== false) {
+        const response = await fetch(baseAPIurl + '/publications/request/update', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            orderNumber: selectedRequest.orderNumber,
+            username: selectedRequest.username,
+            makeup: selectedRequest.makeup,
+            requestedDate: selectedRequest.requestedDate,
+            scheduled: "agendada"
+          })
+        });
+        window.location.reload();
+      }
+    }
+
     const response = await fetch(baseAPIurl + '/agenda/create', {
       method: 'POST',
       headers: {
@@ -182,7 +225,7 @@ function CalendarView() {
     if (response.ok) {
       const data = await response.json();
       const id = data.id;
-      console.log("ID del documento creado: ", id);
+      //console.log("ID del documento creado: ", id);
       return id;
     } else {
       console.error("Error al crear la entrada en la agenda");
@@ -194,13 +237,12 @@ function CalendarView() {
     if (event.type === 'Pedido') {
       let deliveryDate = event.start;
       let tmpStatus = oldEvent.scheduled;
-  
+
       if (oldEvent.start !== deliveryDate) {
-        console.log("CAMBIA EL ESTADO");
         tmpStatus = "modificada";
       }
 
-      
+
       let day = deliveryDate.getDate();  // Obtiene el día
       let month = deliveryDate.getMonth() + 1;  // Obtiene el mes (los meses empiezan desde 0, por eso se suma 1)
       let year = deliveryDate.getFullYear().toString().substr(-2);  // Obtiene los últimos dos dígitos del año
@@ -300,7 +342,47 @@ function CalendarView() {
           details: (event.detailsAddress).split(".")[1]
         })
       });
-    } else {
+    }else{
+      if (event.type === 'Cita') {
+        const allRequests = await fetch(baseAPIurl + '/publications/request/get/all', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        }).then(res => res.json());
+  
+        console.log("allRequests", allRequests);
+  
+        let selectedRequest = false;
+  
+        for (let i = 0; i < allRequests.length; i++) {
+          let request = allRequests[i];
+          console.log("request", request);
+          if (request.username === event.clientData && request.makeup === event.makeup) {
+            selectedRequest = request;
+          }
+        }
+  
+  
+        if (selectedRequest !== false) {
+          const response = await fetch(baseAPIurl + '/publications/request/update', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              orderNumber: selectedRequest.orderNumber,
+              username: selectedRequest.username,
+              makeup: selectedRequest.makeup,
+              requestedDate: selectedRequest.requestedDate,
+              scheduled: "Pendiente"
+            })
+          });
+          window.location.reload();
+        }
+      }
       const response = await fetch(baseAPIurl + '/agenda/delete', {
         method: 'DELETE',
         headers: {
@@ -318,28 +400,40 @@ function CalendarView() {
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
-    console.log("EVENTO SELECCIONADO", event);
-    // let dateStart = new Date(parseISO("2023-11-25T12:00:00.000Z"));
-    // console.log("FECHA", dateStart);
   };
 
   const handleAddEvent = async (event) => {
     var idEvent = await addAgenda(event);
-    console.log("ID EVENT", idEvent);
     const eventWithId = { ...event, id: idEvent };
-    console.log("EVENT WITH ID", eventWithId);
     setAllEvents([...allEvents, eventWithId]);
     setSelectedEvent(null); // Clear the selected event after adding a new one
   };
 
   const handleUpdateEvent = (oldEvent, updatedEvent) => {
-    modifyAgenda(updatedEvent, oldEvent);
-    setAllEvents(allEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
-    setSelectedEvent(null);
+    if(updatedEvent.type === "Pedido"){
+      let startDate = new Date(updatedEvent.start);
+      let startDay = startDate.getDay()
+
+      if(startDay === 1 || startDay === 3 || startDay === 5 || startDay === 0){
+        alert("La entrega de pedidos debe ser martes, jueves o sábado.")
+        return false;
+      }
+      else{
+        modifyAgenda(updatedEvent, oldEvent);
+        setAllEvents(allEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
+        setSelectedEvent(null);
+        return true;
+      }
+    }else{
+      modifyAgenda(updatedEvent, oldEvent);
+      setAllEvents(allEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event));
+      setSelectedEvent(null);
+      return true;
+    }
+    
   };
 
   const handleDeleteEvent = (eventToDelete) => {
-    console.log("ID ELIMINAR", eventToDelete.id);
     deleteAgenda(eventToDelete);
     setAllEvents(allEvents.filter(event => event.id !== eventToDelete.id));
     setSelectedEvent(null); // Clear the selected event after deleting

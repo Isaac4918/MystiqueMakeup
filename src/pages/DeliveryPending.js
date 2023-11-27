@@ -9,6 +9,7 @@ import back from "../components/assets/arrowBack.png";
 import {Link} from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { Dialog } from 'primereact/dialog';
+import { parseISO } from 'date-fns';
 
 function DeliveryPending(){
     const [visible, setVisible] = useState(false);
@@ -61,12 +62,46 @@ function DeliveryPending(){
         setPurchases(purchasesListAll);
     }
 
+    const validateDateAvailability = async(pDate) => {
+        const response = await fetch(baseAPIurl + '/agenda/get/all', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+        }).then(res => res.json());
+        //checks if the date the user wants to schedule is available based on the start and end dates of the agenda events
+        let available = true;
+        for (let i = 0; i < response.length; i++) {
+            let auxEvent = response[i];
+            let start = new Date(parseISO(auxEvent.start));
+            let end = new Date(parseISO(auxEvent.end));
+
+            if((pDate >= start.getTime() && pDate <= end.getTime()) || (pDate === start.getTime() && pDate === end.getTime())){
+                if(auxEvent.type === "Taller"){
+                    let year = pDate.getFullYear();
+                    let month = pDate.getMonth() + 1; // months are zero indexed
+                    let day = pDate.getDate();
+                    let formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year.toString().slice(-2)}`;
+                    let tmpAvailable = window.confirm("El taller: '" + auxEvent.title + "' está programado el: " + formattedDate 
+                    + ", ¿desea programar la entrega ese día de igual forma?");
+                    available = tmpAvailable;
+                }else{
+                    available = false;
+                }
+            }
+        }
+        console.log(available);
+        return available;
+    }
+
+
     const updateAcceptedDelivery = async() => {
         let date = new Date();
-        console.log("DATE", date);
+        date.setHours(0,0,0,0);
 
         let dayNumber = date.getDay(); // 0d 1l 2k 3m 4j 5v 6s
-        console.log(dayNumber);
+        
         if(dayNumber === 1 || dayNumber === 3 || dayNumber === 5){
             date.setDate(date.getDate() + 1); // add one day to the date
         }
@@ -74,6 +109,33 @@ function DeliveryPending(){
             date.setDate(date.getDate() + 2); // add two days to the date
         }else{
             date.setDate(date.getDate() + 3) //add three days to the date
+        }
+
+        //console.log("DATEEEEEE", date);
+        let tmpAvailability = await validateDateAvailability(date);
+        console.log(tmpAvailability);
+
+        if(tmpAvailability === false){
+            let tmpDay = date.getDay();
+            console.log(tmpDay);
+            //if the date is not available, add until it is the next available date that is tuesday, thursday or saturday
+            date.setDate(date.getDate() + 1);
+            tmpDay = date.getDay();
+            while(true){
+                if(tmpDay === 1 || tmpDay === 3 || tmpDay === 5 || tmpDay === 0){
+                    date.setDate(date.getDate() + 1);
+                    tmpDay = date.getDay();
+                }else{
+                    let tmpAvailability2 = await validateDateAvailability(date);
+                    if(tmpAvailability2 === true){
+                        break;
+                    }
+                    else{
+                        date.setDate(date.getDate() + 1);
+                        tmpDay = date.getDay();
+                    }
+                }
+            }
         }
 
         let year = date.getFullYear();
@@ -173,7 +235,7 @@ function DeliveryPending(){
                                         Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : '-'}</div>
                                     <button className="buttonConsult" 
                                     onClick={() => {
-                                        if(purchase.scheduled == "Pendiente" || purchase.scheduled == "cancelada"){
+                                        if(purchase.scheduled === "Pendiente" || purchase.scheduled === "cancelada"){
                                             setVisible(true); setOrderNumber(purchase.orderNumber); 
                                             setUsername(purchase.username);
                                             setAddress(purchase.address); setReceiptImagePath(purchase.receiptImagePath); 
@@ -182,7 +244,7 @@ function DeliveryPending(){
                                             setPaymentDate(purchase.paymentDate);
                                             setCart(purchase.cart); setDetails(purchase.details); 
                                         }else{
-                                            if(purchase.scheduled == "aceptada" || purchase.scheduled == "modificada"){
+                                            if(purchase.scheduled === "aceptada" || purchase.scheduled === "modificada"){
                                                 alert("Ya has agendado esta compra.");
                                             }else{
                                                 alert("Ya has rechazado esta compra.");
@@ -208,9 +270,9 @@ function DeliveryPending(){
                                                     Detalles de la dirrección: {purchase.details} <br/><br/>
                                                     Fecha de entrega: {purchase.deliveryDate ? purchase.deliveryDate : "Sin fecha"} <br/>
                                                     Estado: {purchase.scheduled === "Pendiente" ? 'Pendiente':
-                                                            purchase.scheduled === 'Aceptada' ? 'Agendada' : 
-                                                            purchase.scheduled === 'Rechazada' ? 'Rechazada' : 
-                                                            purchase.scheduled === 'Cancelada' ? 'Pendiente': 'Agendada'}<br/><br/>
+                                                            purchase.scheduled === 'aceptada' ? 'Agendada' : 
+                                                            purchase.scheduled === 'rechazada' ? 'Rechazada' : 
+                                                            purchase.scheduled === 'cancelada' ? 'Pendiente': 'Agendada'}<br/><br/>
                                                     Precio total (incluyendo envío):  ₡{purchase.finalPrice} <br/>
                                                     <div className="layoutDeliveryButtons">
                                                         <button className="buttonDelivery" onClick={updateAcceptedDelivery}>Aceptar</button>

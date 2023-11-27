@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import "../styles/Calendar.css";
 import { Dialog } from 'primereact/dialog';
 import "../styles/Purchase.css";
-import { set } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent, onDefaultEvent }) => {
   const initialEvent = event || {
@@ -17,6 +17,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
   };
   const [newEvent, setNewEvent] = useState({ name: '', start: '', end: '', details: '' });
   const [makeups, setMakeups] = useState([]);
+  const [users, setUsers] = useState([]);
   const [visible, setVisible] = useState(false);
   const [makeupTypes, setMakeupTypes] = useState(["Taller", "Cita"]);
   const baseAPIurl = 'http://localhost:5000';
@@ -28,6 +29,7 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
   useEffect(() => {
     if (newEvent.type === 'Cita') {
       parseMakeups();
+      parseUsers();
     }
   }, [newEvent]);
 
@@ -44,14 +46,25 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
     setMakeups(tmpMakeups);
   }
 
+  const parseUsers = async () => {
+    const tmpUsers = [];
+
+    const response = await fetch(baseAPIurl + '/getAllUsers', {
+      method: 'GET',
+    }).then(res => res.json());
+
+    for (let user of response) {
+      tmpUsers.push(user);
+    }
+    setUsers(tmpUsers);
+  }
+
   const handleSubmit = (e) => { // To add a new event
     e.preventDefault();
 
     if (!validateForm()) {
       return; // return early if validation fails
     }
-
-    console.log(newEvent.type)
 
     // Assign color to newEvent based on its type
     let color;
@@ -90,9 +103,11 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
         color = '#e74c3c';
     }
     const eventWithColor = { ...newEvent, color };
-    onUpdateEvent(event, eventWithColor);
-    alert('Evento modificado con exito!'); // Set the success message
-    setNewEvent(initialEvent); // Reset the form
+    let response = onUpdateEvent(event, eventWithColor);
+    if(response === true){
+      alert('Evento modificado con exito!'); // Set the success message
+      setNewEvent(initialEvent); // Reset the form
+    }
   };
 
   const handleDelete = (e) => { // To delete an existing event
@@ -108,6 +123,26 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
     setNewEvent(initialEvent); // Reset the form
   };
 
+  const doEventsDayOverlap = (event1, event2) => {
+    // Convertir las fechas de inicio y fin en objetos Date
+    let event1Start = new Date(event1.start);
+    let event1End = new Date(event1.end);
+    let event2Start = new Date(event2.start);
+    let event2End = new Date(event2.end);
+    event1Start.setHours(0, 0, 0, 0);
+    event1End.setHours(0, 0, 0, 0);
+    event2Start.setHours(0, 0, 0, 0);
+    event2End.setHours(0, 0, 0, 0);
+
+    // Verificar si los eventos se superponen
+    if ((event1Start.getTime() < event2End.getTime() && event2Start.getTime() < event1End.getTime())
+      || (event1Start.getTime() === event2Start.getTime() && event1End.getTime() === event2End.getTime())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const validateForm = () => { // To validate the form
     // Check that all fields are filled
     if (!newEvent.title || !newEvent.start || !newEvent.end || !newEvent.details) {
@@ -115,27 +150,50 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
       return false;
     }
 
+    // Check that the event doesn't overlap with another event
+    for (let tmpEvent of allEvents) {
+      if (doEventsDayOverlap(newEvent, tmpEvent)) {
+        if (newEvent.type === "Taller" && tmpEvent.type === "Pedido") {
+          let accepted = window.confirm("El " + tmpEvent.title + " está en ese horario, ¿desea agregar el taller de igual forma?");
+          if (accepted) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          alert("Existe un evento en ese horario.");
+          return false;
+        }
+      }
+    }
+
     // Check that end time is not before start time
-    /*if (new Date(newEvent.end).getTime() < new Date(newEvent.start).getTime()) {
+    if (new Date(newEvent.end).getTime() < new Date(newEvent.start).getTime()) {
       alert("La fecha de finalización no puede ser anterior a la fecha de inicio.");
       return false;
-    }*/
+    }
 
-    // Check that there isn't already an event at the chosen time
-    /*const newEventStart = new Date(newEvent.start).getTime();
-    const newEventEnd = new Date(newEvent.end).getTime();
+    //check that the duration is not negative
+    if (newEvent.duration < 0) {
+      alert("La duración no puede ser negativa.");
+      return false;
+    }
 
-    for (let event of allEvents) {
-      const eventStart = new Date(event.start).getTime();
-      const eventEnd = new Date(event.end).getTime();
+    //check that the start and end dates are later or equal to today
+    let todaysDate = new Date();
+    todaysDate.setHours(0, 0, 0, 0);
 
-      if ((newEventStart >= eventStart && newEventStart < eventEnd) ||
-        (newEventEnd > eventStart && newEventEnd <= eventEnd) ||
-        (newEventStart <= eventStart && newEventEnd >= eventEnd)) {
-        alert("Existe un evento en ese horario");
-        return false;
-      }
-    }*/
+    if (new Date(newEvent.start).getTime() < todaysDate.getTime() || new Date(newEvent.end).getTime() < todaysDate.getTime()) {
+      alert("La fecha de inicio y fin no pueden ser anteriores a la fecha actual.");
+      return false;
+    }
+
+    let rightNow = new Date();
+    if ((new Date(newEvent.hour).getTime() < rightNow.getTime()) && (new Date(newEvent.start).getTime() === todaysDate.getTime())){
+      alert("La hora no puede ser anterior a la hora actual.");
+      return false;
+    }
+
     alert('Evento Creado con exito');
     return true;
   };
@@ -229,15 +287,15 @@ const EventForm = ({ allEvents, event, onAddEvent, onUpdateEvent, onDeleteEvent,
 
         {newEvent.type === 'Cita' && (
           <>
-            <Dropdown className='inputEvent' value={newEvent.makeup} onChange={(e) => setNewEvent({ ...newEvent, makeup: e.target.value })} placeholder="Seleccione el maquillaje" options={makeups} />
+            <Dropdown className='inputEvent' value={newEvent.makeup}
+              onChange={(e) => setNewEvent({ ...newEvent, makeup: e.target.value })}
+              placeholder="Seleccione el maquillaje" options={makeups} />
 
-            <input
-              className='inputEvent'
-              type="text"
-              placeholder="Cliente"
-              value={newEvent.clientData}
+            <Dropdown className='inputEvent' value={newEvent.clientData}
               onChange={(e) => setNewEvent({ ...newEvent, clientData: e.target.value })}
-            />
+              placeholder="Seleccione el usuario" options={users} />
+
+
 
             <textarea
               className='inputEvent'
